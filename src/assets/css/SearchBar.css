@@ -1,0 +1,22 @@
+#clearBtn{
+    cursor: pointer;
+}
+
+.SearchBg{
+    background-color: white !important;
+    border-left: none !important;
+    border-bottom-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-right: none !important;
+}
+
+.searchBox{
+    border-right: none !important;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+.uneditable-input:focus {   
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0) inset, 0 0 0px rgba(255, 255, 255, 0);
+  outline: none;
+}
