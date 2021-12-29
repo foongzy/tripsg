@@ -88,15 +88,15 @@ function Sidebar() {
                 ):(
                     <div>
                         {/* handphone */}
-                        <nav class="navbar navbar-light bg-light navv">
+                        <nav class="navbar navv navbar-light">
                             <div class="container-fluid">
                                 {/* <a class="navbar-brand" href="#">Navbar w/ text</a> */}
                                 <Link to="#" className='menu-bars'>
-                                    <Menu onClick={showSidebar} style={{color:"black", fontSize:"30px"}}></Menu>
+                                    <Menu onClick={showSidebar} style={{color:"white", fontSize:"30px", marginBottom:"5px"}}></Menu>
                                 </Link>
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 </ul>
-                                <h2 style={{fontFamily:"monospace", color:"black", paddingTop:"15px"}}>TripSg</h2>
+                                <h2 style={{fontFamily:"monospace", color:"white", paddingTop:"10px"}}>TripSg</h2>
                             </div>
                         </nav>
                         <nav className={sidebar ? 'nav-menu active':'nav-menu'}>

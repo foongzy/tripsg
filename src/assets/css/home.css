@@ -1,5 +1,5 @@
 html{
-    background-color: #ffeded;
+    background-color: #fff6ee;
 }
 @media (min-width:551px) {
     .leftmargin{
@@ -7,9 +7,14 @@ html{
     }
 }
 
+.bgCom{
+    padding: 5px 10px;
+    background-color: #fff6ee;
+}
+
 .bg{
     padding: 15px 10px;
-    background-color: #ffeded;
+    background-color: #fff6ee;
 }
 
 .shadowProperty{
@@ -32,6 +37,7 @@ html{
 
 .BusTime2{
     font-size: 14px;
+    padding-left: 10px;
 }
 
 .rightDivider{
@@ -57,10 +63,43 @@ div.card-body{
 
 .navRadius{
     border-radius: 5px;
-    background-image: linear-gradient(to right, #ff6863, #ffa3a6);
+    background-color: #8860d0;
 }
 
 .bgbtn{
-    background-color: #6f6f6f;
-    border-color: #6f6f6f;
+    background-color: #5680e9 !important;
+    border-color: #5680e9 !important;
+}
+
+.bgbtn:hover{
+    background-color: #5ab9ea !important;
+    border-color: #5ab9ea !important;
+}
+
+.headerbus{
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+}
+
+.leftLabel{
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+.line{
+    border-bottom: 1px solid grey;
+    padding-bottom: 2px;
+}
+
+#refreshIcon{
+    color: black;
+}
+
+.cardR{
+    border-radius: 0px;
+    border-top-color: white;
+    border-left-color: white;
 }

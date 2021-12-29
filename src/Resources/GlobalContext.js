@@ -14,6 +14,8 @@ function GlobalContextProvider(props){
     const[globalBusstopData,setGlobalBusstopData]=useState("")
     const[globalSearchWord,setGlobalSearchWord]=useState("")
     const[globalFilteredData,setGlobalFilteredData]=useState([])
+    const[globalArrivalData,setGlobalArrivalData]=useState([])
+    const[globalbusstopcode,setGlobalbusstopcode]=useState('')
 
     return(
         //Provider is like declare what global state to expose or chare to other components
@@ -22,7 +24,9 @@ function GlobalContextProvider(props){
         value={{
             globalBusstopDataKey:[globalBusstopData,setGlobalBusstopData],
             globalSearchWordKey:[globalSearchWord,setGlobalSearchWord],
-            globalFilteredDataKey:[globalFilteredData,setGlobalFilteredData]
+            globalFilteredDataKey:[globalFilteredData,setGlobalFilteredData],
+            globalArrivalDataKey:[globalArrivalData,setGlobalArrivalData],
+            globalbusstopcodeKey:[globalbusstopcode,setGlobalbusstopcode]
             
         }}
         >

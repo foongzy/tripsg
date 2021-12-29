@@ -3,12 +3,17 @@ import '../assets/css/SearchBar.css'
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import { GlobalContext } from "../Resources/GlobalContext.js";
+import axios from 'axios'
 
 function SearchBar({placeholder, data}) {
     const{globalFilteredDataKey}=useContext(GlobalContext)
     const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey
     const{globalSearchWordKey}=useContext(GlobalContext)
     const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
+    const{globalArrivalDataKey}=useContext(GlobalContext)
+    const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
+    const{globalbusstopcodeKey}=useContext(GlobalContext)
+    const[globalbusstopcode,setGlobalbusstopcode]=globalbusstopcodeKey
 
     const handleFilter=(event)=>{
         const searchWord = event.target.value
@@ -24,6 +29,11 @@ function SearchBar({placeholder, data}) {
         }else{
             setGlobalFilteredData(newFilter)
         }
+    }
+
+    function triggerSearch(event){
+        event.preventDefault();
+        
     }
 
     const clearInput=()=>{
@@ -49,7 +59,7 @@ function SearchBar({placeholder, data}) {
                 globalFilteredData.length!=0?(
                     <div className='dataResult'>
                         {globalFilteredData.slice(0, 10).map((value, key)=>{
-                            return <a className='dataItem' href="*" target="_blank">
+                            return <a className='dataItem' onClick={triggerSearch}>
                                 <p>{value.Description + " ("+value.BusStopCode+")"}</p>
                                 </a>
                         })}
