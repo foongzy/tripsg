@@ -15,7 +15,7 @@ import styles from "../assets/jss/material-kit-react/views/aboutPage";
 
 const useStyles = makeStyles(styles);
 
-function About(props) {
+function Feedback(props) {
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     const {height, width}=useWindowDimensions();
     
@@ -31,7 +31,7 @@ function About(props) {
             <Navbar></Navbar>
             <div className="leftmargin background">
                 <div className={width<551?"bg":"bgCom"}>
-                    {/* About page */}
+                    {/* Feedback page */}
                     <div
                         className={classes.pageHeader} style={{zIndex:"0"}}
                     >
@@ -41,11 +41,11 @@ function About(props) {
                                     <GridItem xs={12} sm={12} md={11}>
                                         <Card className={classes[cardAnimaton]} style={{marginTop:"-10px"}}>
                                             <form className={classes.form}>
-                                                <CardHeader className={classes.cardHeader} style={{background:"linear-gradient(60deg, #8860d0, #6b3fa0)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
+                                                <CardHeader color="primary" className={classes.cardHeader} style={{background:"linear-gradient(60deg, #8860d0, #6b3fa0)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
                                                 <h4>About</h4>
                                                 </CardHeader>
                                                 <CardBody>
-                                                    <h5>Site Under Construction</h5>
+                                                    <h5>Text</h5>
   
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}>
@@ -63,4 +63,4 @@ function About(props) {
     )
 }
 
-export default About
+export default Feedback

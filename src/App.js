@@ -8,6 +8,8 @@ import NotFound from './Page/notFound'
 //Valid url pages
 import About from './Page/About'
 import Home from './Page/Home'
+import Feedback from './Page/Feedback'
+import Location from './Page/Location'
 import Sidebar from './Components/Sidebar';
 
 class App extends Component {
@@ -19,10 +21,10 @@ class App extends Component {
           <Switch>
 
             <Route exact path="/" render={props=>(<Home />)} />
-            <Route exact path="/TripSg" render={props=>(<Home />)} />
+            <Route exact path="/Tripsg" render={props=>(<Home />)} />
             <Route exact path="/BusArrival" render={props=>(<Home />)} />
-            <Route exact path="/Location" render={props=>(<NotFound />)} />
-            <Route exact path="/Feedback" render={props=>(<NotFound />)} />
+            <Route exact path="/Location" render={props=>(<Location />)} />
+            <Route exact path="/Feedback" render={props=>(<Feedback />)} />
             <Route exact path="/About" render={props=>(<About />)} />
             
             <Route render={props=>(<NotFound />)} />

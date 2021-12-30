@@ -10,6 +10,9 @@ import Navbar from '../Components/Sidebar'
 import Refresh from '@material-ui/icons/Refresh';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BusIconBlack from '../assets/img/busIconBlack.png'
+import HelpIcon from '@material-ui/icons/HelpOutline'
+import Square from '@material-ui/icons/CropSquare'
 
 function Home(props){
     const{globalBusstopDataKey}=useContext(GlobalContext)
@@ -33,7 +36,7 @@ function Home(props){
     const loadBusstopsData=()=>{
         if(globalBusstopData==""){
             axios.get(URL).then(res=>{
-                updateGlobalBusstopData(res.data.value)
+                updateGlobalBusstopData(res.data.data)
             }).catch(error=>{
                 console.log("error")
             })
@@ -47,7 +50,6 @@ function Home(props){
             const URLbusArrival=URL+globalSearchWord+"/"
             axios.get(URLbusArrival).then(res=>{
                 let obtainedData=res.data.Services
-                
                 //Sort bus numbers
                 obtainedData.sort(function(a, b) {
                     return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
@@ -109,7 +111,6 @@ function Home(props){
         const URLbusArrival=URL+globalbusstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
-            
             //Sort bus numbers
             obtainedData.sort(function(a, b) {
                 return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
@@ -191,46 +192,107 @@ function Home(props){
                         {
                             globalbusstopcode!=''?(
                                 <nav class="navbar navbar-light shadowProperty headerbus">
-                            <div class="container-fluid line">
-                                <label className="leftLabel">Bus Stop Code: {globalbusstopcode}</label>
-                                <form class="d-flex">
-                                    <a href="" style={{textAlign:"right"}} onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
-                                </form>
-                            </div>
-                            <div className={width<950?"row row-cols-1 row-cols-sm-2 g-0 topMargin":"row row-cols-1 row-cols-sm-3 g-0 topMargin"}>
-                                {globalArrivalData.map((value,key)=>{
-                                    return(
-                                        <div class="col">
-                                            <div class="card cardR" style={{height:"100%"}}>
-                                                <div class="card-body">
-                                                    <div className="row">
-                                                        <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
-                                                            <label className="BusNo">{value.ServiceNo}</label>
+                                    <div class="container-fluid line">
+                                        <label className="leftLabel">Bus Stop Code: {globalbusstopcode}</label>
+                                        <form class="d-flex">
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{textAlign:"right"}}><HelpIcon id="helpIcon"></HelpIcon></a>
+                                            <a href="" style={{textAlign:"right"}} onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
+                                        </form>
+                                    </div>
+                                    <div className={width<950?"row row-cols-1 row-cols-sm-2 g-0 topMargin":"row row-cols-1 row-cols-sm-3 g-0 topMargin"}>
+                                        {globalArrivalData.map((value,key)=>{
+                                            return(
+                                                <div class="col">
+                                                    <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
+                                                        <div class="card-body">
+                                                            <div className="row">
+                                                                <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                    <label className="BusNo">{value.ServiceNo}</label>
+                                                                </div>
+                                                                <div className="col-8 borderLeft">
+                                                                    <label className="BusTime">Next Bus:</label>
+                                                                    <br></br>
+                                                                    <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}</label>
+                                                                    <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}</label>
+                                                                    <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}</label>
+                                                                </div>
+                                                            </div>        
                                                         </div>
-                                                        <div className="col-8 borderLeft">
-                                                            <label className="BusTime">Next Bus:</label>
-                                                            <br></br>
-                                                            <label className="BusTime">{value.NextBus.EstimatedArrival}</label>
-                                                            <label className="BusTime2">{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}</label>
-                                                            <label className="BusTime2">{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}</label>
-                                                        </div>
-                                                    </div>        
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </nav> 
-
+                                            )
+                                        })}
+                                    </div>
+                                </nav> 
                             ):(
-                                <div></div>
+                                // if havent search
+                                <div class="row row-cols-1 row-cols-lg-12 g-2" style={{textAlign:"center", justifyContent:"center", paddingLeft:"32px"}}>
+                                    <img src={BusIconBlack} style={{height:"auto", width:"25%", paddingTop:"40px"}} />
+                                    <label style={{fontSize:"16px", fontFamily:"sans-serif"}}>- Type bus stop in searchbar to begin -</label>
+                                </div>
                             )
                         }
                          
                     </div>
                 </div>
             </div>
+
+            {/* Modal */}
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Bus Timings Guide</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="col">
+                                                    <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
+                                                        <div class="card-body">
+                                                            <div className="row">
+                                                                <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                    <label className="BusNo">12</label>
+                                                                </div>
+                                                                <div className="col-8 borderLeft">
+                                                                    <label className="BusTime">Next Bus:</label>
+                                                                    <br></br>
+                                                                    <label className="BusTime empty">Arriving</label>
+                                                                    <label className='BusTime2 standing'>5min</label>
+                                                                    <label className='BusTime2 full'>10min</label>
+                                                                </div>
+                                                            </div>
+                                                                      
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card cardR" id="nocardborder" style={{height:"100%", borderRadius:"0px"}}>
+                                                        <div class="card-body">
+      <div className="row">
+                                                                <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                    <label className="BusTime" style={{textAlign:"center"}}>Bus Number</label>
+                                                                </div>
+                                                                <div className="col-8 borderLeft">
+                                                                    <label className="BusTime">Color Legend:</label>
+                                                                    <br></br>
+                                                                    <Square className="BusTime empty"></Square><label className="BusTime2 empty">Seats Available</label>
+                                                                    <br></br>
+                                                                    <Square className="BusTime standing"></Square><label className='BusTime2 standing'>Standing Available</label>
+                                                                    <br></br>
+                                                                    <Square className="BusTime full"></Square><label className='BusTime2 full'>Standing Limited</label>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+      </div>
+    
+                                                    
+                                                           
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
     )
 }
