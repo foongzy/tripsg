@@ -31,7 +31,7 @@ function Sidebar() {
 
     function clickHome(event){
         event.preventDefault();
-        history.push("/TripSg");
+        history.push("/BusArrival");
     }
     function clickLocation(event){
         event.preventDefault();

@@ -1,0 +1,32 @@
+.feedbackHead{
+    font-size: 16px;
+}
+
+.feedbackExp{
+    font-size: 14px;
+}
+
+#test{
+    justify-content: right !important;
+}
+
+.inputBox{
+    box-shadow: none !important;
+}
+
+.inputBox:focus{
+    border-color: #5680e9 !important;
+}
+
+.inputBoxErr{
+    box-shadow: none !important;
+    border-color: red !important;
+}
+
+.inputBoxErr:focus{
+    border-color: red !important;
+}
+
+#feedbackBtn:focus{
+    box-shadow: none !important;
+}
