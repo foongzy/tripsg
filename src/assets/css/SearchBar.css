@@ -14,6 +14,16 @@
     border-right: none !important;
 }
 
+#searchbarBus{
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+#searchBtn{
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
 textarea:focus,
 input[type="text"]:focus,
 .uneditable-input:focus {   

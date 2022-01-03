@@ -73,6 +73,11 @@ li.nav-text{
     color: white;
 }
 
+.nav-text a.active{
+    background-color: #5ab9ea;
+    color: white;
+}
+
 .nav-menu-items{
     width:100%;
 }
@@ -110,5 +115,9 @@ ul.nav-menu-items{
 }
 
 .topline{
+    border-top: 1px solid #1663be;
+}
+
+.rightline{
     border-top: 1px solid #1663be;
 }

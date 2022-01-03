@@ -5,29 +5,48 @@ import React, {createContext, useState} from "react"
 export const GlobalContext=createContext();
 
 function GlobalContextProvider(props){
-    // const[globalLoginData,setGlobalLoginData]=useState([{
-    //     "user":'',
-    //     "username": "",
-    //     "displayPicLink":"",
-    //     "isLogin":false,
-    // }]);
     const[globalBusstopData,setGlobalBusstopData]=useState("")
     const[globalSearchWord,setGlobalSearchWord]=useState("")
     const[globalFilteredData,setGlobalFilteredData]=useState([])
     const[globalArrivalData,setGlobalArrivalData]=useState([])
     const[globalbusstopcode,setGlobalbusstopcode]=useState('')
+    const[globalbusstopcodeNearby,setGlobalbusstopcodeNearby]=useState('')
+    const[globalbusstopcodeBM,setGlobalbusstopcodeBM]=useState('')
+    const[globalnearbyBusStops,setGlobalNearbyBusStops]=useState([])
+    const[globalTabToggle,setGlobalTabToggle]=useState(1)
+    const[globalRefreshToggle,setGlobalRefreshToggle]=useState([{
+        "refresh":false,
+        "busNo": "",
+    }]);
+    const[globalBookmarked,setGlobalBookmarked]=useState([])
+    const[globalisBookmarked,setGlobalisBookmarked]=useState(false)
+    const[globalFullBusstopList,setGlobalFullBusstopList]=useState([])
+    const[globalPgToggle,setGlobalPgToggle]=useState([{
+        "isBusArrival":true,
+        "isLocationPlanner":false,
+        "isFeedback":false,
+        "isAbout":false,
+    }])
+    const[globalTitle,setGlobalTitle]=useState("Bus Arrivals")
 
     return(
-        //Provider is like declare what global state to expose or chare to other components
-        //for global state you want to share, you have to put global state into the value attribute of the provider
         <GlobalContext.Provider
         value={{
             globalBusstopDataKey:[globalBusstopData,setGlobalBusstopData],
             globalSearchWordKey:[globalSearchWord,setGlobalSearchWord],
             globalFilteredDataKey:[globalFilteredData,setGlobalFilteredData],
             globalArrivalDataKey:[globalArrivalData,setGlobalArrivalData],
-            globalbusstopcodeKey:[globalbusstopcode,setGlobalbusstopcode]
-            
+            globalbusstopcodeKey:[globalbusstopcode,setGlobalbusstopcode],
+            globalbusstopcodeNearbyKey:[globalbusstopcodeNearby,setGlobalbusstopcodeNearby],
+            globalbusstopcodeBMKey:[globalbusstopcodeBM,setGlobalbusstopcodeBM],
+            globalNearbyBusStopsKey:[globalnearbyBusStops,setGlobalNearbyBusStops],
+            globalTabToggleKey:[globalTabToggle,setGlobalTabToggle],
+            globalRefreshToggleKey:[globalRefreshToggle,setGlobalRefreshToggle],
+            globalBookmarkKey:[globalBookmarked,setGlobalBookmarked],
+            globalisBookmarkKey:[globalisBookmarked,setGlobalisBookmarked],
+            globalFullBusstopListKey:[globalFullBusstopList,setGlobalFullBusstopList],
+            globalPgToggleKey:[globalPgToggle,setGlobalPgToggle],
+            globalTitleKey:[globalTitle,setGlobalTitle]
         }}
         >
             {props.children}

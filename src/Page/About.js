@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import { GlobalContext } from "../Resources/GlobalContext.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../Components/Sidebar'
@@ -18,6 +19,23 @@ const useStyles = makeStyles(styles);
 function About(props) {
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     const {height, width}=useWindowDimensions();
+
+    const{globalPgToggleKey}=useContext(GlobalContext)
+    const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
+    const{globalTitleKey}=useContext(GlobalContext)
+    const[globalTitle,setGlobalTitle]=globalTitleKey
+
+    //Initialise sidebar display
+    const initialiseSidebarDisplay=()=>{
+        setGlobalPgToggle([{
+            "isBusArrival":false,
+            "isLocationPlanner":false,
+            "isFeedback":false,
+            "isAbout":true,
+        }])
+        setGlobalTitle("About")
+    }
+    useEffect(initialiseSidebarDisplay,[]);
     
     setTimeout(function () {
         setCardAnimation("");

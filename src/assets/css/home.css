@@ -1,5 +1,5 @@
 html{
-    background-color: #fff6ee;
+    background-color: #fafafb;
 }
 @media (min-width:551px) {
     .leftmargin{
@@ -9,12 +9,12 @@ html{
 
 .bgCom{
     padding: 5px 10px;
-    background-color: #fff6ee;
+    background-color: #fafafb;
 }
 
 .bg{
     padding: 15px 10px;
-    background-color: #fff6ee;
+    background-color: #fafafb;
 }
 
 .shadowProperty{
@@ -91,17 +91,23 @@ div.card-body{
 
 .line{
     border-bottom: 1px solid grey;
-    padding-bottom: 2px;
 }
 
 #refreshIcon{
     color: black;
+    margin-bottom: 4px;
+}
+
+#bookmarkIcon{
+    color: black;
+    margin-bottom: 4px;
+    margin-right: 2px;
 }
 
 #helpIcon{
     color: black;
     font-size: 20px;
-    margin-right: 4px;
+    margin-bottom: 4px;
 }
 
 .cardR{
@@ -124,4 +130,20 @@ div.card-body{
 
 #nocardborder{
     border-color: white;
+}
+
+.tabbg{
+    background-color: white;
+    border-bottom: 1px solid lightgrey;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    /* padding-right: 62px;
+    padding-left: 30px; */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-bottom: 30px;
+}
+
+.colorModal{
+    color: black;
 }

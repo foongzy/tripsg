@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import { GlobalContext } from "../Resources/GlobalContext.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../Components/Sidebar'
@@ -25,6 +26,11 @@ function Feedback(props) {
     const [feedbackInputError, setFeedbackInputError] = React.useState(false);
     const [emailInputError, setEmailInputError] = React.useState(false);
 
+    const{globalPgToggleKey}=useContext(GlobalContext)
+    const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
+    const{globalTitleKey}=useContext(GlobalContext)
+    const[globalTitle,setGlobalTitle]=globalTitleKey
+
     const {height, width}=useWindowDimensions();
     
     setTimeout(function () {
@@ -44,6 +50,18 @@ function Feedback(props) {
     function updateFeedbackInput(event){
         setFeedbackInput(event.target.value);
     }
+
+    //Initialise sidebar display
+    const initialiseSidebarDisplay=()=>{
+        setGlobalPgToggle([{
+            "isBusArrival":false,
+            "isLocationPlanner":false,
+            "isFeedback":true,
+            "isAbout":false,
+        }])
+        setGlobalTitle("Feedback")
+    }
+    useEffect(initialiseSidebarDisplay,[]);
 
     function submitform(event){
         if(nameInput!=""){
