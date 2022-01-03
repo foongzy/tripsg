@@ -15,6 +15,7 @@ import axios from 'axios'
 import SearchBar from "../Components/SearchBar"
 import Rawdata from '../Resources/test.json'
 import Bookmark from './BookmarkFunc'
+import WheelChair from '@material-ui/icons/Accessible';
 
 function Searchtab(props) {
     const location=geolocation();
@@ -143,7 +144,7 @@ function Searchtab(props) {
                                     <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
                                     Bus Stop Code: {globalbusstopcode}
                                     <a href="#" ><Bookmark></Bookmark></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><HelpIcon id="helpIcon"></HelpIcon></a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><HelpIcon id="helpIcon"></HelpIcon></a>
                                     <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
                                 </label>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,9 +174,9 @@ function Searchtab(props) {
                                                     <div className="col-8">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
                                                     </div>
                                                 </div>        
                                             </div>
@@ -197,7 +198,7 @@ function Searchtab(props) {
             }
 
             {/* Modal */}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">

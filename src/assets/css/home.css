@@ -40,6 +40,18 @@ html{
     padding-left: 10px;
 }
 
+.WheelChair{
+    color: black;
+    font-size: 18px !important;
+    margin-left: 2px;
+}
+
+.WheelChair2{
+    color: black;
+    font-size: 14px !important;
+    margin-left: 2px;
+}
+
 .rightDivider{
     border-right: 1px solid grey;
     padding-right: 5px;
