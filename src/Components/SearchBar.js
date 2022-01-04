@@ -7,9 +7,11 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
+import useWindowDimensions from "../Components/useWindowDimensions"
 
 function SearchBar({placeholder, data}) {
     const location=geolocation();
+    const {height, width}=useWindowDimensions();
 
     const{globalFilteredDataKey}=useContext(GlobalContext)
     const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey
@@ -23,6 +25,8 @@ function SearchBar({placeholder, data}) {
     const[globalnearbyBusStops,setGlobalNearbyBusStops]=globalNearbyBusStopsKey
     const{globalRefreshToggleKey}=useContext(GlobalContext)
     const[globalRefreshToggle,setGlobalRefreshToggle]=globalRefreshToggleKey
+    const{globalFullBusstopListKey}=useContext(GlobalContext)
+    const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
@@ -46,9 +50,8 @@ function SearchBar({placeholder, data}) {
         }
     }
 
-    function triggerSearch(event){
-        event.preventDefault();
-        
+    function triggerSearch(busCode){
+        getBusArrival(busCode, "normal")
     }
 
     const clearInput=()=>{
@@ -107,7 +110,10 @@ function SearchBar({placeholder, data}) {
                     busExtracted[0].NextBus2.EstimatedArrival=time[1]
                     busExtracted[0].NextBus3.EstimatedArrival=time[2]
                     setGlobalArrivalData(busExtracted)
-                    setGlobalbusstopcode(globalnearbyBusStops[0].BusStopCode)
+                    setGlobalbusstopcode([{
+                        "busstopcode": globalnearbyBusStops[0].BusStopCode,
+                        "description": globalnearbyBusStops[0].Description,
+                    }])
                     const refreshVal=[{
                         "refresh":true,
                         "busNo": globalSearchWord.toLowerCase(),
@@ -137,7 +143,16 @@ function SearchBar({placeholder, data}) {
                     obtainedData[i].NextBus3.EstimatedArrival=time[2]
                 }
                 setGlobalArrivalData(obtainedData)
-                setGlobalbusstopcode(res.data.BusStopCode)
+                
+                //Find bus stop details using bus stop code
+                const busExtracted=globalFullBusstopList.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+                });
+                
+                setGlobalbusstopcode([{
+                    "busstopcode": res.data.BusStopCode,
+                    "description": busExtracted[0].Description,
+                }])
                 const refreshVal=[{
                     "refresh":false,
                     "busNo": "",
@@ -150,7 +165,7 @@ function SearchBar({placeholder, data}) {
             setGlobalFilteredData([])
         }).catch(error=>{
             if (action=="normal"){
-                toastError('Bus stop does not exist. Please try again')
+                toastError('Bus stop does not exist')
             }else{
                 toastError('Server error')
             }
@@ -173,9 +188,21 @@ function SearchBar({placeholder, data}) {
                 }else{
                     toastError('Please allow website to use your location to enable quicksearch')
                 }
-            }else{
-                //normal search
+            }else if(globalSearchWord.length==5 && globalSearchWord.match(/^[0-9]+$/) != null){
+                //normal search: search by bus code
                 getBusArrival(globalSearchWord, "normal")
+            }else{
+                //normal search: search by bus name
+                const ifNameExist = globalFullBusstopList.some( search=> search.Description.toLowerCase() == globalSearchWord.toLowerCase());
+                if(ifNameExist==true){
+                    //Find bus stop details using bus stop description
+                    const busExtracted=globalFullBusstopList.filter((value)=>{
+                        return (value.Description.toLowerCase()==globalSearchWord.toLowerCase());
+                    });
+                    getBusArrival(busExtracted[0].BusStopCode, "normal")
+                }else{
+                    toastError('Bus stop name does not exist')
+                }
             }
         }else{
             if(location.loaded==true && location.error==''){
@@ -214,7 +241,7 @@ function SearchBar({placeholder, data}) {
                 globalFilteredData.length!=0?(
                     <div className='dataResult'>
                         {globalFilteredData.slice(0, 10).map((value, key)=>{
-                            return <a className='dataItem' onClick={triggerSearch}>
+                            return <a href="#" className='dataItem' onClick={()=>triggerSearch(value.BusStopCode)}>
                                 <p>{value.Description + " ("+value.BusStopCode+")"}</p>
                                 </a>
                         })}

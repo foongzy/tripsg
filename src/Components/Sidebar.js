@@ -19,7 +19,7 @@ function Sidebar() {
     const{globalTitleKey}=useContext(GlobalContext)
     const[globalTitle,setGlobalTitle]=globalTitleKey
 
-    const maxwidth=550
+    const maxwidth=900
 
     const history = useHistory()
     const {height, width}=useWindowDimensions();

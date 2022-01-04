@@ -1,7 +1,7 @@
 html{
     background-color: #fafafb;
 }
-@media (min-width:551px) {
+@media (min-width:901px) {
     .leftmargin{
         margin-left: 240px;
     }
@@ -149,8 +149,6 @@ div.card-body{
     border-bottom: 1px solid lightgrey;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
-    /* padding-right: 62px;
-    padding-left: 30px; */
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding-bottom: 30px;
@@ -158,4 +156,25 @@ div.card-body{
 
 .colorModal{
     color: black;
+}
+
+.infoNote{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ulpadmag{
+    padding-left: 10px;
+    margin: 0;
+}
+
+.botLine{
+    border-bottom: 1px solid lightgrey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar-light .navbar-brand {
+    white-space: normal !important;
 }

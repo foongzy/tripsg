@@ -9,9 +9,18 @@ function GlobalContextProvider(props){
     const[globalSearchWord,setGlobalSearchWord]=useState("")
     const[globalFilteredData,setGlobalFilteredData]=useState([])
     const[globalArrivalData,setGlobalArrivalData]=useState([])
-    const[globalbusstopcode,setGlobalbusstopcode]=useState('')
-    const[globalbusstopcodeNearby,setGlobalbusstopcodeNearby]=useState('')
-    const[globalbusstopcodeBM,setGlobalbusstopcodeBM]=useState('')
+    const[globalbusstopcode,setGlobalbusstopcode]=useState([{
+        "busstopcode":"",
+        "description": "",
+    }])
+    const[globalbusstopcodeNearby,setGlobalbusstopcodeNearby]=useState([{
+        "busstopcode":"",
+        "description": "",
+    }])
+    const[globalbusstopcodeBM,setGlobalbusstopcodeBM]=useState([{
+        "busstopcode":"",
+        "description": "",
+    }])
     const[globalnearbyBusStops,setGlobalNearbyBusStops]=useState([])
     const[globalTabToggle,setGlobalTabToggle]=useState(1)
     const[globalRefreshToggle,setGlobalRefreshToggle]=useState([{

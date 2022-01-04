@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BusIconBlack from '../assets/img/busIconBlack.png'
 import WheelChair from '@material-ui/icons/Accessible';
+import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 
 function Bookmarktab() {
 
@@ -23,6 +24,8 @@ function Bookmarktab() {
     const[globalbusstopcodeBM,setGlobalbusstopcodeBM]=globalbusstopcodeBMKey
     const{globalBookmarkKey}=useContext(GlobalContext)
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
+    const{globalFullBusstopListKey}=useContext(GlobalContext)
+    const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
 
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
@@ -55,7 +58,16 @@ function Bookmarktab() {
                 obtainedData[i].NextBus3.EstimatedArrival=time[2]
             }
             setGlobalArrivalData(obtainedData)
-            setGlobalbusstopcodeBM(res.data.BusStopCode)
+
+            //Find bus stop details using bus stop code
+            const busExtracted=globalFullBusstopList.filter((value)=>{
+                return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+            });
+
+            setGlobalbusstopcodeBM([{
+                "busstopcode":res.data.BusStopCode,
+                "description": busExtracted[0].Description,
+            }])
         }).catch(error=>{
             toast.error('Server error. Please try again', {
                 position: "top-right",
@@ -71,7 +83,7 @@ function Bookmarktab() {
 
     function refreshClick(event){
         event.preventDefault();
-        const URLbusArrival=URL+globalbusstopcodeBM+"/"
+        const URLbusArrival=URL+globalbusstopcodeBM[0].busstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
             //Sort bus numbers
@@ -101,7 +113,16 @@ function Bookmarktab() {
                 obtainedData[i].NextBus3.EstimatedArrival=time[2]
             }
             setGlobalArrivalData(obtainedData)
-            setGlobalbusstopcodeBM(res.data.BusStopCode)
+
+            //Find bus stop details using bus stop code
+            const busExtracted=globalFullBusstopList.filter((value)=>{
+                return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+            });
+            
+            setGlobalbusstopcodeBM([{
+                "busstopcode":res.data.BusStopCode,
+                "description": busExtracted[0].Description,
+            }])
 
             toast.success('Refresh successful', {
                 position: "top-right",
@@ -126,7 +147,10 @@ function Bookmarktab() {
     }
 
     function clickBack(event){
-        setGlobalbusstopcodeBM('')
+        setGlobalbusstopcodeBM([{
+            "busstopcode":"",
+            "description": "",
+        }])
         setGlobalArrivalData([])
     }
 
@@ -142,17 +166,19 @@ function Bookmarktab() {
     return (
         <div>
             {
-                globalbusstopcodeBM!=''?(
+                globalbusstopcodeBM[0].busstopcode!=''?(
                     <div>
                         <div className="container-fluid line">
-                            <nav class="navbar navbar-expand-lg navbar-light">
+                            <nav class="navbar navbar-expand-lg navbar-light" id="texthead">
+                                <div className="container-fluid">
                                 <label class="navbar-brand leftLabel">
                                     <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    Bus Stop Code: {globalbusstopcodeBM}
+                                    Bus Stop Code: {globalbusstopcodeBM[0].description} ({globalbusstopcodeBM[0].busstopcode})
                                     <a href="#" ><Bookmark></Bookmark></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><HelpIcon id="helpIcon"></HelpIcon></a>
+                                    <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
                                     <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
                                 </label>
+                                </div>
                                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                     </ul>
@@ -163,22 +189,36 @@ function Bookmarktab() {
                             </nav>
                         </div>
                         {/* bus arrivals */}
-                        <div className={width<950?"row row-cols-1 row-cols-sm-2 g-0 topMargin":"row row-cols-1 row-cols-sm-3 g-0 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                        <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
                             {globalArrivalData.map((value,key)=>{
                                 return(
                                     <div class="col">
                                         <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
                                             <div class="card-body">
                                                 <div className="row">
-                                                    <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                    <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
                                                         <label className="BusNo">{value.ServiceNo}</label>
                                                     </div>
-                                                    <div className="col-8">
+                                                    <div className="col-7">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
+                                                        {value.NextBus2.EstimatedArrival!="NaNmin"?(
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                        ):(
+                                                            <></>
+                                                        )
+                                                        }
+                                                        </label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
+                                                        {value.NextBus3.EstimatedArrival!="NaNmin"?(
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                        ):(
+                                                            <></>
+                                                        )
+                                                        }
+                                                        </label>
                                                     </div>
                                                 </div>        
                                             </div>
@@ -221,7 +261,7 @@ function Bookmarktab() {
             {
                 globalBookmarked==""?(
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        <img src={BusIconBlack} style={{height:"auto", width:"10rem", paddingTop:"40px"}} />
+                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"40px"}} />
                         <form class="container-fluid" style={{marginTop:"30px"}}>
                             <p>You have no bookmarks added</p>
                         </form>
@@ -230,59 +270,6 @@ function Bookmarktab() {
                     <div></div>
                 )
             }
-
-            {/* Modal */}
-            <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Bus Timings Guide</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col">
-                                <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
-                                    <div class="card-body">
-                                        <div className="row">
-                                            <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
-                                                <label className="BusNo">12</label>
-                                            </div>
-                                            <div className="col-8 borderLeft">
-                                                <label className="BusTime">Next Bus:</label>
-                                                <br></br>
-                                                <label className="BusTime empty">Arriving</label>
-                                                <label className='BusTime2 standing'>5min</label>
-                                                <label className='BusTime2 full'>10min</label>
-                                            </div>
-                                        </div>                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card cardR" id="nocardborder" style={{height:"100%", borderRadius:"0px"}}>
-                                <div class="card-body">
-                                    <div className="row">
-                                        <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
-                                            <label className="BusTime" style={{textAlign:"center"}}>Bus Number</label>
-                                        </div>
-                                        <div className="col-8 borderLeft">
-                                            <label className="BusTime">Color Legend:</label>
-                                            <br></br>
-                                            <Square className="BusTime empty"></Square><label className="BusTime2 empty">Seats Available</label>
-                                            <br></br>
-                                            <Square className="BusTime standing"></Square><label className='BusTime2 standing'>Standing Available</label>
-                                            <br></br>
-                                            <Square className="BusTime full"></Square><label className='BusTime2 full'>Standing Limited</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                              
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
-                         </div>
-                    </div>
-                </div>
-            </div>
         </div>
     )
 }

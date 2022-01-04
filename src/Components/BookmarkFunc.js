@@ -4,9 +4,11 @@ import BookmarkFilled from '@material-ui/icons/Bookmark';
 import Bookmark from '@material-ui/icons/BookmarkBorder';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useWindowDimensions from "../Components/useWindowDimensions"
 
 function BookmarkFunc() {
     const [bookmarkNameInput, setBookmarkNameInput] = useState("")
+    const {height, width}=useWindowDimensions();
 
     const{globalBookmarkKey}=useContext(GlobalContext)
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
@@ -28,9 +30,9 @@ function BookmarkFunc() {
     }
 
     const checkifBookemarked=()=>{
-        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode);
-        const ifExistNearby = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby);
-        const ifExistBM = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM);
+        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+        const ifExistNearby = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
+        const ifExistBM = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
         if (ifExist==true||ifExistNearby==true||ifExistBM==true){
             setGlobalisBookmarked(true)
         }else{
@@ -45,17 +47,21 @@ function BookmarkFunc() {
             //remove from bookmarks
             const output=globalBookmarked.filter((value)=>{
                 if (globalTabToggle==1){
-                    return (value.BusStopCode.toLowerCase()!=globalbusstopcode);
+                    return (value.BusStopCode.toLowerCase()!=globalbusstopcode[0].busstopcode);
                 }else if(globalTabToggle==2){
-                    return (value.BusStopCode.toLowerCase()!=globalbusstopcodeBM);
+                    return (value.BusStopCode.toLowerCase()!=globalbusstopcodeBM[0].busstopcode);
                 }else{
-                    return (value.BusStopCode.toLowerCase()!=globalbusstopcodeNearby);
+                    return (value.BusStopCode.toLowerCase()!=globalbusstopcodeNearby[0].busstopcode);
                 }
             });
             setGlobalBookmarked(output)
             localStorage.removeItem("bookmarkedBusstops")
             localStorage.setItem("bookmarkedBusstops",JSON.stringify(output))
             setGlobalisBookmarked(false)
+            setGlobalbusstopcodeBM([{
+                "busstopcode":"",
+                "description": "",
+            }])
             toast.success('Bookmark removed', {
                 position: "top-right",
                 autoClose: 5000,
@@ -65,9 +71,6 @@ function BookmarkFunc() {
                 draggable: true,
                 progress: undefined,
             });
-   
-            
-        
     }
 
     function bookmarkClickadd(event){
@@ -76,11 +79,11 @@ function BookmarkFunc() {
         let snapshotBookmark=globalBookmarked
         let busStopCodeAdd=""
         if (globalTabToggle==1){
-            busStopCodeAdd=globalbusstopcode
+            busStopCodeAdd=globalbusstopcode[0].busstopcode
         }else if(globalTabToggle==2){
-            busStopCodeAdd=globalbusstopcodeBM
+            busStopCodeAdd=globalbusstopcodeBM[0].busstopcode
         }else if(globalTabToggle==3){
-            busStopCodeAdd=globalbusstopcodeNearby
+            busStopCodeAdd=globalbusstopcodeNearby[0].busstopcode
         }else{
             toast.error('Bookmark cannot be added. Please try again', {
                 position: "top-right",
@@ -135,12 +138,24 @@ function BookmarkFunc() {
                             <h5 class="modal-title" id="exampleModalLabel">Add bookmark</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label className="BusTime2">You can add a bookmark name to easily identify bus stop.</label>
+                        <div className="modal-body">
+                            <div className="mb-3">
+                                {
+                                    width<=550?(
+                                        <>
+                                        <ul className="ulpadmag">
+                                            <li className="BusTime2 infoNote">Add a bookmark name to easily identify</li>
+                                            <li className="BusTime2 infoNote">bus stop.</li>
+                                        </ul>
+                                        </>
+                                    ):(
+                                        <label className="BusTime2">Add a bookmark name to easily identify bus stop.</label>
+                                    )
+                                }
                                 <br></br>
                                 <label className="BusTime2">Bookmark name:</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Input bookmark name" value={bookmarkNameInput} onChange={updateBookmarkNameInput} />
+                                
                             </div>
                         </div>                                              
                         <div class="modal-footer">

@@ -30,3 +30,42 @@ input[type="text"]:focus,
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0) inset, 0 0 0px rgba(255, 255, 255, 0);
   outline: none;
 }
+
+
+.dataResult{
+    margin-left:20px;
+    /* width: auto */
+    margin-right: 74px;
+    height: 200px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+    overflow: hidden;
+    overflow-y: auto;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.dataResult .dataItem{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.dataResult::-webkit-scrollbar{
+    display: none;
+}
+
+.dataItem p{
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.dataItem{
+    text-decoration: none;
+}
+
+.dataItem:hover{
+    background-color: #5ab9ea;
+}

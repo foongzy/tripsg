@@ -1,12 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import geolocation from "../hooks/useGeoLocation.js";
-import HelpIcon from '@material-ui/icons/HelpOutline'
-import Square from '@material-ui/icons/CropSquare'
 import Refresh from '@material-ui/icons/Refresh';
 import ArrowBack from '@material-ui/icons/ArrowBackIos';
-// import BookmarkFilled from '@material-ui/icons/Bookmark';
-// import Bookmark from '@material-ui/icons/BookmarkBorder';
+import HelpIcon from '@material-ui/icons/HelpOutline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useWindowDimensions from "../Components/useWindowDimensions"
@@ -16,33 +12,29 @@ import SearchBar from "../Components/SearchBar"
 import Rawdata from '../Resources/test.json'
 import Bookmark from './BookmarkFunc'
 import WheelChair from '@material-ui/icons/Accessible';
+import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 
-function Searchtab(props) {
-    const location=geolocation();
+function Searchtab() {
 
     const{globalSearchWordKey}=useContext(GlobalContext)
     const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
     const{globalFilteredDataKey}=useContext(GlobalContext)
     const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey
-    const{globalBusstopDataKey}=useContext(GlobalContext)
-    const[globalBusstopData,setGlobalBusstopData]=globalBusstopDataKey
     const{globalArrivalDataKey}=useContext(GlobalContext)
     const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
     const{globalbusstopcodeKey}=useContext(GlobalContext)
     const[globalbusstopcode,setGlobalbusstopcode]=globalbusstopcodeKey
-    const{globalNearbyBusStopsKey}=useContext(GlobalContext)
-    const[globalnearbyBusStops,setGlobalNearbyBusStops]=globalNearbyBusStopsKey
     const{globalRefreshToggleKey}=useContext(GlobalContext)
     const[globalRefreshToggle,setGlobalRefreshToggle]=globalRefreshToggleKey
-    const{globalBookmarkKey}=useContext(GlobalContext)
-    const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
+    const{globalFullBusstopListKey}=useContext(GlobalContext)
+    const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
     function refreshClick(event){
         event.preventDefault();
-        const URLbusArrival=URL+globalbusstopcode+"/"
+        const URLbusArrival=URL+globalbusstopcode[0].busstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
 
@@ -98,7 +90,18 @@ function Searchtab(props) {
                     obtainedData[i].NextBus3.EstimatedArrival=time[2]
                 }
                 setGlobalArrivalData(obtainedData)
-                setGlobalbusstopcode(res.data.BusStopCode)
+
+                //Find bus stop details using bus stop code
+                const busExtracted=globalFullBusstopList.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+                });
+
+                const busStopDets=[{
+                    "busstopcode":res.data.BusStopCode,
+                    "description": busExtracted[0].Description,
+                }]
+                setGlobalbusstopcode(busStopDets)
+
             }
                
             //reset
@@ -128,23 +131,26 @@ function Searchtab(props) {
     }
 
     function clickBack(event){
-        setGlobalbusstopcode('')
+        setGlobalbusstopcode([{
+            "busstopcode":"",
+            "description": "",
+        }])
         setGlobalArrivalData([])
     }
 
     return (
         <div>
             {
-                globalbusstopcode!=''?(
+                globalbusstopcode[0].busstopcode!=''?(
                     //header
                     <div>
                         <div className="container-fluid line">
                             <nav class="navbar navbar-expand-lg navbar-light">
                                 <label class="navbar-brand leftLabel">
                                     <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    Bus Stop Code: {globalbusstopcode}
+                                    Bus Stop: {globalbusstopcode[0].description} ({globalbusstopcode[0].busstopcode})
                                     <a href="#" ><Bookmark></Bookmark></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><HelpIcon id="helpIcon"></HelpIcon></a>
+                                    <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
                                     <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
                                 </label>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -161,22 +167,38 @@ function Searchtab(props) {
                         </div>
 
                         {/* Show bus arrivals */}
-                        <div className={width<950?"row row-cols-1 row-cols-sm-2 g-0 topMargin":"row row-cols-1 row-cols-sm-3 g-0 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                        <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
                             {globalArrivalData.map((value,key)=>{
                                 return(
                                     <div class="col">
                                         <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
                                             <div class="card-body">
                                                 <div className="row">
-                                                    <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                    <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
                                                         <label className="BusNo">{value.ServiceNo}</label>
                                                     </div>
-                                                    <div className="col-8">
+                                                    <div className="col-7">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
+                                                        {
+                                                            value.NextBus2.EstimatedArrival!="NaNmin"?(
+                                                                value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            ):(
+                                                                <></>
+                                                            )
+                                                        }
+                                                        </label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
+                                                        {
+                                                            value.NextBus3.EstimatedArrival!="NaNmin"?(
+                                                                value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            ):(
+                                                                <></>
+                                                            )
+                                                        }
+                                                        </label>
                                                     </div>
                                                 </div>        
                                             </div>
@@ -188,64 +210,49 @@ function Searchtab(props) {
                     </div>
                 ):(
                     // if havent search
+                    <>
+                    <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon style={{marginTop:"10px", color:"black"}}></HelpIcon></a>
+                    </div>
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        <img src={BusIconBlack} style={{height:"auto", width:"10rem", paddingTop:"40px"}} />
+                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
                         <form class="container-fluid" style={{marginTop:"30px"}}>
                             <SearchBar placeholder="Search bus stop number or name..." data={Rawdata}/>
                         </form>
                     </div>
+                    </>
                 )
             }
-
-            {/* Modal */}
-            <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            {/* modal */}
+            <div class="modal fade" id="searchHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Bus Timings Guide</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search methods</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <b>Quick Search</b>
+                        <ul>
+                            <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
+                            <li>Type in bus number and click search. Applicaiton will show bus arrival for queried bus at nearest bus stop.</li>
+                        </ul>
+                        <div style={{fontSize:"14px", marginLeft:"15px"}}>
+                        Note:
+                        <ul>
+                            <li>Location sharing must be enabled.</li>
+                            <li>May not work for temporary bus stops due to limitations from LTA.</li>
+                        </ul>
                         </div>
-                        <div class="modal-body">
-                            <div class="col">
-                                <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
-                                    <div class="card-body">
-                                        <div className="row">
-                                            <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
-                                                <label className="BusNo">12</label>
-                                            </div>
-                                            <div className="col-8 borderLeft">
-                                                <label className="BusTime">Next Bus:</label>
-                                                <br></br>
-                                                <label className="BusTime empty">Arriving</label>
-                                                <label className='BusTime2 standing'>5min</label>
-                                                <label className='BusTime2 full'>10min</label>
-                                            </div>
-                                        </div>                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card cardR" id="nocardborder" style={{height:"100%", borderRadius:"0px"}}>
-                                <div class="card-body">
-                                    <div className="row">
-                                        <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
-                                            <label className="BusTime" style={{textAlign:"center"}}>Bus Number</label>
-                                        </div>
-                                        <div className="col-8 borderLeft">
-                                            <label className="BusTime">Color Legend:</label>
-                                            <br></br>
-                                            <Square className="BusTime empty"></Square><label className="BusTime2 empty">Seats Available</label>
-                                            <br></br>
-                                            <Square className="BusTime standing"></Square><label className='BusTime2 standing'>Standing Available</label>
-                                            <br></br>
-                                            <Square className="BusTime full"></Square><label className='BusTime2 full'>Standing Limited</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                              
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
-                         </div>
+                        <div className="botLine"></div>
+                        <b>Normal Search</b>
+                        <ul>
+                            <li>Search by typing in bus stop name or bus stop code.</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
+                    </div>
                     </div>
                 </div>
             </div>

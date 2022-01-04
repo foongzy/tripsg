@@ -80,17 +80,26 @@ function Home(props){
 
     function nearbyClick(event){
         updateGlobalTabToggle(3)
-        setGlobalbusstopcodeNearby("")
+        setGlobalbusstopcodeNearby([{
+            "busstopcode":"",
+            "description": "",
+        }])
     }
 
     function bookmarkClick(event){
         updateGlobalTabToggle(2)
-        setGlobalbusstopcodeBM("")
+        setGlobalbusstopcodeBM([{
+            "busstopcode":"",
+            "description": "",
+        }])
     }
 
     function searchClick(event){
         updateGlobalTabToggle(1)
-        setGlobalbusstopcode("")
+        setGlobalbusstopcode([{
+            "busstopcode":"",
+            "description": "",
+        }])
     }
 
     //Initialise Bookmark
@@ -152,7 +161,7 @@ function Home(props){
             <Navbar></Navbar>
             
             <div className="leftmargin background">
-                <div className={width<551?"bg":"bgCom"}>
+                <div className={width<901?"bg":"bgCom"}>
 
                     <div class="bordertop"> 
                         <ul class="nav nav-tabs">
