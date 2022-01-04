@@ -261,7 +261,7 @@ function Nearbytab() {
                                         ):(
                                             //User disabled location
                                             <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                                                <img src={BusIconBlack} style={{height:"auto", width:"10rem", paddingTop:"40px"}} />
+                                                <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
                                                 <form class="container-fluid" style={{marginTop:"30px"}}>
                                                     <p>Please allow website to use your location to enable nearby service</p>
                                                 </form>
@@ -272,7 +272,7 @@ function Nearbytab() {
                             ):(
                                 //Location still not loaded
                                 <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                                    <img src={BusIconBlack} style={{height:"auto", width:"10rem", paddingTop:"40px"}} />
+                                    <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
                                     <form class="container-fluid" style={{marginTop:"30px"}}>
                                         <p>Loading your location...</p>
                                     </form>

@@ -215,7 +215,7 @@ function SearchBar({placeholder, data}) {
             }else if(location.loaded==false){
                 toastError('Loading location. Please try again')
             }else if(location.loaded==true && location.error!=''){
-                toastError('Field cannot be empty')
+                toastError('Search field cannot be empty')
             }else{
                 toastError('Server error')
             }
