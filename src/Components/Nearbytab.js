@@ -259,7 +259,7 @@ function Nearbytab() {
                                                                                 <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>
                                                                                 <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                                             </div>
-                                                                            <div class="card-body">
+                                                                            <div class="card-body borderBodycard">
                                                                                 <div className="row row-cols-1 row-cols-2 g-1">
                                                                                     <label className="card-text">{value.RoadName}</label>
                                                                                     <label className="card-text" style={{textAlign:"right"}}>{value.distFromUser}m</label>

@@ -182,3 +182,16 @@ div.card-body{
 .cardHover:hover{
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2) !important;
 }
+
+.cardHover{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.borderBodycard{
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
