@@ -18,6 +18,8 @@ function Sidebar() {
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
     const{globalTitleKey}=useContext(GlobalContext)
     const[globalTitle,setGlobalTitle]=globalTitleKey
+    const{globalTabToggleKey}=useContext(GlobalContext)
+    const[globalTabToggle,setGlobalTabToggle]=globalTabToggleKey
 
     const maxwidth=900
 
@@ -37,18 +39,22 @@ function Sidebar() {
 
     function clickHome(event){
         event.preventDefault();
+        setGlobalTabToggle(1)
         history.push("/BusArrival");
     }
     function clickLocation(event){
         event.preventDefault();
+        setGlobalTabToggle(1)
         history.push("/Location");
     }
     function clickFeedback(event){
         event.preventDefault();
+        setGlobalTabToggle(1)
         history.push("/Feedback");
     }
     function clickAbout(event){
         event.preventDefault();
+        setGlobalTabToggle(1)
         history.push("/About");
     }
 

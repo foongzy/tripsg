@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
 import '../assets/css/home.css'
+import LoadingScreen from "../Components/loadingScreen";
 
 import axios from 'axios'
-import Rawdata from '../Resources/test.json'
 import Navbar from '../Components/Sidebar'
 import Refresh from '@material-ui/icons/Refresh';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,9 +20,8 @@ import Nearbytab from "../Components/Nearbytab"
 
 function Home(props){
     const location=geolocation();
+    const [isLoading, setLoading] = useState(false)
 
-    const{globalBusstopDataKey}=useContext(GlobalContext)
-    const[globalBusstopData,setGlobalBusstopData]=globalBusstopDataKey
     const{globalSearchWordKey}=useContext(GlobalContext)
     const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
     const{globalFilteredDataKey}=useContext(GlobalContext)
@@ -50,10 +49,6 @@ function Home(props){
 
     const {height, width}=useWindowDimensions();
 
-    const updateGlobalBusstopData=(busData)=>{
-        setGlobalBusstopData(busData)
-    }
-
     const updateGlobalNearbyBusStops=(data)=>{
         setGlobalNearbyBusStops(data)
     }
@@ -66,13 +61,43 @@ function Home(props){
         setGlobalBookmarked(val)
     }
 
+    const findNearestBusStops=()=>{
+        const radius=300 //in metres
+        let nearbyBusStops=[]
+        for (let i = 0; i < globalFullBusstopList.length; i++) {
+            const coordinatesTest={
+                latitude:globalFullBusstopList[i].Latitude,
+                longitude:globalFullBusstopList[i].Longitude,
+            };
+            if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
+                nearbyBusStops.push(globalFullBusstopList[i])
+            }
+        }
+        for (let j = 0; j < nearbyBusStops.length; j++) {
+            const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
+            nearbyBusStops[j].distFromUser = dist;
+        }
+        //sort by dist
+        nearbyBusStops.sort(function(a, b) {
+            return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
+        });
+        updateGlobalNearbyBusStops(nearbyBusStops)
+        console.log(nearbyBusStops)
+        console.log(location)
+    }
+    useEffect(findNearestBusStops,[location])
+
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
     const loadBusstopsData=()=>{
-        if(globalBusstopData==""){
+        if(globalFullBusstopList==""){
+            setLoading(true)
             axios.get(URL).then(res=>{
-                updateGlobalBusstopData(res.data.data)
+                setGlobalFullBusstopList(res.data.data)
+                findNearestBusStops()
+                setLoading(false)
             }).catch(error=>{
                 console.log("error")
+                setLoading(false)
             })
         }
     }
@@ -108,16 +133,9 @@ function Home(props){
         const retrieveBookmark=JSON.parse(retrieveBookmarkTmp);
         if(retrieveBookmark!=null){
             updateGlobalBookmark(retrieveBookmark)
-            console.log(retrieveBookmark)
         }
     }
     useEffect(initialiseBookmark,[]);
-
-    //Initialise full bus stop list
-    const initialiseFullBusStopList=()=>{
-        setGlobalFullBusstopList(Rawdata)
-    }
-    useEffect(initialiseFullBusStopList,[]);
 
     //Initialise sidebar display
     const initialiseSidebarDisplay=()=>{
@@ -131,32 +149,12 @@ function Home(props){
     }
     useEffect(initialiseSidebarDisplay,[]);
 
-    const findNearestBusStops=()=>{
-        const radius=300 //in metres
-        let nearbyBusStops=[]
-        for (let i = 0; i < Rawdata.length; i++) {
-            const coordinatesTest={
-                latitude:Rawdata[i].Latitude,
-                longitude:Rawdata[i].Longitude,
-            };
-            if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
-                nearbyBusStops.push(Rawdata[i])
-            }
-        }
-        for (let j = 0; j < nearbyBusStops.length; j++) {
-            const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
-            nearbyBusStops[j].distFromUser = dist;
-        }
-        //sort by dist
-        nearbyBusStops.sort(function(a, b) {
-            return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
-        });
-        updateGlobalNearbyBusStops(nearbyBusStops)
-    }
-    useEffect(findNearestBusStops,[location])
-
     return(
         <div>
+            {
+                isLoading?
+                <LoadingScreen />:null
+            }
             <ToastContainer />
             <Navbar></Navbar>
             

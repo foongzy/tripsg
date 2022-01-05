@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
 import BusIconBlack from '../assets/img/busIconBlack.png'
 import WheelChair from '@material-ui/icons/Accessible';
+import Location from '@material-ui/icons/LocationOn';
+import HelpIcon from '@material-ui/icons/HelpOutline'
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 
 function Nearbytab() {
@@ -162,7 +164,7 @@ function Nearbytab() {
     //     }
     // }
     // useEffect(toggleDisplay,[location])
-
+    
     return (
         <div>
             {
@@ -234,30 +236,45 @@ function Nearbytab() {
                                 <div>
                                     {
                                         location.error==''?(
-                                            // Show nearby busstops
-                                            <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
-                                                {globalnearbyBusStops.map((value,key)=>{
-                                                    return(
-                                                        <div class="col">
-                                                            <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                                                <div class="card text-dark bg-light mb-3" style={{height:"100%"}}>
-                                                                    <div class="card-header">Bus stop name: {value.Description} <br></br>({value.BusStopCode})
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                        <div className="row">
-                                                                            <div className="container-fluid">
-                                                                                <label className="card-text">{value.RoadName}</label>
-                                                                                <br></br>
-                                                                                <label className="card-text">{value.distFromUser}</label>
+                                            <>
+                                            {
+                                                globalnearbyBusStops==''?(
+                                                    //No bus stops nearby
+                                                    <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
+                                                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                        <form class="container-fluid" style={{marginTop:"30px"}}>
+                                                            <p>There are no bus stops nearby</p>
+                                                        </form>
+                                                    </div>
+                                                ):(
+                                                    // Show nearby busstops
+                                                    <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
+                                                        {globalnearbyBusStops.map((value,key)=>{
+                                                            return(
+                                                                <div class="col">
+                                                                    <a href="javascript:void(0)" className="cardHover" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
+                                                                        <div class="card text-dark bg-light mb-0" style={{height:"100%"}}>
+                                                                            <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
+                                                                                {value.Description} 
+                                                                                <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>
+                                                                                <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                                             </div>
-                                                                        </div>        
-                                                                    </div>
+                                                                            <div class="card-body">
+                                                                                <div className="row row-cols-1 row-cols-2 g-1">
+                                                                                    <label className="card-text">{value.RoadName}</label>
+                                                                                    <label className="card-text" style={{textAlign:"right"}}>{value.distFromUser}m</label>
+                                                                                </div>        
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
                                                                 </div>
-                                                            </a>
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                )
+                                            }
+                                                
+                                            </>
                                         ):(
                                             //User disabled location
                                             <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>

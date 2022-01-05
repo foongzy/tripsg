@@ -9,7 +9,6 @@ import useWindowDimensions from "../Components/useWindowDimensions"
 import BusIconBlack from '../assets/img/busIconBlack.png'
 import axios from 'axios'
 import SearchBar from "../Components/SearchBar"
-import Rawdata from '../Resources/test.json'
 import Bookmark from './BookmarkFunc'
 import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
@@ -160,7 +159,7 @@ function Searchtab() {
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                     </ul>
                                     <form class={width>991?"d-flex":"container-fluid"} style={{padding:"0px"}}>
-                                        <SearchBar placeholder="Search bus stop number or name..." data={Rawdata} />
+                                        <SearchBar placeholder="Search bus stop number or name..." data={globalFullBusstopList} />
                                     </form>
                                 </div>
                             </nav>
@@ -217,7 +216,7 @@ function Searchtab() {
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
                         <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
                         <form class="container-fluid" style={{marginTop:"30px"}}>
-                            <SearchBar placeholder="Search bus stop number or name..." data={Rawdata}/>
+                            <SearchBar placeholder="Search bus stop number or name..." data={globalFullBusstopList}/>
                         </form>
                     </div>
                     </>
@@ -233,7 +232,7 @@ function Searchtab() {
                     </div>
                     <div class="modal-body">
                         <b>Quick Search</b>
-                        <ul>
+                        <ul style={{marginBottom:"5px"}}>
                             <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
                             <li>Type in bus number and click search. Applicaiton will show bus arrival for queried bus at nearest bus stop.</li>
                         </ul>
@@ -246,7 +245,7 @@ function Searchtab() {
                         </div>
                         <div className="botLine"></div>
                         <b>Normal Search</b>
-                        <ul>
+                        <ul style={{marginBottom:"0px"}}>
                             <li>Search by typing in bus stop name or bus stop code.</li>
                         </ul>
                     </div>

@@ -154,7 +154,7 @@ function BookmarkFunc() {
                                 }
                                 <br></br>
                                 <label className="BusTime2">Bookmark name:</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Input bookmark name" value={bookmarkNameInput} onChange={updateBookmarkNameInput} />
+                                <input type="text" maxLength="50" class="form-control" id="exampleInputEmail1" placeholder="Input bookmark name" value={bookmarkNameInput} onChange={updateBookmarkNameInput} />
                                 
                             </div>
                         </div>                                              

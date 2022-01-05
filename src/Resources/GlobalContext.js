@@ -5,7 +5,6 @@ import React, {createContext, useState} from "react"
 export const GlobalContext=createContext();
 
 function GlobalContextProvider(props){
-    const[globalBusstopData,setGlobalBusstopData]=useState("")
     const[globalSearchWord,setGlobalSearchWord]=useState("")
     const[globalFilteredData,setGlobalFilteredData]=useState([])
     const[globalArrivalData,setGlobalArrivalData]=useState([])
@@ -41,7 +40,6 @@ function GlobalContextProvider(props){
     return(
         <GlobalContext.Provider
         value={{
-            globalBusstopDataKey:[globalBusstopData,setGlobalBusstopData],
             globalSearchWordKey:[globalSearchWord,setGlobalSearchWord],
             globalFilteredDataKey:[globalFilteredData,setGlobalFilteredData],
             globalArrivalDataKey:[globalArrivalData,setGlobalArrivalData],

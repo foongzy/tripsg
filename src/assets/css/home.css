@@ -178,3 +178,7 @@ div.card-body{
 .navbar-light .navbar-brand {
     white-space: normal !important;
 }
+
+#cardHover:hover{
+    box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.2) !important;
+}

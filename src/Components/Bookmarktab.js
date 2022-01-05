@@ -2,10 +2,11 @@ import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
 import HelpIcon from '@material-ui/icons/HelpOutline'
-import Square from '@material-ui/icons/CropSquare'
 import Refresh from '@material-ui/icons/Refresh';
 import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import Bookmark from './BookmarkFunc'
+import BookmarkFilled from '@material-ui/icons/Bookmark';
+import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -237,16 +238,15 @@ function Bookmarktab() {
                                 return(
                                     <div class="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                            <div class="card text-dark bg-light mb-3" style={{height:"100%"}}>
-                                                <div class="card-header">Bus stop name: {value.CustomName==""?value.Description:value.CustomName} <br></br>({value.BusStopCode})
+                                            <div class="card text-dark bg-light mb-0" id="cardHover" style={{height:"100%"}}>
+                                                <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
+                                                    {value.CustomName==""?value.Description:value.CustomName} 
+                                                    <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>
+                                                    <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                 </div>
                                                 <div class="card-body">
-                                                    <div className="row">
-                                                        <div className="container-fluid">
-                                                            <label className="card-text">{value.RoadName}</label>
-                                                            <br></br>
-                                                            <label className="card-text">{value.distFromUser}</label>
-                                                        </div>
+                                                    <div className="row row-cols-1 row-cols-1 g-1">
+                                                        <label className="card-text">{value.RoadName}</label>
                                                     </div>        
                                                 </div>
                                             </div>
@@ -260,16 +260,50 @@ function Bookmarktab() {
             }
             {
                 globalBookmarked==""?(
+                    <>
+                    <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon style={{color:"black", marginTop:"-3px"}}></HelpIcon></a>
+                    </div>
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"40px"}} />
+                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
                         <form class="container-fluid" style={{marginTop:"30px"}}>
                             <p>You have no bookmarks added</p>
                         </form>
                     </div>
+                    </>
                 ):(
                     <div></div>
                 )
             }
+            {/* modal */}
+            <div class="modal fade" id="bookmarkHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bookmark</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <b>Adding bookmarks</b>
+                        <ul style={{marginBottom:"5px"}}>
+                            <li>Search for bus stop and click on <BookmarkIcon></BookmarkIcon></li>
+                            <li>Add a name for the bookmark if you like</li>
+                            <li>Click the add button</li>
+                        </ul>
+                        <div className="botLine"></div>
+                        <b>Removing bookmarks</b>
+                        <ul style={{marginBottom:"0px"}}>
+                            <li>Search for bookmarked bus stop</li>
+                            <li>Click on <BookmarkFilled></BookmarkFilled></li>
+                        </ul>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
