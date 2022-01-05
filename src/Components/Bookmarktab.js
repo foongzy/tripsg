@@ -238,7 +238,7 @@ function Bookmarktab() {
                                 return(
                                     <div class="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                            <div class="card text-dark bg-light mb-0" id="cardHover" style={{height:"100%"}}>
+                                            <div class="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
                                                 <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
                                                     {value.CustomName==""?value.Description:value.CustomName} 
                                                     <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>

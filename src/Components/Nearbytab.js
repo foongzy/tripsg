@@ -252,8 +252,8 @@ function Nearbytab() {
                                                         {globalnearbyBusStops.map((value,key)=>{
                                                             return(
                                                                 <div class="col">
-                                                                    <a href="javascript:void(0)" className="cardHover" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                                                        <div class="card text-dark bg-light mb-0" style={{height:"100%"}}>
+                                                                    <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
+                                                                        <div class="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
                                                                             <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
                                                                                 {value.Description} 
                                                                                 <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>
