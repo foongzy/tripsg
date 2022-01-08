@@ -1,6 +1,8 @@
-html{
+.fullbg{
     background-color: #fafafb;
+    height: 100vh;
 }
+
 @media (min-width:901px) {
     .leftmargin{
         margin-left: 240px;
@@ -73,11 +75,6 @@ div.card-body{
     padding-left: 5px;
 }
 
-.navRadius{
-    border-radius: 5px;
-    background-color: #8860d0;
-}
-
 .bgbtn{
     background-color: #5680e9 !important;
     border-color: #5680e9 !important;
@@ -86,14 +83,6 @@ div.card-body{
 .bgbtn:hover{
     background-color: #5ab9ea !important;
     border-color: #5ab9ea !important;
-}
-
-.headerbus{
-    margin-top: 10px;
-    border-radius: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: white;
 }
 
 .leftLabel{
@@ -116,10 +105,27 @@ div.card-body{
     margin-right: 2px;
 }
 
+#mapIcon{
+    color: black;
+    font-size: 20px;
+    margin-bottom: 4px;
+    margin-right: 3px;
+}
+
 #helpIcon{
     color: black;
     font-size: 20px;
     margin-bottom: 4px;
+}
+
+#helpBokmark{
+    color: black;
+    margin-top: -3px;
+}
+
+#helpSearch{
+    color: black;
+    margin-top: 10px;
 }
 
 .cardR{
@@ -194,4 +200,16 @@ div.card-body{
     border-bottom: 1px solid lightgrey;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+}
+
+.arrowIcon{
+    color: black;
+}
+
+#arrivalInfoModal{
+    color: black;
+}
+
+.cardHeaderBusStop{
+    background-color: #C1C8E4 !important;
 }

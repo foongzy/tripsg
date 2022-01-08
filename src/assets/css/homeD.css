@@ -1,0 +1,202 @@
+.fullbgD{
+    background-color: black;
+    height: 100vh;
+}
+
+.bgComD{
+    padding: 5px 10px;
+    background-color: black;
+}
+
+.bgD{
+    padding: 15px 10px;
+    background-color: black;
+}
+
+.WheelChairD{
+    color: white;
+    font-size: 18px !important;
+    margin-left: 2px;
+}
+
+.WheelChair2D{
+    color: white;
+    font-size: 14px !important;
+    margin-left: 2px;
+}
+
+.rightDivider{
+    border-right: 1px solid grey;
+    padding-right: 5px;
+}
+
+.bgbtnD{
+    background-color: #5680e9 !important;
+    border-color: #5680e9 !important;
+}
+
+.bgbtnD:hover{
+    background-color: #5ab9ea !important;
+    border-color: #5ab9ea !important;
+}
+
+.line{
+    border-bottom: 1px solid grey;
+}
+
+#refreshIconD{
+    color: white;
+    margin-bottom: 4px;
+}
+
+#bookmarkIconD{
+    color: white;
+    margin-bottom: 4px;
+    margin-right: 2px;
+}
+
+#mapIconD{
+    color: white;
+    font-size: 20px;
+    margin-bottom: 4px;
+    margin-right: 3px;
+}
+
+#helpIconD{
+    color: white;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+#helpBokmarkD{
+    color: white;
+    margin-top: -3px;
+}
+
+#helpSearchD{
+    color: white;
+    margin-top: 10px;
+}
+
+.cardRD{
+    border-radius: 0px;
+    background-color: transparent !important;
+    border-color: #424242 !important;
+}
+
+.empty{
+    color: #5cb85c
+}
+
+.standing{
+    color:#f0ad4e
+}
+
+.full{
+    color: #d9534f;
+}
+
+#nocardborderD{
+    border-color: black;
+}
+
+.tabbgD{
+    background-color: #424242;
+    border-bottom: 1px solid #303030;
+    border-left: 1px solid #303030;
+    border-right: 1px solid #303030;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-bottom: 30px;
+}
+
+.colorModalD{
+    color: white;
+    background-color: #424242 !important;
+}
+
+.botLine{
+    border-bottom: 1px solid lightgrey;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.borderBodycardD{
+    border-left: 1px solid #212121;
+    border-right: 1px solid #212121;
+    border-bottom: 1px solid #212121;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+}
+
+.busLabelD{
+    color: white;
+}
+
+.arrowIconD{
+    color: white;
+}
+
+.cardbggD{
+    background-color: #303030;
+    color: white;
+}
+
+/* .test{
+    border-color: none !important;
+  
+} */
+.otherLabelColD{
+    color: white;
+}
+
+#searchModal{
+    background-color: #424242;
+    color: white;
+}
+
+#bmModal{
+    background-color: #424242;
+    color: white;
+}
+
+#arrivalInfoModalD{
+    background-color: #424242;
+    color: white;
+}
+
+#exampleInputEmail1D{
+    background-color: #212121 !important;
+    color: #E4E6EB !important;
+    border-color: #3A3B3C !important;
+}
+
+#exampleInputEmail1D:focus{
+    border-color: #B0B3B8 !important;
+}
+
+.navLinkActiveD{
+    background-color: #424242 !important;
+    color: white !important;
+    border-color: #3A3B3C !important;
+}
+
+.navLinkD{
+    color: #5680e9 !important;
+}
+
+.navLinkD:hover{
+    border-color: #3A3B3C !important;
+    background-color: #424242 !important;
+    color: white !important;
+}
+
+.topLineTabD{
+    border-color: #3A3B3C !important;
+}
+
+.cardHeaderBusStopD{
+    background-color: #212121 !important;
+    color: white;
+}

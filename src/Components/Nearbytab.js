@@ -9,10 +9,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
 import BusIconBlack from '../assets/img/busIconBlack.png'
+import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import WheelChair from '@material-ui/icons/Accessible';
 import Location from '@material-ui/icons/LocationOn';
-import HelpIcon from '@material-ui/icons/HelpOutline'
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
+import MapFunc from "./MapFunc.js";
 
 function Nearbytab() {
     const location=geolocation();
@@ -28,6 +29,8 @@ function Nearbytab() {
     const[globalnearbyBusStops,setGlobalNearbyBusStops]=globalNearbyBusStopsKey
     const{globalFullBusstopListKey}=useContext(GlobalContext)
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
@@ -69,6 +72,8 @@ function Nearbytab() {
             setGlobalbusstopcodeNearby([{
                 "busstopcode":res.data.BusStopCode,
                 "description": busExtracted[0].Description,
+                "lat": busExtracted[0].Latitude,
+                "lng": busExtracted[0].Longitude,
             }])
         }).catch(error=>{
             toast.error('Server error. Please try again', {
@@ -124,6 +129,8 @@ function Nearbytab() {
             setGlobalbusstopcodeNearby([{
                 "busstopcode":res.data.BusStopCode,
                 "description": busExtracted[0].Description,
+                "lat": busExtracted[0].Latitude,
+                "lng": busExtracted[0].Longitude,
             }])
 
             toast.success('Refresh successful', {
@@ -152,19 +159,12 @@ function Nearbytab() {
         setGlobalbusstopcodeNearby([{
             "busstopcode": "",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
         setGlobalArrivalData([])
     }
 
-    // const toggleDisplay=()=>{
-    //     if(location.Loaded==true){
-
-    //     }else{
-
-    //     }
-    // }
-    // useEffect(toggleDisplay,[location])
-    
     return (
         <div>
             {
@@ -173,11 +173,12 @@ function Nearbytab() {
                         <div className="container-fluid line">
                             <nav class="navbar navbar-expand-lg navbar-light">
                                 <label class="navbar-brand leftLabel">
-                                    <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    Bus Stop Code: {globalbusstopcodeNearby[0].description} ({globalbusstopcodeNearby[0].busstopcode})
+                                    <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
+                                    <label className={globalDarkMode ? "busLabelD":""}>Bus Stop: {globalbusstopcodeNearby[0].description} ({globalbusstopcodeNearby[0].busstopcode})</label>
                                     <a href="#" ><Bookmark></Bookmark></a>
+                                    <a href="#" ><MapFunc></MapFunc></a>
                                     <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
-                                    <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
+                                    <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>
                                 </label>
                                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -192,9 +193,9 @@ function Nearbytab() {
                         <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
                             {globalArrivalData.map((value,key)=>{
                                 return(
-                                    <div class="col">
-                                        <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
-                                            <div class="card-body">
+                                    <div className="col">
+                                        <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
+                                            <div className={globalDarkMode ?"card-body cardbggD":"card-body"}>
                                                 <div className="row">
                                                     <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
                                                         <label className="BusNo">{value.ServiceNo}</label>
@@ -202,10 +203,10 @@ function Nearbytab() {
                                                     <div className="col-7">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {value.NextBus2.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                         ):(
                                                             <></>
                                                         )
@@ -213,7 +214,7 @@ function Nearbytab() {
                                                         </label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
                                                         {value.NextBus3.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                         ):(
                                                             <></>
                                                         )
@@ -241,9 +242,14 @@ function Nearbytab() {
                                                 globalnearbyBusStops==''?(
                                                     //No bus stops nearby
                                                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                                                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                        {globalDarkMode ?
+                                                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                            :
+                                                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                        }
+                                                        
                                                         <form class="container-fluid" style={{marginTop:"30px"}}>
-                                                            <p>There are no bus stops nearby</p>
+                                                            <p className={globalDarkMode ?"otherLabelColD":""}>There are no bus stops nearby</p>
                                                         </form>
                                                     </div>
                                                 ):(
@@ -251,15 +257,15 @@ function Nearbytab() {
                                                     <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
                                                         {globalnearbyBusStops.map((value,key)=>{
                                                             return(
-                                                                <div class="col">
+                                                                <div className="col">
                                                                     <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                                                        <div class="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
-                                                                            <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
+                                                                        <div className="card text-dark bg-dark mb-0" className="cardHover" style={{height:"100%"}}>
+                                                                            <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                                                 {value.Description} 
                                                                                 <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>
                                                                                 <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                                             </div>
-                                                                            <div class="card-body borderBodycard">
+                                                                            <div className={globalDarkMode ? "card-body borderBodycardD":"card-body borderBodycard"}>
                                                                                 <div className="row row-cols-1 row-cols-2 g-1">
                                                                                     <label className="card-text">{value.RoadName}</label>
                                                                                     <label className="card-text" style={{textAlign:"right"}}>{value.distFromUser}m</label>
@@ -278,9 +284,14 @@ function Nearbytab() {
                                         ):(
                                             //User disabled location
                                             <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                                                <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                {globalDarkMode ?
+                                                    <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                    :
+                                                    <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                }
+                                                
                                                 <form class="container-fluid" style={{marginTop:"30px"}}>
-                                                    <p>Please allow website to use your location to enable nearby service</p>
+                                                    <p className={globalDarkMode ?"otherLabelColD":""}>Please allow website to use your location to enable nearby service</p>
                                                 </form>
                                             </div>
                                         )
@@ -289,9 +300,14 @@ function Nearbytab() {
                             ):(
                                 //Location still not loaded
                                 <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                                    <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                    {globalDarkMode ?
+                                        <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                        :
+                                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                    }
+                                    
                                     <form class="container-fluid" style={{marginTop:"30px"}}>
-                                        <p>Loading your location...</p>
+                                        <p className={globalDarkMode ?"otherLabelColD":""}>Loading your location...</p>
                                     </form>
                                 </div>
                             )

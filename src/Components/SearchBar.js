@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
 import '../assets/css/SearchBar.css'
+import '../assets/css/SearchBarD.css'
 import SearchIcon from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import { GlobalContext } from "../Resources/GlobalContext.js";
@@ -27,6 +28,8 @@ function SearchBar({placeholder, data}) {
     const[globalRefreshToggle,setGlobalRefreshToggle]=globalRefreshToggleKey
     const{globalFullBusstopListKey}=useContext(GlobalContext)
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
@@ -113,6 +116,8 @@ function SearchBar({placeholder, data}) {
                     setGlobalbusstopcode([{
                         "busstopcode": globalnearbyBusStops[0].BusStopCode,
                         "description": globalnearbyBusStops[0].Description,
+                        "lat": globalnearbyBusStops[0].Latitude,
+                        "lng": globalnearbyBusStops[0].Longitude,
                     }])
                     const refreshVal=[{
                         "refresh":true,
@@ -152,6 +157,8 @@ function SearchBar({placeholder, data}) {
                 setGlobalbusstopcode([{
                     "busstopcode": res.data.BusStopCode,
                     "description": busExtracted[0].Description,
+                    "lat": busExtracted[0].Latitude,
+                    "lng": busExtracted[0].Longitude,
                 }])
                 const refreshVal=[{
                     "refresh":false,
@@ -226,24 +233,26 @@ function SearchBar({placeholder, data}) {
         <div className='search'>
             <div className='searchInputs'>
                 <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Search by bus stop code or name">
-                    <input type="text" id="searchbarBus" class="form-control searchBox" placeholder={placeholder} value={globalSearchWord} onChange={handleFilter} aria-label="Recipient's username with two button addons" />
-                    <span class="input-group-text SearchBg" id="basic-addon2">
+                    <input type="text" id={globalDarkMode ? "searchbarBusD":"searchbarBus"} className={globalDarkMode ? "form-control searchBoxD":"form-control searchBox"} placeholder={placeholder} value={globalSearchWord} onChange={handleFilter} aria-label="Recipient's username with two button addons" />
+                    <span className={globalDarkMode ? "input-group-text SearchBgD":"input-group-text SearchBg"} id="basic-addon2">
                         {globalSearchWord.length==0?(
                             <SearchIcon></SearchIcon>
                         ):(
                             <Close id="clearBtn" onClick={clearInput}></Close>
                         )}
                     </span>
-                    <button style={{color:"white", zIndex:"0"}} onClick={clickSearch} class="btn btn-outline-secondary btnradius bgbtn" type="Search" id="searchBtn">Search</button>
+                    <button style={{color:"white", zIndex:"0"}} onClick={clickSearch} className={globalDarkMode ? "btn btn-outline-secondary btnradius bgbtnD":"btn btn-outline-secondary btnradius bgbtn"} type="Search" id="searchBtn">Search</button>
                 </div>
             </div>
             {
                 globalFilteredData.length!=0?(
-                    <div className='dataResult'>
+                    <div className={globalDarkMode ? "dataResultD":"dataResult"}>
                         {globalFilteredData.slice(0, 10).map((value, key)=>{
-                            return <a href="#" className='dataItem' onClick={()=>triggerSearch(value.BusStopCode)}>
-                                <p>{value.Description + " ("+value.BusStopCode+")"}</p>
+                            return <div className='container-fluid' id="searchCont">
+                                <a href="#" className={globalDarkMode ? 'dataItemD':'dataItem'} onClick={()=>triggerSearch(value.BusStopCode)}>
+                                    <div className="searchResults">{value.Description + " ("+value.BusStopCode+")"}</div>
                                 </a>
+                            </div>
                         })}
                     </div>
                 ):(

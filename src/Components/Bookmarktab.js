@@ -11,8 +11,10 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BusIconBlack from '../assets/img/busIconBlack.png'
+import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
+import MapFunc from "./MapFunc.js";
 
 function Bookmarktab() {
 
@@ -27,6 +29,8 @@ function Bookmarktab() {
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
     const{globalFullBusstopListKey}=useContext(GlobalContext)
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
@@ -68,6 +72,8 @@ function Bookmarktab() {
             setGlobalbusstopcodeBM([{
                 "busstopcode":res.data.BusStopCode,
                 "description": busExtracted[0].Description,
+                "lat": busExtracted[0].Latitude,
+                "lng": busExtracted[0].Longitude,
             }])
         }).catch(error=>{
             toast.error('Server error. Please try again', {
@@ -123,6 +129,8 @@ function Bookmarktab() {
             setGlobalbusstopcodeBM([{
                 "busstopcode":res.data.BusStopCode,
                 "description": busExtracted[0].Description,
+                "lat": busExtracted[0].Latitude,
+                "lng": busExtracted[0].Longitude,
             }])
 
             toast.success('Refresh successful', {
@@ -151,18 +159,11 @@ function Bookmarktab() {
         setGlobalbusstopcodeBM([{
             "busstopcode":"",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
         setGlobalArrivalData([])
     }
-
-    // const toggleDisplay=()=>{
-    //     if(location.Loaded==true){
-
-    //     }else{
-
-    //     }
-    // }
-    // useEffect(toggleDisplay,[location])
 
     return (
         <div>
@@ -173,18 +174,18 @@ function Bookmarktab() {
                             <nav class="navbar navbar-expand-lg navbar-light" id="texthead">
                                 <div className="container-fluid">
                                 <label class="navbar-brand leftLabel">
-                                    <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    Bus Stop Code: {globalbusstopcodeBM[0].description} ({globalbusstopcodeBM[0].busstopcode})
+                                    <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
+                                    <label className={globalDarkMode ? "busLabelD":""}>Bus Stop: {globalbusstopcodeBM[0].description} ({globalbusstopcodeBM[0].busstopcode})</label>
                                     <a href="#" ><Bookmark></Bookmark></a>
+                                    <a href="#" ><MapFunc></MapFunc></a>
                                     <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
-                                    <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
+                                    <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>
                                 </label>
                                 </div>
                                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                     </ul>
                                     <form class={width>991?"d-flex":"container-fluid"} style={{padding:"0px"}}>
-                                        {/* <SearchBar placeholder="Search bus stop number or name..." data={Rawdata} /> */}
                                     </form>
                                 </div>
                             </nav>
@@ -193,9 +194,9 @@ function Bookmarktab() {
                         <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
                             {globalArrivalData.map((value,key)=>{
                                 return(
-                                    <div class="col">
-                                        <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
-                                            <div class="card-body">
+                                    <div className="col">
+                                        <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
+                                            <div className={globalDarkMode ?"card-body cardbggD":"card-body"}>
                                                 <div className="row">
                                                     <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
                                                         <label className="BusNo">{value.ServiceNo}</label>
@@ -203,10 +204,10 @@ function Bookmarktab() {
                                                     <div className="col-7">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {value.NextBus2.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                         ):(
                                                             <></>
                                                         )
@@ -214,7 +215,7 @@ function Bookmarktab() {
                                                         </label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
                                                         {value.NextBus3.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                         ):(
                                                             <></>
                                                         )
@@ -239,12 +240,12 @@ function Bookmarktab() {
                                     <div class="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
                                             <div class="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
-                                                <div class="card-header" style={{backgroundColor:"#C1C8E4"}}>
+                                                <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                     {value.CustomName==""?value.Description:value.CustomName} 
                                                     <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>
                                                     <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                 </div>
-                                                <div class="card-body borderBodycard">
+                                                <div class={globalDarkMode ? "card-body borderBodycardD":"card-body borderBodycard"}>
                                                     <div className="row row-cols-1 row-cols-1 g-1">
                                                         <label className="card-text">{value.RoadName}</label>
                                                     </div>        
@@ -262,12 +263,17 @@ function Bookmarktab() {
                 globalBookmarked==""?(
                     <>
                     <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon style={{color:"black", marginTop:"-3px"}}></HelpIcon></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon id={globalDarkMode?"helpBokmarkD":"helpBokmark"}></HelpIcon></a>
                     </div>
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                        {globalDarkMode ?
+                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                            :
+                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                        }
+                        
                         <form class="container-fluid" style={{marginTop:"30px"}}>
-                            <p>You have no bookmarks added</p>
+                            <p className={globalDarkMode ?"otherLabelColD":""}>You have no bookmarks added</p>
                         </form>
                     </div>
                     </>
@@ -278,7 +284,7 @@ function Bookmarktab() {
             {/* modal */}
             <div class="modal fade" id="bookmarkHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                    <div class="modal-content" id={globalDarkMode ?"bmModal":""}>
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Bookmark</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -299,7 +305,7 @@ function Bookmarktab() {
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>

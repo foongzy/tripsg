@@ -11,14 +11,20 @@ function GlobalContextProvider(props){
     const[globalbusstopcode,setGlobalbusstopcode]=useState([{
         "busstopcode":"",
         "description": "",
+        "lat": "",
+        "lng": "",
     }])
     const[globalbusstopcodeNearby,setGlobalbusstopcodeNearby]=useState([{
         "busstopcode":"",
         "description": "",
+        "lat": "",
+        "lng": "",
     }])
     const[globalbusstopcodeBM,setGlobalbusstopcodeBM]=useState([{
         "busstopcode":"",
         "description": "",
+        "lat": "",
+        "lng": "",
     }])
     const[globalnearbyBusStops,setGlobalNearbyBusStops]=useState([])
     const[globalTabToggle,setGlobalTabToggle]=useState(1)
@@ -36,6 +42,8 @@ function GlobalContextProvider(props){
         "isAbout":false,
     }])
     const[globalTitle,setGlobalTitle]=useState("Bus Arrivals")
+    const[globalDarkMode,setGlobalDarkMode]=useState(false)
+    const[globalDisplayName,setGlobalDisplayName]=useState("")
 
     return(
         <GlobalContext.Provider
@@ -53,7 +61,9 @@ function GlobalContextProvider(props){
             globalisBookmarkKey:[globalisBookmarked,setGlobalisBookmarked],
             globalFullBusstopListKey:[globalFullBusstopList,setGlobalFullBusstopList],
             globalPgToggleKey:[globalPgToggle,setGlobalPgToggle],
-            globalTitleKey:[globalTitle,setGlobalTitle]
+            globalTitleKey:[globalTitle,setGlobalTitle],
+            globalDarkModeKey:[globalDarkMode,setGlobalDarkMode],
+            globalDispNameKey:[globalDisplayName,setGlobalDisplayName]
         }}
         >
             {props.children}

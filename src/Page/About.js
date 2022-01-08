@@ -12,7 +12,8 @@ import CardHeader from "../Components/Card/CardHeader.js";
 import CardFooter from "../Components/Card/CardFooter.js";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
-
+import '../assets/css/about.css'
+import '../assets/css/aboutD.css'
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +25,8 @@ function About(props) {
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
     const{globalTitleKey}=useContext(GlobalContext)
     const[globalTitle,setGlobalTitle]=globalTitleKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     //Initialise sidebar display
     const initialiseSidebarDisplay=()=>{
@@ -44,22 +47,22 @@ function About(props) {
     const { ...rest } = props;
 
     return (
-        <div>
+        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">
-                <div className={width<551?"bg":"bgCom"}>
+                <div className={width<551?(globalDarkMode?"bgD":"bg"):(globalDarkMode?"bgComD":"bgCom")}>
                     {/* About page */}
                     <div
-                        className={classes.pageHeader} style={{zIndex:"0"}}
+                        className={classes.pageHeader} style={{zIndex:"0"} }
                     >
                         <div className={classes.container}>
                             <div className="cardCont">
                                 <GridContainer justify="center">
                                     <GridItem xs={12} sm={12} md={11}>
                                         <Card className={classes[cardAnimaton]} style={{marginTop:"-10px"}}>
-                                            <form className={classes.form}>
-                                                <CardHeader className={classes.cardHeader} style={{background:"linear-gradient(60deg, #8860d0, #6b3fa0)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
+                                            <form className={classes.form} id={globalDarkMode?"aboutCardbgD":""}>
+                                                <CardHeader className={classes.cardHeader} style={{background:"linear-gradient(60deg, #5680e9, #1b7ced)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
                                                 <h4>About</h4>
                                                 </CardHeader>
                                                 <CardBody>

@@ -1,0 +1,28 @@
+.inputBoxD:focus{
+    border-color: #B0B3B8 !important;
+}
+
+.inputBoxD{
+    box-shadow: none !important;
+    background-color: #212121 !important;
+    color: #E4E6EB !important;
+    border-color: #3A3B3C !important;
+}
+
+.inputBoxErrD{
+    box-shadow: none !important;
+    border-color: red !important;
+    background-color: #212121 !important;
+    color: #E4E6EB !important;
+
+}
+
+.inputBoxErrD:focus{
+    border-color: red !important;
+}
+
+#feedbackCardbgD{
+    background-color: #424242;
+    color: white;
+    border-radius: 5px;
+}

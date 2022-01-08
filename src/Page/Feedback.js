@@ -13,11 +13,14 @@ import CardFooter from "../Components/Card/CardFooter.js";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
 import '../assets/css/feedback.css'
+import '../assets/css/feedbackD.css'
 import axios from 'axios'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
 function Feedback(props) {
+    const history = useHistory()
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     const [nameInput, setNameInput] = React.useState("");
     const [emailInput, setEmailInput] = React.useState("");
@@ -30,6 +33,10 @@ function Feedback(props) {
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
     const{globalTitleKey}=useContext(GlobalContext)
     const[globalTitle,setGlobalTitle]=globalTitleKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalDispNameKey}=useContext(GlobalContext)
+    const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
 
     const {height, width}=useWindowDimensions();
     
@@ -62,6 +69,19 @@ function Feedback(props) {
         setGlobalTitle("Feedback")
     }
     useEffect(initialiseSidebarDisplay,[]);
+
+    //Initialise display name
+    const initialiseDisplayName=()=>{
+        const retrieveDispNameTmp=localStorage.getItem('tripsgname');
+        const retrieveDispName=JSON.parse(retrieveDispNameTmp);
+        if(retrieveDispName!=null){
+            setGlobalDisplayName(retrieveDispName.displayname)
+            setNameInput(retrieveDispName.displayname)
+        }else{
+            history.push("/Login");
+        }
+    }
+    useEffect(initialiseDisplayName,[]);
 
     function submitform(event){
         if(nameInput!=""){
@@ -160,11 +180,11 @@ function Feedback(props) {
     }
 
     return (
-        <div>
+        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">
-                <div className={width<551?"bg":"bgCom"}>
+                <div className={width<551?(globalDarkMode?"bgD":"bg"):(globalDarkMode?"bgComD":"bgCom")}>
                     {/* Feedback page */}
                     <div
                         className={classes.pageHeader} style={{zIndex:"0"}}
@@ -174,27 +194,27 @@ function Feedback(props) {
                                 <GridContainer justify="center">
                                     <GridItem xs={12} sm={12} md={11}>
                                         <Card className={classes[cardAnimaton]} style={{marginTop:"-10px"}}>
-                                            <form className={classes.form}>
-                                                <CardHeader color="primary" className={classes.cardHeader} style={{background:"linear-gradient(60deg, #8860d0, #6b3fa0)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
+                                            <form className={classes.form} id={globalDarkMode?"feedbackCardbgD":""}>
+                                                <CardHeader color="primary" className={classes.cardHeader} style={{background:"linear-gradient(60deg, #5680e9, #1b7ced)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
                                                 <h4>Feedback</h4>
                                                 </CardHeader>
                                                 <CardBody>
                                                 <label for="exampleFormControlInput1" class="form-label feedbackExp">* refers to mandatory fields</label>
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlInput1" class="form-label feedbackHead">Name*</label>
-                                                    <input type="text" maxLength="50" class={nameInputError==true?"form-control inputBoxErr":"form-control inputBox"} id="exampleFormControlInput1" value={nameInput} onChange={updateNameInput} placeholder="Enter name" />
+                                                    <input type="text" maxLength="50" class={nameInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={nameInput} onChange={updateNameInput} placeholder="Enter name" />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlInput1" class="form-label feedbackHead">Email</label>
-                                                    <input type="email" maxLength="50" class={emailInputError==true?"form-control inputBoxErr":"form-control inputBox"} id="exampleFormControlInput1" value={emailInput} onChange={updateEmailInput} placeholder="Enter email" />
+                                                    <input type="email" maxLength="50" class={emailInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={emailInput} onChange={updateEmailInput} placeholder="Enter email" />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlTextarea1" class="form-label feedbackHead">Feedback*</label>
-                                                    <textarea maxLength="500" class={feedbackInputError==true?"form-control inputBoxErr":"form-control inputBox"} placeholder="Enter feedback" id="exampleFormControlTextarea1" rows="3" value={feedbackInput} onChange={updateFeedbackInput}></textarea>
+                                                    <textarea maxLength="500" class={feedbackInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} placeholder="Enter feedback" id="exampleFormControlTextarea1" rows="3" value={feedbackInput} onChange={updateFeedbackInput}></textarea>
                                                 </div>
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}  id="test">
-                                                    <button type="button" id="feedbackBtn" class="btn btn-secondary bgbtn" style={{alignItems:"flex-end"}} onClick={submitform}>Submit</button>
+                                                    <button type="button" id="feedbackBtn" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} style={{alignItems:"flex-end"}} onClick={submitform}>Submit</button>
                                                 </CardFooter>
                                             </form>
                                         </Card>

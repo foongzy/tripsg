@@ -78,17 +78,18 @@ li.nav-text{
     color: white;
 }
 
-.nav-menu-items{
-    width:100%;
+.darkModeSwitch {
+    margin-top: 10px;
+    justify-content: center;
 }
 
-.toggleNav{
-    background-color: #5680e9;
-    width: 100%;
-    height: 64px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
+.darkModeSwitch:hover{
+    background-color: transparent;
+    color: white;
+}
+
+.nav-menu-items{
+    width:100%;
 }
 
 .navbar-toggleCom{
@@ -118,6 +119,23 @@ ul.nav-menu-items{
     border-top: 1px solid #1663be;
 }
 
-.rightline{
-    border-top: 1px solid #1663be;
+#flexSwitchCheck:focus{
+    box-shadow: none;
+}
+
+.welcome{
+    color: white;
+    margin-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 24px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.welcomeS{
+    color: white;
+    margin-bottom: 10px;
+    padding-left: 16px;
+    padding-right: 24px;
 }

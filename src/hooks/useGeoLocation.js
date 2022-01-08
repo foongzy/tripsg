@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { GlobalContext } from "../Resources/GlobalContext.js";
 
 const useGeoLocation=()=> {
     const[location, setLocation]=useState({
@@ -39,6 +40,7 @@ const useGeoLocation=()=> {
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError)
     },[])
+
     return location
 }
 

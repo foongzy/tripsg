@@ -3,14 +3,13 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
 import '../assets/css/home.css'
+import '../assets/css/homeD.css'
 import LoadingScreen from "../Components/loadingScreen";
 
 import axios from 'axios'
 import Navbar from '../Components/Sidebar'
-import Refresh from '@material-ui/icons/Refresh';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BusIconBlack from '../assets/img/busIconBlack.png'
 
 import geolocation from "../hooks/useGeoLocation.js";
 import { getDistance, orderByDistance, isPointWithinRadius } from 'geolib';
@@ -46,6 +45,8 @@ function Home(props){
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
     const{globalTitleKey}=useContext(GlobalContext)
     const[globalTitle,setGlobalTitle]=globalTitleKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     const {height, width}=useWindowDimensions();
 
@@ -82,23 +83,36 @@ function Home(props){
             return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
         });
         updateGlobalNearbyBusStops(nearbyBusStops)
-        console.log(nearbyBusStops)
-        console.log(location)
     }
-    useEffect(findNearestBusStops,[location])
+    useEffect(findNearestBusStops,[location, globalFullBusstopList])
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
     const loadBusstopsData=()=>{
         if(globalFullBusstopList==""){
-            setLoading(true)
-            axios.get(URL).then(res=>{
-                setGlobalFullBusstopList(res.data.data)
+            const retrieveBusStopListTmp=localStorage.getItem('busstoplistdata');
+            const retrieveBusStopList=JSON.parse(retrieveBusStopListTmp);
+            //check if retrieved already 
+            if(retrieveBusStopList!=null && retrieveBusStopList.lastUpdate>=new Date().setHours(0,0,0,0)){
+                setGlobalFullBusstopList(retrieveBusStopList.data)
                 findNearestBusStops()
-                setLoading(false)
-            }).catch(error=>{
-                console.log("error")
-                setLoading(false)
-            })
+            }else{
+                setLoading(true)
+                axios.get(URL).then(res=>{
+                    setGlobalFullBusstopList(res.data.data)
+                    findNearestBusStops()
+                    let now=new Date()
+                    const toLocalStorageBusstopList={
+                        "lastUpdate":now.setHours(0,0,0,0),
+                        "data":res.data.data
+                    }
+                    localStorage.removeItem("busstoplistdata")
+                    localStorage.setItem("busstoplistdata",JSON.stringify(toLocalStorageBusstopList))
+                    setLoading(false)
+                }).catch(error=>{
+                    console.log("failed to load full bus stop list")
+                    setLoading(false)
+                })
+            }
         }
     }
     useEffect(loadBusstopsData,[])
@@ -108,6 +122,8 @@ function Home(props){
         setGlobalbusstopcodeNearby([{
             "busstopcode":"",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
     }
 
@@ -116,6 +132,8 @@ function Home(props){
         setGlobalbusstopcodeBM([{
             "busstopcode":"",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
     }
 
@@ -124,6 +142,8 @@ function Home(props){
         setGlobalbusstopcode([{
             "busstopcode":"",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
     }
 
@@ -150,7 +170,7 @@ function Home(props){
     useEffect(initialiseSidebarDisplay,[]);
 
     return(
-        <div>
+        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
             {
                 isLoading?
                 <LoadingScreen />:null
@@ -159,22 +179,22 @@ function Home(props){
             <Navbar></Navbar>
             
             <div className="leftmargin background">
-                <div className={width<901?"bg":"bgCom"}>
+                <div className={width<901?(globalDarkMode?"bgD":"bg"):(globalDarkMode?"bgComD":"bgCom")}>
 
-                    <div class="bordertop"> 
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class={globalTabToggle==1?"nav-link active":"nav-link"} aria-current="page" href="#" onClick={searchClick}>Search</a>
+                    <div className="bordertop"> 
+                        <ul className={globalDarkMode?"nav nav-tabs topLineTabD":"nav nav-tabs"}>
+                            <li className="nav-item">
+                                <a className={globalTabToggle==1?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} aria-current="page" href="#" onClick={searchClick}>Search</a>
                             </li>
-                            <li class="nav-item">
-                                <a class={globalTabToggle==2?"nav-link active":"nav-link"} href="#" onClick={bookmarkClick}>Bookmark</a>
+                            <li className="nav-item">
+                                <a className={globalTabToggle==2?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={bookmarkClick}>Bookmark</a>
                             </li>
-                            <li class="nav-item">
-                                <a class={globalTabToggle==3?"nav-link active":"nav-link"} href="#" onClick={nearbyClick}>Nearby</a>
+                            <li className="nav-item">
+                                <a className={globalTabToggle==3?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={nearbyClick}>Nearby</a>
                             </li>
                         </ul>
                         
-                        <div className="tabbg">
+                        <div className={globalDarkMode ? "tabbgD":"tabbg"}>
                             {
                                 globalTabToggle==1?(
                                     // Search tab

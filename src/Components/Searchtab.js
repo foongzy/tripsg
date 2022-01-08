@@ -7,11 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useWindowDimensions from "../Components/useWindowDimensions"
 import BusIconBlack from '../assets/img/busIconBlack.png'
+import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import axios from 'axios'
 import SearchBar from "../Components/SearchBar"
 import Bookmark from './BookmarkFunc'
 import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
+import MapFunc from "./MapFunc.js";
 
 function Searchtab() {
 
@@ -27,6 +29,8 @@ function Searchtab() {
     const[globalRefreshToggle,setGlobalRefreshToggle]=globalRefreshToggleKey
     const{globalFullBusstopListKey}=useContext(GlobalContext)
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
@@ -98,6 +102,8 @@ function Searchtab() {
                 const busStopDets=[{
                     "busstopcode":res.data.BusStopCode,
                     "description": busExtracted[0].Description,
+                    "lat": busExtracted[0].Latitude,
+                    "lng": busExtracted[0].Longitude,
                 }]
                 setGlobalbusstopcode(busStopDets)
 
@@ -133,6 +139,8 @@ function Searchtab() {
         setGlobalbusstopcode([{
             "busstopcode":"",
             "description": "",
+            "lat": "",
+            "lng": "",
         }])
         setGlobalArrivalData([])
     }
@@ -146,11 +154,12 @@ function Searchtab() {
                         <div className="container-fluid line">
                             <nav class="navbar navbar-expand-lg navbar-light">
                                 <label class="navbar-brand leftLabel">
-                                    <a href="#" style={{color:"black"}}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    Bus Stop: {globalbusstopcode[0].description} ({globalbusstopcode[0].busstopcode})
+                                    <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
+                                    <label className={globalDarkMode ? "busLabelD":""}>Bus Stop: {globalbusstopcode[0].description} ({globalbusstopcode[0].busstopcode})</label>
                                     <a href="#" ><Bookmark></Bookmark></a>
+                                    <a href="#" ><MapFunc></MapFunc></a>
                                     <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
-                                    <a href="#" onClick={refreshClick}><Refresh id="refreshIcon"></Refresh></a>
+                                    <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>
                                 </label>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -166,12 +175,12 @@ function Searchtab() {
                         </div>
 
                         {/* Show bus arrivals */}
-                        <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                        <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin test" style={{paddingLeft:"10px", paddingRight:"10px"}}>
                             {globalArrivalData.map((value,key)=>{
                                 return(
-                                    <div class="col">
-                                        <div class="card cardR" style={{height:"100%", borderRadius:"0px"}}>
-                                            <div class="card-body">
+                                    <div className="col">
+                                        <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
+                                            <div className={globalDarkMode ?"card-body cardbggD":"card-body"}>
                                                 <div className="row">
                                                     <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
                                                         <label className="BusNo">{value.ServiceNo}</label>
@@ -179,11 +188,11 @@ function Searchtab() {
                                                     <div className="col-7">
                                                         <label className="BusTime">Next Bus:</label>
                                                         <br></br>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair"></WheelChair>:<></>}</label>
+                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {
                                                             value.NextBus2.EstimatedArrival!="NaNmin"?(
-                                                                value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                                value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                             ):(
                                                                 <></>
                                                             )
@@ -192,7 +201,7 @@ function Searchtab() {
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
                                                         {
                                                             value.NextBus3.EstimatedArrival!="NaNmin"?(
-                                                                value.NextBus.Feature=="WAB"?<WheelChair className="WheelChair2"></WheelChair>:<></>
+                                                                value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                             ):(
                                                                 <></>
                                                             )
@@ -211,10 +220,14 @@ function Searchtab() {
                     // if havent search
                     <>
                     <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon style={{marginTop:"10px", color:"black"}}></HelpIcon></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon id={globalDarkMode?"helpSearchD":"helpSearch"}></HelpIcon></a>
                     </div>
                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                        {globalDarkMode ?
+                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                            :
+                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
+                        }
                         <form class="container-fluid" style={{marginTop:"30px"}}>
                             <SearchBar placeholder="Search bus stop number or name..." data={globalFullBusstopList}/>
                         </form>
@@ -225,7 +238,7 @@ function Searchtab() {
             {/* modal */}
             <div class="modal fade" id="searchHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                    <div class="modal-content" id={globalDarkMode ?"searchModal":""}>
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Search methods</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -250,7 +263,7 @@ function Searchtab() {
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary bgbtn" data-bs-dismiss="modal">Close</button>
+                        <button type="button" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>

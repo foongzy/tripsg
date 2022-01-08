@@ -24,6 +24,8 @@ function BookmarkFunc() {
     const[globalTabToggle,setGlobalTabToggle]=globalTabToggleKey
     const{globalFullBusstopListKey}=useContext(GlobalContext)
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
+    const{globalDarkModeKey}=useContext(GlobalContext)
+    const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
     function updateBookmarkNameInput(event){
         setBookmarkNameInput(event.target.value);
@@ -61,6 +63,8 @@ function BookmarkFunc() {
             setGlobalbusstopcodeBM([{
                 "busstopcode":"",
                 "description": "",
+                "lat": "",
+                "lng": "",
             }])
             toast.success('Bookmark removed', {
                 position: "top-right",
@@ -126,14 +130,14 @@ function BookmarkFunc() {
         <>
         {
             globalisBookmarked==true?(
-                <BookmarkFilled id="bookmarkIcon" style={{marginLeft:"15px"}} onClick={bookmarkClickremove}></BookmarkFilled>
+                <BookmarkFilled id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"} style={{marginLeft:"15px"}} onClick={bookmarkClickremove}></BookmarkFilled>
             ):(
-                <Bookmark data-bs-toggle="modal" data-bs-target="#exampleModal" id="bookmarkIcon" style={{marginLeft:"15px"}}></Bookmark>
+                <Bookmark data-bs-toggle="modal" data-bs-target="#exampleModal" id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"} style={{marginLeft:"15px"}}></Bookmark>
             )
         }
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content colorModal">
+                    <div class={globalDarkMode ? "modal-content colorModalD":"modal-content colorModal"}>
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add bookmark</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -154,7 +158,7 @@ function BookmarkFunc() {
                                 }
                                 <br></br>
                                 <label className="BusTime2">Bookmark name:</label>
-                                <input type="text" maxLength="50" class="form-control" id="exampleInputEmail1" placeholder="Input bookmark name" value={bookmarkNameInput} onChange={updateBookmarkNameInput} />
+                                <input type="text" maxLength="50" class="form-control" id={globalDarkMode ?"exampleInputEmail1D":"exampleInputEmail1"} placeholder="Input bookmark name" value={bookmarkNameInput} onChange={updateBookmarkNameInput} />
                                 
                             </div>
                         </div>                                              

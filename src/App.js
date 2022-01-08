@@ -9,8 +9,8 @@ import NotFound from './Page/notFound'
 import About from './Page/About'
 import Home from './Page/Home'
 import Feedback from './Page/Feedback'
-import Location from './Page/Location'
-import Sidebar from './Components/Sidebar';
+import Settings from './Page/Settings'
+import Login from './Page/Login'
 
 class App extends Component {
   render(){
@@ -23,9 +23,10 @@ class App extends Component {
             <Route exact path="/" render={props=>(<Home />)} />
             <Route exact path="/tripsg" render={props=>(<Home />)} />
             <Route exact path="/BusArrival" render={props=>(<Home />)} />
-            <Route exact path="/Location" render={props=>(<Location />)} />
+            <Route exact path="/Settings" render={props=>(<Settings />)} />
             <Route exact path="/Feedback" render={props=>(<Feedback />)} />
             <Route exact path="/About" render={props=>(<About />)} />
+            <Route exact path="/Login" render={props=>(<Login />)} />
             
             <Route render={props=>(<NotFound />)} />
           </Switch>
