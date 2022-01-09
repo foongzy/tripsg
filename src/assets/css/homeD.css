@@ -8,6 +8,11 @@
     background-color: black;
 }
 
+.fullbgHomeD{
+    background-color: black;
+    height: 100vh;
+}
+
 .bgD{
     padding: 15px 10px;
     background-color: black;
