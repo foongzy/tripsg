@@ -170,7 +170,7 @@ function Home(props){
     useEffect(initialiseSidebarDisplay,[]);
 
     return(
-        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
+        <div className={globalDarkMode ? "fullbgHomeD":"fullbgHome"}>
             {
                 isLoading?
                 <LoadingScreen />:null

@@ -11,17 +11,17 @@ function BusArrivalInfoFunc() {
         <>
             <HelpIcon id={globalDarkMode ? "helpIconD":"helpIcon"} data-bs-toggle="modal" data-bs-target="#helpModal"></HelpIcon>
             {/* Modal */}
-            <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" id={globalDarkMode ?"arrivalInfoModalD":"arrivalInfoModal"}>
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Bus Timings Guide</h5>
+            <div className="modal fade" id="helpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content" id={globalDarkMode ?"arrivalInfoModalD":"arrivalInfoModal"}>
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Bus Timings Guide</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="col">
-                                <div class={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
-                                    <div class="card-body">
+                        <div className="modal-body">
+                            <div className="col">
+                                <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
+                                    <div className={globalDarkMode ?"card-body boxBusInfoD":"card-body"}>
                                         <div className="row">
                                             <div className="col-4 borderBot rightDivider" style={{textAlign:"center"}}>
                                                 <label className="BusNo">12</label>

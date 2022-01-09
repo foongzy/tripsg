@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
 import '../assets/css/settings.css'
 import '../assets/css/settingsD.css'
+import axios from 'axios'
 
 const useStyles = makeStyles(styles);
 
@@ -67,6 +68,14 @@ function Settings(props) {
     function clickNameUpdate(event){
         event.preventDefault();
         if(nameInput!=""){
+            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+globalDisplayName+"/3/"
+            const data={
+                "newuser": nameInput
+            }
+            axios.post(URL,data).then(res=>{
+            }).catch(error=>{
+                console.log("error")
+            })
             //save to local storage
             const tripsgname={
                 "displayname":nameInput
@@ -100,7 +109,7 @@ function Settings(props) {
     }
 
     return (
-        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
+        <div className={globalDarkMode ? "fullbgD":"fullbgSe"}>
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">
@@ -134,7 +143,7 @@ function Settings(props) {
                                                                                 <label>You can update your display name here.</label>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col-sm-6 borderLeft">
+                                                                        <div className="col-sm-6 borderLeftt">
                                                                             <div className="col-sm-12">
                                                                                 <label style={{marginBottom:"5px"}}>Current display name: {globalDisplayName}</label>
                                                                                 <br />
@@ -165,7 +174,7 @@ function Settings(props) {
                                                                                 <label>You can toggle dark mode on/off here.</label>
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col-sm-6 borderLeft">
+                                                                        <div className="col-sm-6 borderLeftt">
                                                                             <div className="col-sm-12" style={{display:"flex", alignContent:"space-between"}}>
                                                                                 <label style={{marginBottom:"5px"}}>{globalDarkMode?"Toggle dark mode off:":"Toggle dark mode on:"}</label>
 

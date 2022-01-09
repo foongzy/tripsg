@@ -11,6 +11,7 @@ import Feedback from '@material-ui/icons/Feedback';
 import Bus from '@material-ui/icons/DepartureBoard';
 import Info from '@material-ui/icons/Info';
 import { GlobalContext } from "../Resources/GlobalContext.js";
+import axios from 'axios'
 
 function Sidebar() {
     const [sidebar, setSidebar]=useState(false)
@@ -25,6 +26,8 @@ function Sidebar() {
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
     const{globalDispNameKey}=useContext(GlobalContext)
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
+    const{globalSessionIsLogKey}=useContext(GlobalContext)
+    const[globalSessionIsLog,setGlobalSessionIsLog]=globalSessionIsLogKey
 
     const maxwidth=900
 
@@ -79,6 +82,14 @@ function Sidebar() {
         const retrieveDispName=JSON.parse(retrieveDispNameTmp);
         if(retrieveDispName!=null){
             setGlobalDisplayName(retrieveDispName.displayname)
+            if (globalSessionIsLog==false){
+            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+retrieveDispName.displayname+"/2/"
+            axios.post(URL).then(res=>{
+                setGlobalSessionIsLog(true)
+            }).catch(error=>{
+                console.log("error")
+            })
+        }
         }else{
             history.push("/Login");
         }
@@ -152,7 +163,6 @@ function Sidebar() {
                                 <h2 style={{fontFamily:"monospace", color:"white", paddingTop:"10px"}}>TripSg</h2>
                             </div>
                         </nav>
-                        {/* <nav className={sidebar ? 'nav-menu active':'nav-menu'}> */}
                         <nav className={sidebar ? (globalDarkMode ?'nav-menuD active':'nav-menu active'):(globalDarkMode ?'nav-menuD':'nav-menu')}>
                             <ul className='nav-menu-items' onClick={showSidebar}>
                                 <li className='navbar-toggle'>
@@ -166,25 +176,25 @@ function Sidebar() {
                                 <li className={globalDarkMode ? 'nav-textD toplineD':'nav-text topline'}>
                                     <a href="" onClick={clickHome} className={globalPgToggle[0].isBusArrival==true?"active":""}>
                                         <Bus></Bus>
-                                        <span>Bus Arrivals</span>
+                                        <span className='spann'>Bus Arrivals</span>
                                     </a>
                                 </li>
                                 <li className={globalDarkMode ? 'nav-textD':'nav-text'}>
                                     <a href="" onClick={clickFeedback} className={globalPgToggle[0].isFeedback==true?"active":""}>
                                         <Feedback></Feedback>
-                                        <span>Feedback</span>
+                                        <span className='spann'>Feedback</span>
                                     </a>
                                 </li>
                                 <li className={globalDarkMode ? 'nav-textD':'nav-text'}>
                                     <a href="" onClick={clickAbout} className={globalPgToggle[0].isAbout==true?"active":""}>
                                         <Info></Info>
-                                        <span>About</span>
+                                        <span className='spann'>About</span>
                                     </a>
                                 </li>
                                 <li className={globalDarkMode ? 'nav-textD botlineD':'nav-text botline'}>
                                     <a href="" onClick={clickSetting} className={globalPgToggle[0].isLocationPlanner==true?"active":""}>
                                         <Setting></Setting>
-                                        <span>Settings</span>
+                                        <span className='spann'>Settings</span>
                                     </a>
                                 </li>
                             </ul>

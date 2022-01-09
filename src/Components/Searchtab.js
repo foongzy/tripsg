@@ -155,8 +155,8 @@ function Searchtab() {
                             <nav class="navbar navbar-expand-lg navbar-light">
                                 <label class="navbar-brand leftLabel">
                                     <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
-                                    <label className={globalDarkMode ? "busLabelD":""}>Bus Stop: {globalbusstopcode[0].description} ({globalbusstopcode[0].busstopcode})</label>
-                                    <a href="#" ><Bookmark></Bookmark></a>
+                                    <label className={globalDarkMode ? "busLabelD":""} style={{marginRight:"15px"}}>Bus Stop: {globalbusstopcode[0].description} ({globalbusstopcode[0].busstopcode})</label>
+                                    <a href="#" style={{marginLeft:"-4px"}}><Bookmark></Bookmark></a>
                                     <a href="#" ><MapFunc></MapFunc></a>
                                     <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
                                     <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>

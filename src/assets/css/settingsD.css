@@ -7,6 +7,16 @@
     box-shadow: none;
 }
 
+#accordianBtn1D:not(.collapsed){
+    background-color: #303030;
+    color: white;
+}
+
+#accordianBtn1D:active{
+    background-color: #303030;
+    color: white;
+}
+
 #accordianBtn2D{
     background-color: #424242;
     color: white;
@@ -15,6 +25,17 @@
 #accordianBtn2D:focus{
     box-shadow: none;
 }
+
+#accordianBtn2D:not(.collapsed){
+    background-color: #303030;
+    color: white;
+}
+
+#accordianBtn2D:active{
+    background-color: #303030;
+    color: white;
+}
+
 
 #flush-headingTwoD{
     background-color: #424242;
@@ -28,13 +49,13 @@
 
 
 @media (min-width:575.5px) {
-    .borderLeft{
+    .borderLeftt{
       border-left: 1px solid #212121
     }
 }
   
 @media (max-width:575.5px) {
-    .borderLeft{
+    .borderLeftt{
       border-top: 1px solid #212121;
       padding-top: 5px;
     }

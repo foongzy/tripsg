@@ -44,6 +44,7 @@ function GlobalContextProvider(props){
     const[globalTitle,setGlobalTitle]=useState("Bus Arrivals")
     const[globalDarkMode,setGlobalDarkMode]=useState(false)
     const[globalDisplayName,setGlobalDisplayName]=useState("")
+    const[globalSessionIsLog,setGlobalSessionIsLog]=useState(false)
 
     return(
         <GlobalContext.Provider
@@ -63,7 +64,8 @@ function GlobalContextProvider(props){
             globalPgToggleKey:[globalPgToggle,setGlobalPgToggle],
             globalTitleKey:[globalTitle,setGlobalTitle],
             globalDarkModeKey:[globalDarkMode,setGlobalDarkMode],
-            globalDispNameKey:[globalDisplayName,setGlobalDisplayName]
+            globalDispNameKey:[globalDisplayName,setGlobalDisplayName],
+            globalSessionIsLogKey:[globalSessionIsLog,setGlobalSessionIsLog]
         }}
         >
             {props.children}

@@ -14,6 +14,7 @@ import styles from "../assets/jss/material-kit-react/views/aboutPage";
 import Person from '@material-ui/icons/Person';
 import Button from "../Components/CustomButtons/Button.js";
 import '../assets/css/login.css'
+import axios from 'axios'
 
 const useStyles = makeStyles(styles);
 
@@ -24,6 +25,8 @@ function Login(props) {
     const [cardAnimaton, setCardAnimation] = useState("cardHidden");
     const{globalDispNameKey}=useContext(GlobalContext)
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
+    const{globalSessionIsLogKey}=useContext(GlobalContext)
+    const[globalSessionIsLog,setGlobalSessionIsLog]=globalSessionIsLogKey
 
     setTimeout(function () {
         setCardAnimation("");
@@ -38,6 +41,11 @@ function Login(props) {
     function clickEnter(event){
         event.preventDefault();
         if(userInput!=""){
+            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+userInput+"/1/"
+            axios.post(URL).then(res=>{
+            }).catch(error=>{
+                console.log("error")
+            })
             //save to local storage
             const tripsgname={
                 "displayname":userInput
@@ -46,6 +54,7 @@ function Login(props) {
             setGlobalDisplayName(userInput)
             setUserInputError(false)
             setUserInput("")
+            setGlobalSessionIsLog(true)
             history.push("/BusArrival");
         }else{
             toast.error('Name field cannot be empty', {

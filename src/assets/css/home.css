@@ -1,5 +1,5 @@
-.fullbg{
-    background-color: #fafafb;
+.fullbgHome{
+    background-color: #F0F8FF;
     height: 100vh;
 }
 
@@ -11,12 +11,12 @@
 
 .bgCom{
     padding: 5px 10px;
-    background-color: #fafafb;
+    /* background-color: #fafafb; */
 }
 
 .bg{
     padding: 15px 10px;
-    background-color: #fafafb;
+    /* background-color: #fafafb; */
 }
 
 .shadowProperty{

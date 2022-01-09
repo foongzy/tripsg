@@ -77,6 +77,10 @@ function BookmarkFunc() {
             });
     }
 
+    function bookmarkClickCancel(event){
+        setBookmarkNameInput("")
+    }
+
     function bookmarkClickadd(event){
         event.preventDefault();
         //add to bookmarks
@@ -130,9 +134,9 @@ function BookmarkFunc() {
         <>
         {
             globalisBookmarked==true?(
-                <BookmarkFilled id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"} style={{marginLeft:"15px"}} onClick={bookmarkClickremove}></BookmarkFilled>
+                <BookmarkFilled id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"} onClick={bookmarkClickremove}></BookmarkFilled>
             ):(
-                <Bookmark data-bs-toggle="modal" data-bs-target="#exampleModal" id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"} style={{marginLeft:"15px"}}></Bookmark>
+                <Bookmark data-bs-toggle="modal" data-bs-target="#exampleModal" id={globalDarkMode ? "bookmarkIconD":"bookmarkIcon"}></Bookmark>
             )
         }
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -140,7 +144,7 @@ function BookmarkFunc() {
                     <div class={globalDarkMode ? "modal-content colorModalD":"modal-content colorModal"}>
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add bookmark</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={bookmarkClickCancel}></button>
                         </div>
                         <div className="modal-body">
                             <div className="mb-3">
@@ -148,8 +152,7 @@ function BookmarkFunc() {
                                     width<=550?(
                                         <>
                                         <ul className="ulpadmag">
-                                            <li className="BusTime2 infoNote">Add a bookmark name to easily identify</li>
-                                            <li className="BusTime2 infoNote">bus stop.</li>
+                                            <li className="BusTime2 infoNote">Add a bookmark name to easily identify bus stop.</li>
                                         </ul>
                                         </>
                                     ):(
@@ -163,7 +166,7 @@ function BookmarkFunc() {
                             </div>
                         </div>                                              
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={bookmarkClickCancel}>Cancel</button>
                             <button type="button" class="btn btn-success" data-bs-dismiss="modal" onClick={bookmarkClickadd}>Add</button>
                          </div>
                     </div>

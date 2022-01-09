@@ -47,11 +47,11 @@ function About(props) {
     const { ...rest } = props;
 
     return (
-        <div className={globalDarkMode ? "fullbgD":"fullbg"}>
+        <div className={globalDarkMode ? "fullbgD":"fullbgab"}>
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">
-                <div className={width<551?(globalDarkMode?"bgD":"bg"):(globalDarkMode?"bgComD":"bgCom")}>
+                <div className={width<551?(globalDarkMode?"bgD":"bgg"):(globalDarkMode?"bgComD":"bggCom")}>
                     {/* About page */}
                     <div
                         className={classes.pageHeader} style={{zIndex:"0"} }
