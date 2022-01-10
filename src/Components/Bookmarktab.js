@@ -57,7 +57,6 @@ function Bookmarktab() {
                 return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
             });
             setActiveBookmark(bookmarkExtracted)
-            console.log(bookmarkExtracted)
 
             //Sort bus numbers
             obtainedData.sort(function(a, b) {

@@ -22,6 +22,8 @@ function MapFunc() {
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
     const{globalLocationKey}=useContext(GlobalContext)
     const[globalLocation,setGlobalLocation]=globalLocationKey
+    const{globalNearbyBusStopsKey}=useContext(GlobalContext)
+    const[globalnearbyBusStops,setGlobalNearbyBusStops]=globalNearbyBusStopsKey
 
     let MapHeight=height-220
     let MapWidth
@@ -48,31 +50,35 @@ function MapFunc() {
     const MapURLEnd="&popupWidth=200"
 
     const getMap=()=>{
-        if (mapURLState==""){
-            let latitude
-            let longitude
-            if(globalTabToggle==1){
-                latitude=globalbusstopcode[0].lat
-                longitude=globalbusstopcode[0].lng
-            }else if(globalTabToggle==2){
-                latitude=globalbusstopcodeBM[0].lat
-                longitude=globalbusstopcodeBM[0].lng
-            }else if(globalTabToggle==3){
-                latitude=globalbusstopcodeNearby[0].lat
-                longitude=globalbusstopcodeNearby[0].lng
-            }else{
-                console.log("error")
-            }
-            MapURL=MapURL+"&marker=latLng:"+latitude+","+longitude+"!icon:"+markerIcon+"!colour:"+markerColor
+        let latitude
+        let longitude
+        let code
+        if(globalTabToggle==1){
+            latitude=globalbusstopcode[0].lat
+            longitude=globalbusstopcode[0].lng
+            code=globalbusstopcode[0].busstopcode
+        }else if(globalTabToggle==2){
+            latitude=globalbusstopcodeBM[0].lat
+            longitude=globalbusstopcodeBM[0].lng
+            code=globalbusstopcodeBM[0].busstopcode
+        }else if(globalTabToggle==3){
+            latitude=globalbusstopcodeNearby[0].lat
+            longitude=globalbusstopcodeNearby[0].lng
+            code=globalbusstopcodeNearby[0].busstopcode
+        }else{
+            console.log("error")
+        }
+        MapURL=MapURL+"&marker=latLng:"+latitude+","+longitude+"!icon:"+markerIcon+"!colour:"+markerColor
 
-            //add user position
+        //add user position if nearby
+        const ifNearby = globalnearbyBusStops.some( nearby=> nearby.BusStopCode == code);
+        if(ifNearby){
             MapURL=MapURL+"&marker=latLng:"+globalLocation.coordinates.lat+","+globalLocation.coordinates.lng+"!icon:"+"fa-street-view"+"!colour:"+"blue"
-
-            MapURL=MapURL+MapURLEnd
-            document.getElementById('map').src = MapURL;
-            setMapURLState(MapURL)
         }
             
+        MapURL=MapURL+MapURLEnd
+        document.getElementById('map').src = MapURL;
+        setMapURLState(MapURL)         
     }
     useEffect(getMap,[globalbusstopcode, globalbusstopcodeNearby, globalbusstopcodeBM])
 
