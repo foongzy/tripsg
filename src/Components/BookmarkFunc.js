@@ -66,15 +66,28 @@ function BookmarkFunc() {
                 "lat": "",
                 "lng": "",
             }])
-            toast.success('Bookmark removed', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.success('Bookmark removed', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.success('Bookmark removed', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
     }
 
     function bookmarkClickCancel(event){
@@ -93,15 +106,28 @@ function BookmarkFunc() {
         }else if(globalTabToggle==3){
             busStopCodeAdd=globalbusstopcodeNearby[0].busstopcode
         }else{
-            toast.error('Bookmark cannot be added. Please try again', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.error('Bookmark cannot be added. Please try again', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.error('Bookmark cannot be added. Please try again', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
         if(busStopCodeAdd!=""){
             const busExtracted=globalFullBusstopList.filter((value)=>{
@@ -118,15 +144,28 @@ function BookmarkFunc() {
             localStorage.removeItem("bookmarkedBusstops")
             localStorage.setItem("bookmarkedBusstops",JSON.stringify(snapshotBookmark))
             setGlobalisBookmarked(true)
-            toast.success('Bookmark added', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.success('Bookmark added', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.success('Bookmark added', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
     }
 

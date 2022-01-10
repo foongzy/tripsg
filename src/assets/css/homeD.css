@@ -209,3 +209,10 @@
 .boxBusInfoD{
     border: 1px solid #212121;
 }
+
+.bookmarkNameD{
+    padding: 0px 12px;
+    display: flex;
+    font-size: 20px;
+    color: white;
+}

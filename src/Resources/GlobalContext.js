@@ -46,6 +46,7 @@ function GlobalContextProvider(props){
     const[globalDisplayName,setGlobalDisplayName]=useState("")
     const[globalSessionIsLog,setGlobalSessionIsLog]=useState(false)
     const[globalSearchRadius,setGlobalSearchRadius]=useState(300)
+    const[globalLocation,setGlobalLocation]=useState("")
 
     return(
         <GlobalContext.Provider
@@ -67,7 +68,8 @@ function GlobalContextProvider(props){
             globalDarkModeKey:[globalDarkMode,setGlobalDarkMode],
             globalDispNameKey:[globalDisplayName,setGlobalDisplayName],
             globalSessionIsLogKey:[globalSessionIsLog,setGlobalSessionIsLog],
-            globalSearchRadiusKey:[globalSearchRadius,setGlobalSearchRadius]
+            globalSearchRadiusKey:[globalSearchRadius,setGlobalSearchRadius],
+            globalLocationKey:[globalLocation,setGlobalLocation]
         }}
         >
             {props.children}

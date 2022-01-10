@@ -99,15 +99,28 @@ function Bookmarktab() {
                 "lng": busExtracted[0].Longitude,
             }])
         }).catch(error=>{
-            toast.error('Server error. Please try again', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.error('Server error. Please try again', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.error('Server error. Please try again', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })   
     }
 
@@ -156,25 +169,51 @@ function Bookmarktab() {
                 "lng": busExtracted[0].Longitude,
             }])
 
-            toast.success('Refresh successful', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.success('Refresh successful', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.success('Refresh successful', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }).catch(error=>{
-            toast.error('Server error', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            if(globalDarkMode){
+                toast.error('Server error', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.error('Server error', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         })
     }
 
@@ -203,15 +242,28 @@ function Bookmarktab() {
         
         localStorage.removeItem("bookmarkedBusstops")
         localStorage.setItem("bookmarkedBusstops",JSON.stringify(bookmarkFinal))
-        toast.success('Successfully updated bookmark name', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
+        if(globalDarkMode){
+            toast.success('Successfully updated bookmark name', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+            toast.success('Successfully updated bookmark name', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     }
 
     return (
@@ -233,7 +285,7 @@ function Bookmarktab() {
                                 </div>
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 </ul>
-                                <div style={{fontSize:"20px", display:"flex", padding:"0px 12px"}}>
+                                <div className={globalDarkMode ? "bookmarkNameD":"bookmarkName"}>
                                     {activeBookmark[0].CustomName}<a href="#"><EditIcon id="editIcon" data-bs-toggle="modal" data-bs-target="#bookmarkEditModal"></EditIcon></a>
                                 </div>
                             </nav>

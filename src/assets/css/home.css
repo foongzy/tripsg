@@ -219,3 +219,9 @@ div.card-body{
     padding-left: 5px;
     padding-bottom: 5px;
 }
+
+.bookmarkName{
+    padding: 0px 12px;
+    display: flex;
+    font-size: 20px;
+}

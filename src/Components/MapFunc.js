@@ -20,6 +20,8 @@ function MapFunc() {
     const[globalTabToggle,setGlobalTabToggle]=globalTabToggleKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalLocationKey}=useContext(GlobalContext)
+    const[globalLocation,setGlobalLocation]=globalLocationKey
 
     let MapHeight=height-220
     let MapWidth
@@ -62,6 +64,10 @@ function MapFunc() {
                 console.log("error")
             }
             MapURL=MapURL+"&marker=latLng:"+latitude+","+longitude+"!icon:"+markerIcon+"!colour:"+markerColor
+
+            //add user position
+            MapURL=MapURL+"&marker=latLng:"+globalLocation.coordinates.lat+","+globalLocation.coordinates.lng+"!icon:"+"fa-street-view"+"!colour:"+"blue"
+
             MapURL=MapURL+MapURLEnd
             document.getElementById('map').src = MapURL;
             setMapURLState(MapURL)

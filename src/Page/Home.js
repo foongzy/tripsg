@@ -49,6 +49,8 @@ function Home(props){
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
     const{globalSearchRadiusKey}=useContext(GlobalContext)
     const[globalSearchRadius,setGlobalSearchRadius]=globalSearchRadiusKey
+    const{globalLocationKey}=useContext(GlobalContext)
+    const[globalLocation,setGlobalLocation]=globalLocationKey
 
     const {height, width}=useWindowDimensions();
 
@@ -91,6 +93,7 @@ function Home(props){
             return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
         });
         updateGlobalNearbyBusStops(nearbyBusStops)
+        setGlobalLocation(location)
     }
     useEffect(findNearestBusStops,[location, globalFullBusstopList])
 
