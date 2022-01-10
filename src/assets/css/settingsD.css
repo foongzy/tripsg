@@ -36,8 +36,31 @@
     color: white;
 }
 
+#accordianBtn3D{
+    background-color: #424242;
+    color: white;
+}
+
+#accordianBtn3D:focus{
+    box-shadow: none;
+}
+
+#accordianBtn3D:not(.collapsed){
+    background-color: #303030;
+    color: white;
+}
+
+#accordianBtn3D:active{
+    background-color: #303030;
+    color: white;
+}
+
 
 #flush-headingTwoD{
+    background-color: #424242;
+}
+
+#flush-headingThreeD{
     background-color: #424242;
 }
 

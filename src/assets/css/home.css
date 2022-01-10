@@ -213,3 +213,9 @@ div.card-body{
 .cardHeaderBusStop{
     background-color: #C1C8E4 !important;
 }
+
+#editIcon{
+    color: grey;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}

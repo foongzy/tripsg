@@ -168,7 +168,7 @@ function Searchtab() {
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                     </ul>
                                     <form class={width>991?"d-flex":"container-fluid"} style={{padding:"0px"}}>
-                                        <SearchBar placeholder="Search bus stop number or name..." data={globalFullBusstopList} />
+                                        <SearchBar placeholder="Search..." data={globalFullBusstopList} />
                                     </form>
                                 </div>
                             </nav>
@@ -229,7 +229,7 @@ function Searchtab() {
                             <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
                         }
                         <form class="container-fluid" style={{marginTop:"30px"}}>
-                            <SearchBar placeholder="Search bus stop number or name..." data={globalFullBusstopList}/>
+                            <SearchBar placeholder="Search..." data={globalFullBusstopList}/>
                         </form>
                     </div>
                     </>
@@ -247,7 +247,7 @@ function Searchtab() {
                         <b>Quick Search</b>
                         <ul style={{marginBottom:"5px"}}>
                             <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
-                            <li>Type in bus number and click search. Applicaiton will show bus arrival for queried bus at nearest bus stop.</li>
+                            <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop.</li>
                         </ul>
                         <div style={{fontSize:"14px", marginLeft:"15px"}}>
                         Note:

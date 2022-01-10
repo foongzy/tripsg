@@ -7,6 +7,7 @@ import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import Bookmark from './BookmarkFunc'
 import BookmarkFilled from '@material-ui/icons/Bookmark';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
+import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +22,16 @@ function Bookmarktab() {
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
+    const [activeBookmark, setActiveBookmark]=useState([
+        {
+            "CustomName": "",
+            "BusStopCode": "",
+            "RoadName": "",
+            "Description": ""
+        }
+    ])
+    const [nameInput, setNameInput]=useState("")
+
     const{globalArrivalDataKey}=useContext(GlobalContext)
     const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
     const{globalbusstopcodeBMKey}=useContext(GlobalContext)
@@ -32,10 +43,22 @@ function Bookmarktab() {
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
 
+    function updateNameInput(event){
+        setNameInput(event.target.value);
+    }
+
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
+
+            //Find bookmark bus stop details from selection
+            const bookmarkExtracted=globalBookmarked.filter((value)=>{
+                return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+            });
+            setActiveBookmark(bookmarkExtracted)
+            console.log(bookmarkExtracted)
+
             //Sort bus numbers
             obtainedData.sort(function(a, b) {
                 return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
@@ -165,13 +188,39 @@ function Bookmarktab() {
         setGlobalArrivalData([])
     }
 
+    function bookmarkClickUpdate(event){
+        event.preventDefault();
+        let snapshotBookmark=activeBookmark
+        const bookmarkEdit=globalbusstopcodeBM[0].busstopcode
+        snapshotBookmark[0].CustomName=nameInput
+        //Find all other bookmarks and add in updated bookmark
+        const bookmarkFinal=globalBookmarked.filter((value)=>{
+            return (value.BusStopCode.toLowerCase()!=bookmarkEdit.toLowerCase());
+        });
+        bookmarkFinal.push(snapshotBookmark[0])
+        setGlobalBookmarked(bookmarkFinal)
+        setActiveBookmark(snapshotBookmark)
+        
+        localStorage.removeItem("bookmarkedBusstops")
+        localStorage.setItem("bookmarkedBusstops",JSON.stringify(bookmarkFinal))
+        toast.success('Successfully updated bookmark name', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
     return (
         <div>
             {
                 globalbusstopcodeBM[0].busstopcode!=''?(
                     <div>
                         <div className="container-fluid line">
-                            <nav class="navbar navbar-expand-lg navbar-light" id="texthead">
+                            <nav class="navbar navbar-expand-md navbar-light" id="texthead">
                                 <div className="container-fluid">
                                 <label class="navbar-brand leftLabel">
                                     <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
@@ -182,11 +231,10 @@ function Bookmarktab() {
                                     <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>
                                 </label>
                                 </div>
-                                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    </ul>
-                                    <form class={width>991?"d-flex":"container-fluid"} style={{padding:"0px"}}>
-                                    </form>
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                </ul>
+                                <div style={{fontSize:"20px", display:"flex", padding:"0px 12px"}}>
+                                    {activeBookmark[0].CustomName}<a href="#"><EditIcon id="editIcon" data-bs-toggle="modal" data-bs-target="#bookmarkEditModal"></EditIcon></a>
                                 </div>
                             </nav>
                         </div>
@@ -237,9 +285,9 @@ function Bookmarktab() {
                         <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
                             {globalBookmarked.map((value,key)=>{
                                 return(
-                                    <div class="col">
+                                    <div className="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                            <div class="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
+                                            <div className="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
                                                 <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                     {value.CustomName==""?value.Description:value.CustomName} 
                                                     <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>
@@ -306,6 +354,31 @@ function Bookmarktab() {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* edit bookmark name modal */}
+            <div class="modal fade" id="bookmarkEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content" id={globalDarkMode ?"bmModal":""}>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit bookmark name</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <div class="container-fluid">
+                        <label>Current bookmark name: {activeBookmark[0].CustomName==""?"Not set":activeBookmark[0].CustomName}</label>
+                        <br></br>
+                        <label style={{marginTop:"5px"}}>New bookmark name:</label>
+                        <input type="text" placeholder="Enter bookmark name" maxLength="25" className={globalDarkMode?"form-control form-control-sm inputBoxD":"form-control form-control-sm inputBox"} id="exampleFormControlInput1" value={nameInput} onChange={updateNameInput}/>
+                        
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onClick={bookmarkClickUpdate}>Update</button>
                     </div>
                     </div>
                 </div>

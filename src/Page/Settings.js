@@ -24,6 +24,7 @@ function Settings(props) {
 
     const [nameInput, setNameInput] = useState("");
     const [nameInputError, setNameInputError] = useState(false);
+    const [radiusInput, setRadiusInput] = useState("");
 
     const{globalPgToggleKey}=useContext(GlobalContext)
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
@@ -33,6 +34,8 @@ function Settings(props) {
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
     const{globalDispNameKey}=useContext(GlobalContext)
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
+    const{globalSearchRadiusKey}=useContext(GlobalContext)
+    const[globalSearchRadius,setGlobalSearchRadius]=globalSearchRadiusKey
 
     setTimeout(function () {
         setCardAnimation("");
@@ -42,6 +45,10 @@ function Settings(props) {
 
     function updateNameInput(event){
         setNameInput(event.target.value);
+    }
+
+    function updateRadiusInput(event){
+        setRadiusInput(event.target.value);
     }
 
     //Initialise sidebar display
@@ -55,6 +62,20 @@ function Settings(props) {
         setGlobalTitle("Settings")
     }
     useEffect(initialiseSidebarDisplay,[]);
+
+    //Initialise local search radius state from global
+    const initialiseSearchRLocal=()=>{
+        //retrieve search radius settings
+        const retrieveSearchRTmp=localStorage.getItem('tripsgradius');
+        const retrieveSearchR=JSON.parse(retrieveSearchRTmp);
+        if(retrieveSearchR!=null){
+            setGlobalSearchRadius(retrieveSearchR.radius)
+            setRadiusInput(retrieveSearchR.radius)
+        }else{
+            setRadiusInput(globalSearchRadius)
+        }
+    }
+    useEffect(initialiseSearchRLocal,[]);
 
     function darkModeToggle(event){
         setGlobalDarkMode(!globalDarkMode)
@@ -108,6 +129,26 @@ function Settings(props) {
         }
     }
 
+    function clickRadiusUpdate(event){
+        event.preventDefault();
+        //save to local storage
+        const tripsgradius={
+            "radius":radiusInput
+        }
+        localStorage.removeItem("tripsgradius")
+        localStorage.setItem("tripsgradius",JSON.stringify(tripsgradius))
+        setGlobalSearchRadius(radiusInput)
+        toast.success('Successfully updated search radius', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+
     return (
         <div className={globalDarkMode ? "fullbgD":"fullbgSe"}>
             <ToastContainer />
@@ -125,19 +166,19 @@ function Settings(props) {
                                         <Card className={classes[cardAnimaton]} style={{marginTop:"-10px"}}>
                                             <form className={classes.form} id={globalDarkMode?"aboutCardbgD":""}>
                                                 <CardHeader className={classes.cardHeader} style={{background:"linear-gradient(60deg, #5680e9, #1b7ced)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
-                                                <h4>Settings</h4>
+                                                    <h4>Settings</h4>
                                                 </CardHeader>
                                                 <CardBody>
-                                                <div className="accordion accordion-flush" id="accordionFlushExample">
-                                                    <div className="accordion-item">
-                                                        <h2 className="accordion-header" id="flush-headingOne">
-                                                        <button className="accordion-button collapsed" id={globalDarkMode?"accordianBtn1D":"accordianBtn1"} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                            Display Name
-                                                        </button>
-                                                        </h2>
-                                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                        <div className={globalDarkMode?"accordion-bodyD":"accordion-body"}>
-                                                        <div className="row">
+                                                    <div className="accordion accordion-flush" id="accordionFlushExample">
+                                                        <div className="accordion-item">
+                                                            <h2 className="accordion-header" id="flush-headingOne">
+                                                                <button className="accordion-button collapsed" id={globalDarkMode?"accordianBtn1D":"accordianBtn1"} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                    Display Name
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                                <div className={globalDarkMode?"accordion-bodyD":"accordion-body"}>
+                                                                    <div className="row">
                                                                         <div className="col-sm-6 borderBot">
                                                                             <div className="col-sm-12">
                                                                                 <label>You can update your display name here.</label>
@@ -157,18 +198,18 @@ function Settings(props) {
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="accordion-item">
-                                                        <h2 className="accordion-header" id={globalDarkMode?"flush-headingTwoD":"flush-headingTwo"}>
-                                                        <button className="accordion-button collapsed" id={globalDarkMode?"accordianBtn2D":"accordianBtn2"} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                            Dark Mode
-                                                        </button>
-                                                        </h2>
-                                                        <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                                        <div className={globalDarkMode?"accordion-bodyD":"accordion-body"}>
-                                                        <div className="row">
+                                                        <div className="accordion-item">
+                                                            <h2 className="accordion-header" id={globalDarkMode?"flush-headingTwoD":"flush-headingTwo"}>
+                                                                <button className="accordion-button collapsed" id={globalDarkMode?"accordianBtn2D":"accordianBtn2"} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                                    Dark Mode
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseTwo" className="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                                                <div className={globalDarkMode?"accordion-bodyD":"accordion-body"}>
+                                                                    <div className="row">
                                                                         <div className="col-sm-6 borderBot">
                                                                             <div className="col-sm-12">
                                                                                 <label>You can toggle dark mode on/off here.</label>
@@ -177,7 +218,6 @@ function Settings(props) {
                                                                         <div className="col-sm-6 borderLeftt">
                                                                             <div className="col-sm-12" style={{display:"flex", alignContent:"space-between"}}>
                                                                                 <label style={{marginBottom:"5px"}}>{globalDarkMode?"Toggle dark mode off:":"Toggle dark mode on:"}</label>
-
                                                                                 <div class="form-check form-switch" style={{alignItems:"flex-end", marginLeft: "auto"}}>
                                                                                     {
                                                                                         globalDarkMode==true?(
@@ -185,17 +225,50 @@ function Settings(props) {
                                                                                         ):(
                                                                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheck" onClick={darkModeToggle}/>
                                                                                         )
-                                                                                    }
-                                                                                    
+                                                                                    }   
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        <div className="accordion-item">
+                                                            <h2 className="accordion-header" id={globalDarkMode?"flush-headingThreeD":"flush-headingThree"}>
+                                                                <button className="accordion-button collapsed" id={globalDarkMode?"accordianBtn3D":"accordianBtn3"} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                                    Nearby Radius
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseThree" className="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                                                <div className={globalDarkMode?"accordion-bodyD":"accordion-body"}>
+                                                                    <div className="row">
+                                                                        <div className="col-sm-6 borderBot">
+                                                                            <div className="col-sm-12">
+                                                                                <label>The application uses your location to search for nearby bus stops. <br></br>You can change the search radius here.</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-sm-6 borderLeftt">
+                                                                            <div className="col-sm-12">
+                                                                                <label style={{marginBottom:"5px"}}>Current radius: {globalDisplayName}</label>
+                                                                                <br />
+                                                                                <label style={{marginBottom:"5px"}}>Select new search radius: {radiusInput>=1000?(radiusInput/1000+"km"):(radiusInput+"m")}</label>
+                                                                                <div class="range">
+                                                                                    <input type="range" class="form-range" min="100" max="2000" step="100" id="customRange3" value={radiusInput} onChange={updateRadiusInput} />
+                                                                                    <div className="col-sm-12" style={{display:"flex", alignContent:"space-between"}}>
+                                                                                        <label>100m</label>
+                                                                                        <label style={{alignItems:"flex-end", marginLeft: "auto"}}>2km</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className="d-grid gap-2 d-md-flex justify-content-md-end" style={{marginTop:"15px"}}>
+                                                                                    <button className="btn btn-secondary bgbtn " id="button" onClick={clickRadiusUpdate}>Update</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    </div>
-  
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}>
                                                 </CardFooter>

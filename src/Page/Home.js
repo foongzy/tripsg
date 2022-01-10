@@ -47,6 +47,8 @@ function Home(props){
     const[globalTitle,setGlobalTitle]=globalTitleKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalSearchRadiusKey}=useContext(GlobalContext)
+    const[globalSearchRadius,setGlobalSearchRadius]=globalSearchRadiusKey
 
     const {height, width}=useWindowDimensions();
 
@@ -63,7 +65,13 @@ function Home(props){
     }
 
     const findNearestBusStops=()=>{
-        const radius=300 //in metres
+        //retrieve search radius settings
+        const retrieveSearchRTmp=localStorage.getItem('tripsgradius');
+        const retrieveSearchR=JSON.parse(retrieveSearchRTmp);
+        if(retrieveSearchR!=null){
+            setGlobalSearchRadius(retrieveSearchR.radius)
+        }
+        const radius=globalSearchRadius //in metres
         let nearbyBusStops=[]
         for (let i = 0; i < globalFullBusstopList.length; i++) {
             const coordinatesTest={
