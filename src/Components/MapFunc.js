@@ -36,7 +36,7 @@ function MapFunc() {
     }else{
         MapWidth=width-(3*px)-2
     }
-    const MapZoom=20
+    const MapZoom=15
     const markerIcon="fa-bus"
     const markerColor="red"
     let mapType
