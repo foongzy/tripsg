@@ -225,3 +225,7 @@ div.card-body{
     display: flex;
     font-size: 20px;
 }
+
+#starIcon{
+    color: black;
+}

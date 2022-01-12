@@ -16,6 +16,7 @@ import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
+import Star from "./StarFunc.js"
 
 function Bookmarktab() {
 
@@ -27,7 +28,8 @@ function Bookmarktab() {
             "CustomName": "",
             "BusStopCode": "",
             "RoadName": "",
-            "Description": ""
+            "Description": "",
+            "Starred":[],
         }
     ])
     const [nameInput, setNameInput]=useState("")
@@ -47,6 +49,40 @@ function Bookmarktab() {
         setNameInput(event.target.value);
     }
 
+    const sortArrivalData=(starArray, arrivalData)=>{
+        let snapshotArrivalData=arrivalData
+        let starArr=[]
+        let notstarArr=[]
+        //split arrival data into star and no star
+        for (let i = 0; i < snapshotArrivalData.length; i++) {
+            //check if star
+            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+            const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+            });
+            if(isStar){
+                //starred
+                starArr.push(busArrivalDets[0])
+            }else{
+                //not starred
+                notstarArr.push(busArrivalDets[0])
+            }
+        }
+
+        //sort star
+        starArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        //sort no star
+        notstarArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        
+        //combine
+        let sorted=starArr.concat(notstarArr)
+        return sorted
+    }
+
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
         axios.get(URLbusArrival).then(res=>{
@@ -59,9 +95,7 @@ function Bookmarktab() {
             setActiveBookmark(bookmarkExtracted)
 
             //Sort bus numbers
-            obtainedData.sort(function(a, b) {
-                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-            });
+            obtainedData=sortArrivalData(bookmarkExtracted[0].Starred, obtainedData)
 
             //Calculating time to bus
             const dateTimeNow=Date.now()
@@ -128,10 +162,9 @@ function Bookmarktab() {
         const URLbusArrival=URL+globalbusstopcodeBM[0].busstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
+
             //Sort bus numbers
-            obtainedData.sort(function(a, b) {
-                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-            });
+            obtainedData=sortArrivalData(activeBookmark[0].Starred, obtainedData)
 
             //Calculating time to bus
             const dateTimeNow=Date.now()
@@ -155,6 +188,7 @@ function Bookmarktab() {
                 obtainedData[i].NextBus3.EstimatedArrival=time[2]
             }
             setGlobalArrivalData(obtainedData)
+            console.log(globalArrivalData)
 
             //Find bus stop details using bus stop code
             const busExtracted=globalFullBusstopList.filter((value)=>{
@@ -265,6 +299,42 @@ function Bookmarktab() {
         }
     }
 
+    const starSort=()=>{
+        let snapshotArrivalData=globalArrivalData
+        let starArray=activeBookmark[0].Starred
+        let starArr=[]
+        let notstarArr=[]
+        //split arrival data into star and no star
+        for (let i = 0; i < snapshotArrivalData.length; i++) {
+            //check if star
+            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+            const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+            });
+            if(isStar){
+                //starred
+                starArr.push(busArrivalDets[0])
+            }else{
+                //not starred
+                notstarArr.push(busArrivalDets[0])
+            }
+        }
+
+        //sort star
+        starArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        //sort no star
+        notstarArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        
+        //combine
+        let sorted=starArr.concat(notstarArr)
+        setGlobalArrivalData(sorted )
+    }
+    useEffect(starSort,[globalBookmarked])
+
     return (
         <div>
             {
@@ -301,8 +371,8 @@ function Bookmarktab() {
                                                         <label className="BusNo">{value.ServiceNo}</label>
                                                     </div>
                                                     <div className="col-7">
-                                                        <label className="BusTime">Next Bus:</label>
-                                                        <br></br>
+                                                        <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:<Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></label>
+                                                        
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {value.NextBus2.EstimatedArrival!="NaNmin"?(
