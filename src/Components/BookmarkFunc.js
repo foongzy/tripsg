@@ -152,6 +152,7 @@ function BookmarkFunc() {
             localStorage.removeItem("bookmarkedBusstops")
             localStorage.setItem("bookmarkedBusstops",JSON.stringify(snapshotBookmark))
             setGlobalisBookmarked(true)
+            setBookmarkNameInput("")
             if(globalDarkMode){
                 toast.success('Bookmark added', {
                     position: "top-right",
