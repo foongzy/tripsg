@@ -7,6 +7,8 @@ import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import Bookmark from './BookmarkFunc'
 import BookmarkFilled from '@material-ui/icons/Bookmark';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
+import StarFilled from '@material-ui/icons/Star';
+import StarIcon from '@material-ui/icons/StarBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
@@ -132,6 +134,7 @@ function Bookmarktab() {
                 "lng": busExtracted[0].Longitude,
             }])
         }).catch(error=>{
+            console.log(error)
             if(globalDarkMode){
                 toast.error('Server error. Please try again', {
                     position: "top-right",
@@ -300,38 +303,41 @@ function Bookmarktab() {
     }
 
     const starSort=()=>{
-        let snapshotArrivalData=globalArrivalData
-        let starArray=activeBookmark[0].Starred
-        let starArr=[]
-        let notstarArr=[]
-        //split arrival data into star and no star
-        for (let i = 0; i < snapshotArrivalData.length; i++) {
-            //check if star
-            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
-            const busArrivalDets=snapshotArrivalData.filter((value)=>{
-                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
-            });
-            if(isStar){
-                //starred
-                starArr.push(busArrivalDets[0])
-            }else{
-                //not starred
-                notstarArr.push(busArrivalDets[0])
+        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
+        if(ifExist){
+            let snapshotArrivalData=globalArrivalData
+            let starArray=activeBookmark[0].Starred
+            let starArr=[]
+            let notstarArr=[]
+            //split arrival data into star and no star
+            for (let i = 0; i < snapshotArrivalData.length; i++) {
+                //check if star
+                const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+                const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                    return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                });
+                if(isStar){
+                    //starred
+                    starArr.push(busArrivalDets[0])
+                }else{
+                    //not starred
+                    notstarArr.push(busArrivalDets[0])
+                }
             }
-        }
 
-        //sort star
-        starArr.sort(function(a, b) {
-            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-        });
-        //sort no star
-        notstarArr.sort(function(a, b) {
-            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-        });
-        
-        //combine
-        let sorted=starArr.concat(notstarArr)
-        setGlobalArrivalData(sorted )
+            //sort star
+            starArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            //sort no star
+            notstarArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            
+            //combine
+            let sorted=starArr.concat(notstarArr)
+            setGlobalArrivalData(sorted )
+        }
     }
     useEffect(starSort,[globalBookmarked])
 
@@ -471,7 +477,13 @@ function Bookmarktab() {
                             <li>Search for bookmarked bus stop</li>
                             <li>Click on <BookmarkFilled></BookmarkFilled></li>
                         </ul>
-                        
+                        <div className="botLine"></div>
+                        <b>Starred bus services</b>
+                        <ul style={{marginBottom:"0px"}}>
+                            <li>Bookmarked bus stops allows you to star bus services by clicking <StarIcon></StarIcon></li>
+                            <li>Starred services appear at the top</li>
+                            <li>Remove star by clicking <StarFilled></StarFilled></li>
+                        </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>

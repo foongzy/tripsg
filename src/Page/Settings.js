@@ -288,7 +288,7 @@ function Settings(props) {
                                                                         </div>
                                                                         <div className="col-sm-6 borderLeftt">
                                                                             <div className="col-sm-12">
-                                                                                <label style={{marginBottom:"5px"}}>Current radius: {globalDisplayName}</label>
+                                                                                <label style={{marginBottom:"5px"}}>Current radius: {globalSearchRadius>=1000?(globalSearchRadius/1000+"km"):(globalSearchRadius+"m")}</label>
                                                                                 <br />
                                                                                 <label style={{marginBottom:"5px"}}>Select new search radius: {radiusInput>=1000?(radiusInput/1000+"km"):(radiusInput+"m")}</label>
                                                                                 <div class="range">

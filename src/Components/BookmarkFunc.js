@@ -32,10 +32,17 @@ function BookmarkFunc() {
     }
 
     const checkifBookemarked=()=>{
-        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
-        const ifExistNearby = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
-        const ifExistBM = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
-        if (ifExist==true||ifExistNearby==true||ifExistBM==true){
+        let ifExist
+        if (globalTabToggle==1){
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+        }else if(globalTabToggle==3){
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
+        }else if(globalTabToggle==2){
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
+        }else{
+            console.log("error")
+        }
+        if (ifExist==true){
             setGlobalisBookmarked(true)
         }else{
             setGlobalisBookmarked(false)

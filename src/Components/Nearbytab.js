@@ -14,12 +14,23 @@ import WheelChair from '@material-ui/icons/Accessible';
 import Location from '@material-ui/icons/LocationOn';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
+import Star from "./StarFunc.js"
 
 function Nearbytab() {
     const location=geolocation();
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+
+    const [activeBookmark, setActiveBookmark]=useState([
+        {
+            "CustomName": "",
+            "BusStopCode": "",
+            "RoadName": "",
+            "Description": "",
+            "Starred":[],
+        }
+    ])
 
     const{globalArrivalDataKey}=useContext(GlobalContext)
     const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
@@ -31,15 +42,66 @@ function Nearbytab() {
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalisBookmarkKey}=useContext(GlobalContext)
+    const[globalisBookmarked,setGlobalisBookmarked]=globalisBookmarkKey
+    const{globalBookmarkKey}=useContext(GlobalContext)
+    const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
+
+    const sortArrivalData=(starArray, arrivalData)=>{
+        let snapshotArrivalData=arrivalData
+        let starArr=[]
+        let notstarArr=[]
+        //split arrival data into star and no star
+        for (let i = 0; i < snapshotArrivalData.length; i++) {
+            //check if star
+            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+            const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+            });
+            if(isStar){
+                //starred
+                starArr.push(busArrivalDets[0])
+            }else{
+                //not starred
+                notstarArr.push(busArrivalDets[0])
+            }
+        }
+
+        //sort star
+        starArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        //sort no star
+        notstarArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        
+        //combine
+        let sorted=starArr.concat(notstarArr)
+        return sorted
+    }
 
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
+        const ifExistNearby = globalBookmarked.some( bookmark=> bookmark.BusStopCode == code);
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
+
             //Sort bus numbers
-            obtainedData.sort(function(a, b) {
-                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-            });
+            if(ifExistNearby){
+                //Find bookmark bus stop details from selection
+                const bookmarkExtracted=globalBookmarked.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+                });
+                setActiveBookmark(bookmarkExtracted)
+
+                //Sort
+                obtainedData=sortArrivalData(bookmarkExtracted[0].Starred, obtainedData)
+            }else{
+                obtainedData.sort(function(a, b) {
+                    return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+                });
+            }
 
             //Calculating time to bus
             const dateTimeNow=Date.now()
@@ -106,10 +168,15 @@ function Nearbytab() {
         const URLbusArrival=URL+globalbusstopcodeNearby[0].busstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
+
             //Sort bus numbers
-            obtainedData.sort(function(a, b) {
-                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-            });
+            if(globalisBookmarked){
+                obtainedData=sortArrivalData(activeBookmark[0].Starred, obtainedData)
+            }else{
+                obtainedData.sort(function(a, b) {
+                    return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+                });
+            }
 
             //Calculating time to bus
             const dateTimeNow=Date.now()
@@ -204,6 +271,45 @@ function Nearbytab() {
         setGlobalArrivalData([])
     }
 
+    const starSort=()=>{
+        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
+        if(ifExist){
+            let snapshotArrivalData=globalArrivalData
+            let starArray=activeBookmark[0].Starred
+            let starArr=[]
+            let notstarArr=[]
+            //split arrival data into star and no star
+            for (let i = 0; i < snapshotArrivalData.length; i++) {
+                //check if star
+                const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+                const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                    return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                });
+                if(isStar){
+                    //starred
+                    starArr.push(busArrivalDets[0])
+                }else{
+                    //not starred
+                    notstarArr.push(busArrivalDets[0])
+                }
+            }
+
+            //sort star
+            starArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            //sort no star
+            notstarArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            
+            //combine
+            let sorted=starArr.concat(notstarArr)
+            setGlobalArrivalData(sorted )
+        }
+    }
+    useEffect(starSort,[globalBookmarked])
+
     return (
         <div>
             {
@@ -243,8 +349,15 @@ function Nearbytab() {
                                                         <label className="BusNo">{value.ServiceNo}</label>
                                                     </div>
                                                     <div className="col-7">
-                                                        <label className="BusTime">Next Bus:</label>
-                                                        <br></br>
+                                                        <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
+                                                            {
+                                                                globalisBookmarked?(
+                                                                    <Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/>
+                                                                ):(
+                                                                    <></>
+                                                                )
+                                                            }
+                                                        </label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {value.NextBus2.EstimatedArrival!="NaNmin"?(
@@ -285,9 +398,9 @@ function Nearbytab() {
                                                     //No bus stops nearby
                                                     <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
                                                         {globalDarkMode ?
-                                                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                                             :
-                                                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                                         }
                                                         
                                                         <form class="container-fluid" style={{marginTop:"30px"}}>
@@ -296,7 +409,7 @@ function Nearbytab() {
                                                     </div>
                                                 ):(
                                                     // Show nearby busstops
-                                                    <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
+                                                    <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px", paddingTop:"0px"}}>
                                                         {globalnearbyBusStops.map((value,key)=>{
                                                             return(
                                                                 <div className="col">

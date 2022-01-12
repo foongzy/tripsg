@@ -16,6 +16,7 @@ import { getDistance, orderByDistance, isPointWithinRadius } from 'geolib';
 import Searchtab from "../Components/Searchtab"
 import Bookmarktab from "../Components/Bookmarktab"
 import Nearbytab from "../Components/Nearbytab"
+import Refresh from "@material-ui/icons/Refresh";
 
 function Home(props){
     const location=geolocation();
@@ -180,6 +181,59 @@ function Home(props){
     }
     useEffect(initialiseSidebarDisplay,[]);
 
+    const refreshNearby=()=>{
+        //retrieve search radius settings
+        const retrieveSearchRTmp=localStorage.getItem('tripsgradius');
+        const retrieveSearchR=JSON.parse(retrieveSearchRTmp);
+        if(retrieveSearchR!=null){
+            setGlobalSearchRadius(retrieveSearchR.radius)
+        }
+        const radius=globalSearchRadius //in metres
+        let nearbyBusStops=[]
+        for (let i = 0; i < globalFullBusstopList.length; i++) {
+            const coordinatesTest={
+                latitude:globalFullBusstopList[i].Latitude,
+                longitude:globalFullBusstopList[i].Longitude,
+            };
+            if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
+                nearbyBusStops.push(globalFullBusstopList[i])
+            }
+        }
+        for (let j = 0; j < nearbyBusStops.length; j++) {
+            const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
+            nearbyBusStops[j].distFromUser = dist;
+        }
+        //sort by dist
+        nearbyBusStops.sort(function(a, b) {
+            return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
+        });
+        updateGlobalNearbyBusStops(nearbyBusStops)
+        setGlobalLocation(location)
+
+        if(globalDarkMode){
+            toast.success('Nearby bus stops refreshed', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+            toast.success('Nearby bus stops refreshed', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     return(
         <div className={globalDarkMode ? "fullbgHomeD":"fullbgHome"}>
             {
@@ -192,18 +246,27 @@ function Home(props){
             <div className="leftmargin background">
                 <div className={width<901?(globalDarkMode?"bgD":"bg"):(globalDarkMode?"bgComD":"bgCom")}>
 
-                    <div className="bordertop"> 
-                        <ul className={globalDarkMode?"nav nav-tabs topLineTabD":"nav nav-tabs"}>
-                            <li className="nav-item">
-                                <a className={globalTabToggle==1?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} aria-current="page" href="#" onClick={searchClick}>Search</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className={globalTabToggle==2?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={bookmarkClick}>Bookmark</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className={globalTabToggle==3?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={nearbyClick}>Nearby</a>
-                            </li>
-                        </ul>
+                    <div className="bordertop">
+                        <div style={{display:"flex"}}>
+                                <ul className={globalDarkMode?"nav nav-tabs topLineTabD":"nav nav-tabs"}>
+                                    <li className="nav-item">
+                                        <a className={globalTabToggle==1?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} aria-current="page" href="#" onClick={searchClick}>Search</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className={globalTabToggle==2?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={bookmarkClick}>Bookmark</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className={globalTabToggle==3?(globalDarkMode?"nav-link active navLinkActiveD":"nav-link active"):(globalDarkMode?"nav-link navLinkD":"nav-link")} href="#" onClick={nearbyClick}>Nearby</a>
+                                    </li>
+                                </ul>
+                                {
+                                    globalTabToggle==3&&globalbusstopcodeNearby[0].busstopcode==""?(
+                                        <a href="#" onClick={refreshNearby} style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}}><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>
+                                    ):(
+                                        <></>
+                                    )
+                                }
+                        </div>
                         
                         <div className={globalDarkMode ? "tabbgD":"tabbg"}>
                             {

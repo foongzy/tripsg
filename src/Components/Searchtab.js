@@ -14,6 +14,7 @@ import Bookmark from './BookmarkFunc'
 import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
+import Star from "./StarFunc.js"
 
 function Searchtab() {
 
@@ -31,20 +32,67 @@ function Searchtab() {
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalisBookmarkKey}=useContext(GlobalContext)
+    const[globalisBookmarked,setGlobalisBookmarked]=globalisBookmarkKey
+    const{globalBookmarkKey}=useContext(GlobalContext)
+    const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+
+    const sortArrivalData=(starArray, arrivalData)=>{
+        let snapshotArrivalData=arrivalData
+        let starArr=[]
+        let notstarArr=[]
+        //split arrival data into star and no star
+        for (let i = 0; i < snapshotArrivalData.length; i++) {
+            //check if star
+            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+            const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+            });
+            if(isStar){
+                //starred
+                starArr.push(busArrivalDets[0])
+            }else{
+                //not starred
+                notstarArr.push(busArrivalDets[0])
+            }
+        }
+
+        //sort star
+        starArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        //sort no star
+        notstarArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        
+        //combine
+        let sorted=starArr.concat(notstarArr)
+        return sorted
+    }
 
     function refreshClick(event){
         event.preventDefault();
         const URLbusArrival=URL+globalbusstopcode[0].busstopcode+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
-
+            
             //Sort bus numbers
-            obtainedData.sort(function(a, b) {
-                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-            });
+            const ifBmark = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+            if(ifBmark){
+                //Find bookmark bus stop details from selection
+                const bookmarkExtracted=globalBookmarked.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+                });
+                obtainedData=sortArrivalData(bookmarkExtracted[0].Starred, obtainedData)
+            }else{
+                obtainedData.sort(function(a, b) {
+                    return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+                });
+            }
 
             //Calculating time to bus
             const dateTimeNow=Date.now()
@@ -171,6 +219,48 @@ function Searchtab() {
         setGlobalArrivalData([])
     }
 
+    const starSort=()=>{
+        const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+        if(ifExist){
+            let snapshotArrivalData=globalArrivalData
+            const bookmarkExtracted=globalBookmarked.filter((value)=>{
+                return (value.BusStopCode.toLowerCase()==globalbusstopcode[0].busstopcode.toLowerCase());
+            });
+            let starArray=bookmarkExtracted[0].Starred
+            let starArr=[]
+            let notstarArr=[]
+            //split arrival data into star and no star
+            for (let i = 0; i < snapshotArrivalData.length; i++) {
+                //check if star
+                const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+                const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                    return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                });
+                if(isStar){
+                    //starred
+                    starArr.push(busArrivalDets[0])
+                }else{
+                    //not starred
+                    notstarArr.push(busArrivalDets[0])
+                }
+            }
+
+            //sort star
+            starArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            //sort no star
+            notstarArr.sort(function(a, b) {
+                return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+            });
+            
+            //combine
+            let sorted=starArr.concat(notstarArr)
+            setGlobalArrivalData(sorted )
+        }
+    }
+    useEffect(starSort,[globalBookmarked])
+
     return (
         <div>
             {
@@ -212,8 +302,15 @@ function Searchtab() {
                                                         <label className="BusNo">{value.ServiceNo}</label>
                                                     </div>
                                                     <div className="col-7">
-                                                        <label className="BusTime">Next Bus:</label>
-                                                        <br></br>
+                                                        <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
+                                                            {
+                                                                globalisBookmarked?(
+                                                                    <Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/>
+                                                                ):(
+                                                                    <></>
+                                                                )
+                                                            }
+                                                        </label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                         <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
                                                         {

@@ -31,11 +31,47 @@ function SearchBar({placeholder, data}) {
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalBookmarkKey}=useContext(GlobalContext)
+    const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
     const updateGlobalRefreshToggle=(value)=>{
         setGlobalRefreshToggle(value)
+    }
+
+    const sortArrivalData=(starArray, arrivalData)=>{
+        let snapshotArrivalData=arrivalData
+        let starArr=[]
+        let notstarArr=[]
+        //split arrival data into star and no star
+        for (let i = 0; i < snapshotArrivalData.length; i++) {
+            //check if star
+            const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
+            const busArrivalDets=snapshotArrivalData.filter((value)=>{
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+            });
+            if(isStar){
+                //starred
+                starArr.push(busArrivalDets[0])
+            }else{
+                //not starred
+                notstarArr.push(busArrivalDets[0])
+            }
+        }
+
+        //sort star
+        starArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        //sort no star
+        notstarArr.sort(function(a, b) {
+            return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+        });
+        
+        //combine
+        let sorted=starArr.concat(notstarArr)
+        return sorted
     }
 
     const handleFilter=(event)=>{
@@ -92,12 +128,22 @@ function SearchBar({placeholder, data}) {
         const URLbusArrival=URL+busStop+"/"
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
-                    
+
             //Sort bus numbers
             if(action!="quickBusNo"){
-                obtainedData.sort(function(a, b) {
-                    return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
-                });
+                const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == busStop);
+                if(ifExist){
+                    //Find bookmark bus stop details from selection
+                    const bookmarkExtracted=globalBookmarked.filter((value)=>{
+                        return (value.BusStopCode.toLowerCase()==res.data.BusStopCode.toLowerCase());
+                    });
+                    //Sort
+                    obtainedData=sortArrivalData(bookmarkExtracted[0].Starred, obtainedData)
+                }else{
+                    obtainedData.sort(function(a, b) {
+                        return parseFloat(a.ServiceNo) - parseFloat(b.ServiceNo);
+                    });
+                }
             }
 
             //Calculating time to bus

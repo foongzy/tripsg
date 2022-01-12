@@ -8,7 +8,15 @@ import useWindowDimensions from "./useWindowDimensions"
 
 function StarFunc({BusNum}) {
     const [isStar, setIsStar] = useState(false)
-    const [activeBM, setActiveBM] = useState("")
+    const [activeBM, setActiveBM] = useState([
+        {
+            "CustomName": "",
+            "BusStopCode": "",
+            "RoadName": "",
+            "Description": "",
+            "Starred":[],
+        }
+    ])
     const {height, width}=useWindowDimensions();
 
     const{globalBookmarkKey}=useContext(GlobalContext)
@@ -29,23 +37,56 @@ function StarFunc({BusNum}) {
     const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
 
     const checkifStar=()=>{
-        //filter out active bookmark
-        const activeBookmark=globalBookmarked.filter((value)=>{
-            return (value.BusStopCode.toLowerCase()==globalbusstopcodeBM[0].busstopcode);
-        });
-        setActiveBM(activeBookmark)
-        // const ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
-        // const ifExistNearby = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
-        const ifStar = activeBookmark[0].Starred.includes(BusNum)
-        setIsStar(ifStar)
+        let ifExist
+        if (globalTabToggle==1){
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+        }else if(globalTabToggle==3){
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
+        }else if(globalTabToggle==2){   
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
+        }else{
+            console.log("error")
+        }
+        if(ifExist){
+            //filter out active bookmark
+            let activeBookmark
+            if (globalTabToggle==1){
+                activeBookmark=globalBookmarked.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcode[0].busstopcode);
+                });
+            }else if(globalTabToggle==2){
+                activeBookmark=globalBookmarked.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeBM[0].busstopcode);
+                });
+            }else if(globalTabToggle==3){
+                activeBookmark=globalBookmarked.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeNearby[0].busstopcode);
+                });
+            }else{
+                console.log("error")
+            }
+            setActiveBM(activeBookmark)
+            const ifStar = activeBookmark[0].Starred.includes(BusNum)
+            setIsStar(ifStar)
+        }
     }
-    useEffect(checkifStar,[globalbusstopcodeBM, globalArrivalData])
+    useEffect(checkifStar,[globalbusstopcode, globalbusstopcodeBM, globalbusstopcodeNearby, globalArrivalData])
 
     function removeStar(event){
         event.preventDefault();
         //remove star
         let snapshotBookmark=activeBM
-        const bookmarkEdit=globalbusstopcodeBM[0].busstopcode
+
+        let bookmarkEdit
+        if (globalTabToggle==1){
+            bookmarkEdit=globalbusstopcode[0].busstopcode
+        }else if(globalTabToggle==2){
+            bookmarkEdit=globalbusstopcodeBM[0].busstopcode
+        }else if(globalTabToggle==3){
+            bookmarkEdit=globalbusstopcodeNearby[0].busstopcode
+        }else{
+            console.log("error")
+        }
         let snapshotStar=snapshotBookmark[0].Starred
         const index = snapshotStar.indexOf(BusNum);
         if (index !== -1) {
@@ -91,7 +132,16 @@ function StarFunc({BusNum}) {
         event.preventDefault();
         //add to star
         let snapshotBookmark=activeBM
-        const bookmarkEdit=globalbusstopcodeBM[0].busstopcode
+        let bookmarkEdit
+        if (globalTabToggle==1){
+            bookmarkEdit=globalbusstopcode[0].busstopcode
+        }else if(globalTabToggle==2){
+            bookmarkEdit=globalbusstopcodeBM[0].busstopcode
+        }else if(globalTabToggle==3){
+            bookmarkEdit=globalbusstopcodeNearby[0].busstopcode
+        }else{
+            console.log("error")
+        }
         let snapshotStar=snapshotBookmark[0].Starred
         snapshotStar.push(BusNum)
         snapshotBookmark[0].Starred=snapshotStar
