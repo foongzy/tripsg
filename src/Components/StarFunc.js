@@ -17,7 +17,6 @@ function StarFunc({BusNum}) {
             "Starred":[],
         }
     ])
-    const {height, width}=useWindowDimensions();
 
     const{globalBookmarkKey}=useContext(GlobalContext)
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
@@ -39,11 +38,11 @@ function StarFunc({BusNum}) {
     const checkifStar=()=>{
         let ifExist
         if (globalTabToggle==1){
-            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcode[0].busstopcode);
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode.toLowerCase() == globalbusstopcode[0].busstopcode.toLowerCase());
         }else if(globalTabToggle==3){
-            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeNearby[0].busstopcode);
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode.toLowerCase() == globalbusstopcodeNearby[0].busstopcode.toLowerCase());
         }else if(globalTabToggle==2){   
-            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode == globalbusstopcodeBM[0].busstopcode);
+            ifExist = globalBookmarked.some( bookmark=> bookmark.BusStopCode.toLowerCase() == globalbusstopcodeBM[0].busstopcode.toLowerCase());
         }else{
             console.log("error")
         }
@@ -52,15 +51,15 @@ function StarFunc({BusNum}) {
             let activeBookmark
             if (globalTabToggle==1){
                 activeBookmark=globalBookmarked.filter((value)=>{
-                    return (value.BusStopCode.toLowerCase()==globalbusstopcode[0].busstopcode);
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcode[0].busstopcode.toLowerCase());
                 });
             }else if(globalTabToggle==2){
                 activeBookmark=globalBookmarked.filter((value)=>{
-                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeBM[0].busstopcode);
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeBM[0].busstopcode.toLowerCase());
                 });
             }else if(globalTabToggle==3){
                 activeBookmark=globalBookmarked.filter((value)=>{
-                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeNearby[0].busstopcode);
+                    return (value.BusStopCode.toLowerCase()==globalbusstopcodeNearby[0].busstopcode.toLowerCase());
                 });
             }else{
                 console.log("error")

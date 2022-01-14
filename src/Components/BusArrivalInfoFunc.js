@@ -3,6 +3,7 @@ import HelpIcon from '@material-ui/icons/HelpOutline'
 import Square from '@material-ui/icons/CropSquare'
 import WheelChair from '@material-ui/icons/Accessible';
 import { GlobalContext } from "../Resources/GlobalContext.js";
+import InfoIcon from '@material-ui/icons/InfoOutlined';
 
 function BusArrivalInfoFunc() {
     const{globalDarkModeKey}=useContext(GlobalContext)
@@ -27,8 +28,9 @@ function BusArrivalInfoFunc() {
                                                 <label className="BusNo">12</label>
                                             </div>
                                             <div className="col-8 borderLeft">
-                                                <label className="BusTime">Next Bus:</label>
-                                                <br></br>
+                                                <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
+                                                <a id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
+                                                </label>
                                                 <label className="BusTime empty">Arriving</label>
                                                 <label className='BusTime2 standing'>5min<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair></label>
                                                 <label className='BusTime2 full'>10min</label>
@@ -53,6 +55,8 @@ function BusArrivalInfoFunc() {
                                             <Square className="BusTime full"></Square><label className='BusTime2 full'>Standing Limited</label>
                                             <br></br>
                                             <WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair><label className='BusTime2' style={{marginLeft:"2px"}}>Wheelchair Accessible</label>
+                                            <br></br>
+                                            <InfoIcon className={globalDarkMode ? "WheelChairD":"WheelChair"}/><label className='BusTime2'>Bus Route Info</label>
                                         </div>
                                     </div>
                                 </div>

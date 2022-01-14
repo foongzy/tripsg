@@ -15,6 +15,13 @@ import Location from '@material-ui/icons/LocationOn';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
 import Star from "./StarFunc.js"
+import InfoIcon from '@material-ui/icons/InfoOutlined';
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
 
 function Nearbytab() {
     const location=geolocation();
@@ -31,6 +38,13 @@ function Nearbytab() {
             "Starred":[],
         }
     ])
+    const [showBusRoute, setShowBusRoute] = useState(false)
+    const [currentBusStopSeq, setCurrentBusStopSeq] = useState("")
+    const [currentBusDets, setCurrentBusDets] = useState("")
+    const [currentTotalBusStop, setCurrentTotalBusStop] = useState(0)
+    const [extractedBusDets, setExtractedBusDets] = useState("")
+    const [busNumState,setBusNum]=useState("")
+    const [isLoop,setIsLoop]=useState(false)
 
     const{globalArrivalDataKey}=useContext(GlobalContext)
     const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
@@ -56,7 +70,7 @@ function Nearbytab() {
             //check if star
             const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
             const busArrivalDets=snapshotArrivalData.filter((value)=>{
-                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo.toLowerCase());
             });
             if(isStar){
                 //starred
@@ -262,13 +276,18 @@ function Nearbytab() {
     }
 
     function clickBack(event){
-        setGlobalbusstopcodeNearby([{
-            "busstopcode": "",
-            "description": "",
-            "lat": "",
-            "lng": "",
-        }])
-        setGlobalArrivalData([])
+        if(showBusRoute==true){
+            setShowBusRoute(false)
+            setIsLoop(false)
+        }else{
+            setGlobalbusstopcodeNearby([{
+                "busstopcode": "",
+                "description": "",
+                "lat": "",
+                "lng": "",
+            }])
+            setGlobalArrivalData([])
+        }
     }
 
     const starSort=()=>{
@@ -283,7 +302,7 @@ function Nearbytab() {
                 //check if star
                 const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
                 const busArrivalDets=snapshotArrivalData.filter((value)=>{
-                    return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                    return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo.toLowerCase());
                 });
                 if(isStar){
                     //starred
@@ -309,6 +328,56 @@ function Nearbytab() {
         }
     }
     useEffect(starSort,[globalBookmarked])
+
+    const InfoClickBusRoute=(BusNum)=>{
+        const URL="http://tripsg-db.herokuapp.com/api/busroutes/"+BusNum+"/"+globalbusstopcodeNearby[0].busstopcode+"/"
+        axios.get(URL).then(res=>{
+            setCurrentBusStopSeq(res.data.currentStopSeq)
+            let busstoproutelist=res.data.data
+            for (let i = 0; i < busstoproutelist.length; i++) {
+                //Find bus stop details using bus stop code
+                const busExtracted=globalFullBusstopList.filter((value)=>{
+                    return (value.BusStopCode.toLowerCase()==busstoproutelist[i].BusStopCode.toLowerCase());
+                });
+                busstoproutelist[i]["busStopDescription"] = busExtracted[0].Description
+                if(res.data.currentStopSeq==busstoproutelist[i].StopSequence){
+                    setExtractedBusDets(busstoproutelist[i])
+                }
+            }
+            if(busstoproutelist[0].BusStopCode==busstoproutelist[busstoproutelist.length-1].BusStopCode){
+                setIsLoop(true)
+            }
+            setCurrentBusDets(busstoproutelist)
+            setCurrentTotalBusStop(busstoproutelist.length)
+            setShowBusRoute(true)
+            setBusNum(BusNum)
+                    // setLoading(false)
+        }).catch(error=>{
+            if(globalDarkMode){
+                toast.error('Error loading bus route details', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark", 
+                });
+            }else{
+                toast.error('Error loading bus route details', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+                    // setLoading(false)
+        })
+    }
 
     return (
         <div>
@@ -337,52 +406,136 @@ function Nearbytab() {
                                 </div>
                             </nav>
                         </div>
-                        {/* bus arrivals */}
-                        <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
-                            {globalArrivalData.map((value,key)=>{
-                                return(
-                                    <div className="col">
-                                        <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
-                                            <div className={globalDarkMode ?"card-body cardbggD":"card-body"}>
-                                                <div className="row">
-                                                    <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
-                                                        <label className="BusNo">{value.ServiceNo}</label>
+                        {
+                            showBusRoute==true?(
+                                <div style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"10px"}}>
+                                    <div className="row">
+                                    <div className="col-sm-6" style={{marginTop:"10px"}}>
+                                            <div className="row container-fluid">
+                                                <div className={globalDarkMode ? "card cardRD":"card timingCard"}>
+                                                    <h4 className={globalDarkMode ?"card-title busrouteD":"card-title busroute"}>Bus {busNumState} Info</h4>
+                                                    {
+                                                       isLoop?(
+                                                            <div className={globalDarkMode ?"busrouteD":"busroute"} style={{marginTop:"-8px", marginBottom:"8px"}}>Loop Service</div>
+                                                       ):(
+                                                            <></>
+                                                       )
+                                                   }
+                                                    <div className={globalDarkMode ?"card-body cardbggD":"card-body timingoutline"}>
+                                                        <div className="row">
+                                                            <div className="col-6 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                <label className="BusTime topmar">Weekdays</label>
+                                                            </div>
+                                                            <div className="col-6">
+                                                            <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
+                                                            <br></br>
+                                                            <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div className="row" style={{marginTop:"10px"}}>
+                                                            <div className="col-6 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                <label className="BusTime topmar">Saturday</label>
+                                                            </div>
+                                                            <div className="col-6">
+                                                            <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
+                                                            <br></br>
+                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
+                                                                
+                                                            </div>
+                                                        </div> 
+                                                        <div className="row" style={{marginTop:"10px"}}>
+                                                            <div className="col-6 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                <label className="BusTime topmar">Sunday</label>
+                                                            </div>
+                                                            <div className="col-6">
+                                                            <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
+                                                            <br></br>
+                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
+                                                                
+                                                            </div>
+                                                        </div> 
                                                     </div>
-                                                    <div className="col-7">
-                                                        <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
-                                                            {
-                                                                globalisBookmarked?(
-                                                                    <Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/>
+                                                    <div className={globalDarkMode ?"busrouteD":"busroute"} style={{fontSize:"12px", marginTop:"5px"}}>Note: Timings displayed are for this bus stop</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6" style={{justifyContent:"center"}}>
+                                        <Timeline position="left">
+                                            {currentBusDets.map((value,key)=>{
+                                                return(
+                                                    <div>
+                                                        <TimelineItem>
+                                                            <TimelineSeparator>
+                                                                <TimelineDot variant={value.StopSequence<currentBusStopSeq?"outlined":"filled"} color="primary" />
+                                                                    {
+                                                                        currentTotalBusStop-1==key?(
+                                                                            <></>
+                                                                        ):(
+                                                                            <TimelineConnector />
+                                                                        )
+                                                                    }
+                                                                </TimelineSeparator>
+                                                            <TimelineContent className={value.StopSequence<currentBusStopSeq?("busroute passed"):(globalDarkMode?"busrouteD":"busroute")}>{value.busStopDescription} ({value.BusStopCode})</TimelineContent>
+                                                        </TimelineItem>
+                                                    </div> 
+                                                )
+                                            })}
+                                            </Timeline>
+                                        </div>
+                                    </div>
+                                </div>
+                            ):(
+                                // {/* bus arrivals */}
+                                <div className="row row-cols-1 row-cols-sm-2 g-0 topMargin" style={{paddingLeft:"10px", paddingRight:"10px"}}>
+                                    {globalArrivalData.map((value,key)=>{
+                                        return(
+                                            <div className="col">
+                                                <div className={globalDarkMode ? "card cardRD":"card cardR"} style={{height:"100%", borderRadius:"0px"}}>
+                                                    <div className={globalDarkMode ?"card-body cardbggD":"card-body"}>
+                                                        <div className="row">
+                                                            <div className="col-5 borderBot rightDivider" style={{textAlign:"center"}}>
+                                                                <label className="BusNo">{value.ServiceNo}</label>
+                                                            </div>
+                                                            <div className="col-7">
+                                                                <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
+                                                                    <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
+                                                                    {
+                                                                        globalisBookmarked?(
+                                                                            <div style={{marginLeft:"3px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div>
+                                                                        ):(
+                                                                            <></>
+                                                                        )
+                                                                    }
+                                                                </label>
+                                                                <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
+                                                                <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
+                                                                {value.NextBus2.EstimatedArrival!="NaNmin"?(
+                                                                    value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
                                                                 ):(
                                                                     <></>
                                                                 )
-                                                            }
-                                                        </label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
-                                                        {value.NextBus2.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
-                                                        ):(
-                                                            <></>
-                                                        )
-                                                        }
-                                                        </label>
-                                                        <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
-                                                        {value.NextBus3.EstimatedArrival!="NaNmin"?(
-                                                            value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
-                                                        ):(
-                                                            <></>
-                                                        )
-                                                        }
-                                                        </label>
+                                                                }
+                                                                </label>
+                                                                <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus3.EstimatedArrival!="NaNmin"?value.NextBus3.EstimatedArrival:""}
+                                                                {value.NextBus3.EstimatedArrival!="NaNmin"?(
+                                                                    value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair>:<></>
+                                                                ):(
+                                                                    <></>
+                                                                )
+                                                                }
+                                                                </label>
+                                                            </div>
+                                                        </div>        
                                                     </div>
-                                                </div>        
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        }
+                        
                     </div>
                 ):(
                     // havent click bus stop

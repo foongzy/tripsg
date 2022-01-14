@@ -35,11 +35,12 @@
 
 .BusTime{
     font-size: 18px;
+    padding-right: 10px;
 }
 
 .BusTime2{
     font-size: 14px;
-    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .WheelChair{
@@ -232,4 +233,32 @@ div.card-body{
 
 #refreshNearby{
     color: black;
+}
+
+#inFoIconBR{
+    color: black;
+}
+
+.busroute{
+    color: black;
+}
+
+.topmar{
+    margin-top: 10px;
+}
+
+.timing{
+    font-size: 14px;
+}
+
+.timingCard{
+    border-color:  white !important;
+}
+
+.timingoutline{
+    border: 1px solid lightgray;
+}
+
+.passed{
+    color: grey;
 }

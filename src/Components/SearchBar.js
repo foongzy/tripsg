@@ -49,7 +49,7 @@ function SearchBar({placeholder, data}) {
             //check if star
             const isStar = starArray.includes(snapshotArrivalData[i].ServiceNo)
             const busArrivalDets=snapshotArrivalData.filter((value)=>{
-                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo);
+                return (value.ServiceNo.toLowerCase()==snapshotArrivalData[i].ServiceNo.toLowerCase());
             });
             if(isStar){
                 //starred
@@ -75,18 +75,50 @@ function SearchBar({placeholder, data}) {
     }
 
     const handleFilter=(event)=>{
-        const searchWord = event.target.value
+        let searchWord = event.target.value
         setGlobalSearchWord(searchWord);
-        const newFilter=data.filter((value)=>{
+        let newFilterOriginal=data.filter((value)=>{
             return (
                 value.BusStopCode.toLowerCase().includes(searchWord.toLowerCase())||
                 value.Description.toLowerCase().includes(searchWord.toLowerCase())
             );
         });
+
+        //handle shortforms
+        const longwords=["bukit", "block", "street", "opposite", "avenue", "station", "after", "before", "primary", 
+        "school", "secondary", "centre", "church", "singapore", "park", "hospital", "road", "mosque", "garden", "drive",
+        "square", "towers", "tower", "tanjong", "complex", "place", "national", "library", "terminal", "jalan", "singapore", 
+        "pri", "primary", "mount", "building", "court", "interchange", "industrial"]
+        const shortforms=["bt", "blk", "st", "opp", "ave", "stn", "aft", "bef", "pr", 
+        "sch", "sec", "ctr", "ch", "sg", "pk", "hosp", "rd", "mque", "gdn", "dr",
+        "sq", "twrs", "twr", "tg", "cplx", "pl", "natl", "lib", "ter", "jln", "s'pore", 
+        "pr", "pri", "mt", "bldg" ,"ct", "int", "ind"]
+        for (let i = 0; i < longwords.length; i++) {
+            if (searchWord.toLowerCase().includes(longwords[i])){
+                const searchWordtmp=searchWord.replace(longwords[i], shortforms[i])
+                let newFilterBt=data.filter((value)=>{
+                    return (
+                        value.BusStopCode.toLowerCase().includes(searchWordtmp.toLowerCase())||
+                        value.Description.toLowerCase().includes(searchWordtmp.toLowerCase())
+                    );
+                });
+                newFilterOriginal=[...new Set([...newFilterOriginal,...newFilterBt])]
+            }else if(searchWord.toLowerCase().includes(shortforms[i])){
+                const searchWordtmp=searchWord.replace(shortforms[i], longwords[i])
+                let newFilterBt=data.filter((value)=>{
+                    return (
+                        value.BusStopCode.toLowerCase().includes(searchWordtmp.toLowerCase())||
+                        value.Description.toLowerCase().includes(searchWordtmp.toLowerCase())
+                    );
+                });
+                newFilterOriginal=[...new Set([...newFilterOriginal,...newFilterBt])]
+            }else{}
+        }
+
         if(searchWord==""){
             setGlobalFilteredData([])
         }else{
-            setGlobalFilteredData(newFilter)
+            setGlobalFilteredData(newFilterOriginal)
         }
     }
 
