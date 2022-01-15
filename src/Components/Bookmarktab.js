@@ -60,6 +60,8 @@ function Bookmarktab() {
     const[globalFullBusstopList,setGlobalFullBusstopList]=globalFullBusstopListKey
     const{globalDarkModeKey}=useContext(GlobalContext)
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
+    const{globalIsLoadingKey}=useContext(GlobalContext)
+    const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
 
     function updateNameInput(event){
         setNameInput(event.target.value);
@@ -101,6 +103,7 @@ function Bookmarktab() {
 
     function getBusArrival(code){
         const URLbusArrival=URL+code+"/"
+        setGlobalIsLoading(true)
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
 
@@ -147,7 +150,9 @@ function Bookmarktab() {
                 "lat": busExtracted[0].Latitude,
                 "lng": busExtracted[0].Longitude,
             }])
+            setGlobalIsLoading(false)
         }).catch(error=>{
+            setGlobalIsLoading(false)
             if(globalDarkMode){
                 toast.error('Server error. Please try again', {
                     position: "top-right",
@@ -176,6 +181,7 @@ function Bookmarktab() {
     function refreshClick(event){
         event.preventDefault();
         const URLbusArrival=URL+globalbusstopcodeBM[0].busstopcode+"/"
+        setGlobalIsLoading(true)
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
 
@@ -217,7 +223,7 @@ function Bookmarktab() {
                 "lat": busExtracted[0].Latitude,
                 "lng": busExtracted[0].Longitude,
             }])
-
+            setGlobalIsLoading(false)
             if(globalDarkMode){
                 toast.success('Refresh successful', {
                     position: "top-right",
@@ -241,6 +247,7 @@ function Bookmarktab() {
                 });
             }
         }).catch(error=>{
+            setGlobalIsLoading(false)
             if(globalDarkMode){
                 toast.error('Server error', {
                     position: "top-right",
@@ -361,6 +368,7 @@ function Bookmarktab() {
 
     const InfoClickBusRoute=(BusNum)=>{
         const URL="http://tripsg-db.herokuapp.com/api/busroutes/"+BusNum+"/"+globalbusstopcodeBM[0].busstopcode+"/"
+        setGlobalIsLoading(true)
         axios.get(URL).then(res=>{
             setCurrentBusStopSeq(res.data.currentStopSeq)
             let busstoproutelist=res.data.data
@@ -381,7 +389,7 @@ function Bookmarktab() {
             setCurrentTotalBusStop(busstoproutelist.length)
             setShowBusRoute(true)
             setBusNum(BusNum)
-                    // setLoading(false)
+            setGlobalIsLoading(false)
         }).catch(error=>{
             if(globalDarkMode){
                 toast.error('Error loading bus route details', {
@@ -405,7 +413,7 @@ function Bookmarktab() {
                     progress: undefined,
                 });
             }
-                    // setLoading(false)
+            setGlobalIsLoading(false)
         })
     }
 

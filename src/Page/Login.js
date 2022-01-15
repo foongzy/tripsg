@@ -15,6 +15,7 @@ import Person from '@material-ui/icons/Person';
 import Button from "../Components/CustomButtons/Button.js";
 import '../assets/css/login.css'
 import axios from 'axios'
+import LoadingScreen from "../Components/loadingScreen";
 
 const useStyles = makeStyles(styles);
 
@@ -23,6 +24,7 @@ function Login(props) {
     const [userInput, setUserInput]=useState('');
     const [userInputError, setUserInputError] = useState(false);
     const [cardAnimaton, setCardAnimation] = useState("cardHidden");
+    const [isLoading, setIsLoading] = React.useState(false);
     const{globalDispNameKey}=useContext(GlobalContext)
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
     const{globalSessionIsLogKey}=useContext(GlobalContext)
@@ -42,9 +44,12 @@ function Login(props) {
         event.preventDefault();
         if(userInput!=""){
             const URL ="https://tripsg-db.herokuapp.com/api/logs/"+userInput+"/1/"
+            setIsLoading(true)
             axios.post(URL).then(res=>{
+              setIsLoading(false)
             }).catch(error=>{
-                console.log("error")
+              setIsLoading(false)
+              console.log("error")
             })
             //save to local storage
             const tripsgname={
@@ -72,6 +77,10 @@ function Login(props) {
     
     return (
         <div className="bgg">
+          {
+                isLoading?
+                <LoadingScreen />:null
+            }
         <div
           className={classes.pageHeader}
         >

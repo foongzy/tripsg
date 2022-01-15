@@ -33,6 +33,10 @@ function SearchBar({placeholder, data}) {
     const[globalDarkMode,setGlobalDarkMode]=globalDarkModeKey
     const{globalBookmarkKey}=useContext(GlobalContext)
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
+    const{globalIsLoadingKey}=useContext(GlobalContext)
+    const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
+    const{globalShowBusRouteKey}=useContext(GlobalContext)
+    const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
@@ -158,7 +162,9 @@ function SearchBar({placeholder, data}) {
 
     function getBusArrival(busStop, action){
         const URLbusArrival=URL+busStop+"/"
+        setGlobalIsLoading(true)
         axios.get(URLbusArrival).then(res=>{
+            setGlobalShowBusRoute(false)
             let obtainedData=res.data.Services
 
             //Sort bus numbers
@@ -262,7 +268,9 @@ function SearchBar({placeholder, data}) {
             //reset
             setGlobalSearchWord('')
             setGlobalFilteredData([])
+            setGlobalIsLoading(false)
         }).catch(error=>{
+            setGlobalIsLoading(false)
             if (action=="normal"){
                 toastError('Bus stop does not exist')
             }else{

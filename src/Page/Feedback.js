@@ -16,6 +16,7 @@ import '../assets/css/feedback.css'
 import '../assets/css/feedbackD.css'
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
+import LoadingScreen from "../Components/loadingScreen";
 
 const useStyles = makeStyles(styles);
 
@@ -28,6 +29,7 @@ function Feedback(props) {
     const [nameInputError, setNameInputError] = React.useState(false);
     const [feedbackInputError, setFeedbackInputError] = React.useState(false);
     const [emailInputError, setEmailInputError] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const{globalPgToggleKey}=useContext(GlobalContext)
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
@@ -94,6 +96,7 @@ function Feedback(props) {
                             "feedback": feedbackInput,
                         }
                         const URL="https://tripsg-db.herokuapp.com/api/feedback/"
+                        setIsLoading(true)
                         axios.post(URL, data).then(res=>{
                             setNameInput("")
                             setFeedbackInput("")
@@ -101,6 +104,7 @@ function Feedback(props) {
                             setNameInputError(false)
                             setFeedbackInputError(false)
                             setEmailInputError(false)
+                            setIsLoading(false)
                             if(globalDarkMode){
                                 toast.success('Thank you for your feedback', {
                                     position: "top-right",
@@ -124,6 +128,7 @@ function Feedback(props) {
                                 });
                             }
                         }).catch(error=>{
+                            setIsLoading(false)
                             if(globalDarkMode){
                                 toast.error('Error submitting feedback. Please try again', {
                                     position: "top-right",
@@ -259,6 +264,10 @@ function Feedback(props) {
 
     return (
         <div className={globalDarkMode ? "fullbgD":"fullbg"}>
+            {
+                isLoading?
+                <LoadingScreen />:null
+            }
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">

@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import MapIcon from '@material-ui/icons/Map';
 import useWindowDimensions from "../Components/useWindowDimensions"
-import axios from 'axios'
 
 function MapFunc() {
     const {height, width}=useWindowDimensions();

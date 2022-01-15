@@ -15,16 +15,18 @@ import styles from "../assets/jss/material-kit-react/views/aboutPage";
 import '../assets/css/settings.css'
 import '../assets/css/settingsD.css'
 import axios from 'axios'
+import LoadingScreen from "../Components/loadingScreen";
 
 const useStyles = makeStyles(styles);
 
 function Settings(props) {
-    const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+    const [cardAnimaton, setCardAnimation] = useState("cardHidden");
     const {height, width}=useWindowDimensions();
 
     const [nameInput, setNameInput] = useState("");
     const [nameInputError, setNameInputError] = useState(false);
     const [radiusInput, setRadiusInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const{globalPgToggleKey}=useContext(GlobalContext)
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
@@ -93,8 +95,11 @@ function Settings(props) {
             const data={
                 "newuser": nameInput
             }
+            setIsLoading(true)
             axios.post(URL,data).then(res=>{
+                setIsLoading(false)
             }).catch(error=>{
+                setIsLoading(false)
                 console.log("error")
             })
             //save to local storage
@@ -190,6 +195,10 @@ function Settings(props) {
 
     return (
         <div className={globalDarkMode ? "fullbgD":"fullbgSe"}>
+            {
+                isLoading?
+                <LoadingScreen />:null
+            }
             <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">

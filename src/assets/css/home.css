@@ -262,3 +262,12 @@ div.card-body{
 .passed{
     color: grey;
 }
+
+.mleft{
+    margin-left: 5px;
+}
+
+.WheelChair3{
+    color: black;
+    font-size: 18px !important;
+}

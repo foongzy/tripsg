@@ -25,7 +25,6 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import { tabScrollButtonClasses } from "@mui/material";
 
 function Searchtab() {
-    const [showBusRoute, setShowBusRoute] = useState(false)
     const [currentBusStopSeq, setCurrentBusStopSeq] = useState("")
     const [currentBusDets, setCurrentBusDets] = useState("")
     const [currentTotalBusStop, setCurrentTotalBusStop] = useState(0)
@@ -51,6 +50,10 @@ function Searchtab() {
     const[globalisBookmarked,setGlobalisBookmarked]=globalisBookmarkKey
     const{globalBookmarkKey}=useContext(GlobalContext)
     const[globalBookmarked,setGlobalBookmarked]=globalBookmarkKey
+    const{globalIsLoadingKey}=useContext(GlobalContext)
+    const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
+    const{globalShowBusRouteKey}=useContext(GlobalContext)
+    const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
@@ -92,6 +95,7 @@ function Searchtab() {
     function refreshClick(event){
         event.preventDefault();
         const URLbusArrival=URL+globalbusstopcode[0].busstopcode+"/"
+        setGlobalIsLoading(true)
         axios.get(URLbusArrival).then(res=>{
             let obtainedData=res.data.Services
             
@@ -175,6 +179,7 @@ function Searchtab() {
             //reset
             setGlobalSearchWord('')
             setGlobalFilteredData([])
+            setGlobalIsLoading(false)
 
             if(globalDarkMode){
                 toast.success('Refresh successful', {
@@ -199,6 +204,7 @@ function Searchtab() {
                 });
             }
         }).catch(error=>{
+            setGlobalIsLoading(false)
             if(globalDarkMode){
                 toast.error('Server error', {
                     position: "top-right",
@@ -225,8 +231,8 @@ function Searchtab() {
     }
 
     function clickBack(event){
-        if(showBusRoute==true){
-            setShowBusRoute(false)
+        if(globalShowBusRoute==true){
+            setGlobalShowBusRoute(false)
             setIsLoop(false)
         }else{
             setGlobalbusstopcode([{
@@ -283,6 +289,7 @@ function Searchtab() {
 
     const InfoClickBusRoute=(BusNum)=>{
         const URL="http://tripsg-db.herokuapp.com/api/busroutes/"+BusNum+"/"+globalbusstopcode[0].busstopcode+"/"
+        setGlobalIsLoading(true)
         axios.get(URL).then(res=>{
             setCurrentBusStopSeq(res.data.currentStopSeq)
             let busstoproutelist=res.data.data
@@ -302,10 +309,11 @@ function Searchtab() {
             }
             setCurrentBusDets(busstoproutelist)
             setCurrentTotalBusStop(busstoproutelist.length)
-            setShowBusRoute(true)
+            setGlobalShowBusRoute(true)
             setBusNum(BusNum)
-                    // setLoading(false)
+            setGlobalIsLoading(false)
         }).catch(error=>{
+            setGlobalIsLoading(false)
             if(globalDarkMode){
                 toast.error('Error loading bus route details', {
                     position: "top-right",
@@ -328,7 +336,6 @@ function Searchtab() {
                     progress: undefined,
                 });
             }
-                    // setLoading(false)
         })
     }
 
@@ -361,7 +368,7 @@ function Searchtab() {
                             </nav>
                         </div>
                         {
-                            showBusRoute==true?(
+                            globalShowBusRoute==true?(
                                 <div style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"10px"}}>
                                     <div className="row">
                                     <div className="col-sm-6" style={{marginTop:"10px"}}>

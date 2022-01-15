@@ -54,9 +54,9 @@ function BusArrivalInfoFunc() {
                                             <br></br>
                                             <Square className="BusTime full"></Square><label className='BusTime2 full'>Standing Limited</label>
                                             <br></br>
-                                            <WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair><label className='BusTime2' style={{marginLeft:"2px"}}>Wheelchair Accessible</label>
+                                            <WheelChair className={globalDarkMode ? "WheelChair3D":"WheelChair3"}></WheelChair><label className='BusTime2 mleft'>Wheelchair Accessible</label>
                                             <br></br>
-                                            <InfoIcon className={globalDarkMode ? "WheelChairD":"WheelChair"}/><label className='BusTime2'>Bus Route Info</label>
+                                            <InfoIcon className={globalDarkMode ? "WheelChair3D":"WheelChair3"}/><label className='BusTime2 mleft'>Bus Route Info</label>
                                         </div>
                                     </div>
                                 </div>

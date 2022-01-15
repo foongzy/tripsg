@@ -28,6 +28,10 @@ function Sidebar() {
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
     const{globalSessionIsLogKey}=useContext(GlobalContext)
     const[globalSessionIsLog,setGlobalSessionIsLog]=globalSessionIsLogKey
+    const{globalIsLoadingKey}=useContext(GlobalContext)
+    const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
+    const{globalShowBusRouteKey}=useContext(GlobalContext)
+    const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
 
     const maxwidth=900
 
@@ -47,21 +51,25 @@ function Sidebar() {
 
     function clickHome(event){
         event.preventDefault();
+        setGlobalShowBusRoute(false)
         setGlobalTabToggle(1)
         history.push("/BusArrival");
     }
     function clickSetting(event){
         event.preventDefault();
+        setGlobalShowBusRoute(false)
         setGlobalTabToggle(1)
         history.push("/Settings");
     }
     function clickFeedback(event){
         event.preventDefault();
+        setGlobalShowBusRoute(false)
         setGlobalTabToggle(1)
         history.push("/Feedback");
     }
     function clickAbout(event){
         event.preventDefault();
+        setGlobalShowBusRoute(false)
         setGlobalTabToggle(1)
         history.push("/About");
     }
@@ -84,10 +92,13 @@ function Sidebar() {
             setGlobalDisplayName(retrieveDispName.displayname)
             if (globalSessionIsLog==false){
             const URL ="https://tripsg-db.herokuapp.com/api/logs/"+retrieveDispName.displayname+"/2/"
+            setGlobalIsLoading(true)
             axios.post(URL).then(res=>{
                 setGlobalSessionIsLog(true)
+                setGlobalIsLoading(false)
             }).catch(error=>{
                 console.log("error")
+                setGlobalIsLoading(false)
             })
         }
         }else{

@@ -20,7 +20,6 @@ import Refresh from "@material-ui/icons/Refresh";
 
 function Home(props){
     const location=geolocation();
-    const [isLoading, setLoading] = useState(false)
 
     const{globalSearchWordKey}=useContext(GlobalContext)
     const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
@@ -52,6 +51,10 @@ function Home(props){
     const[globalSearchRadius,setGlobalSearchRadius]=globalSearchRadiusKey
     const{globalLocationKey}=useContext(GlobalContext)
     const[globalLocation,setGlobalLocation]=globalLocationKey
+    const{globalIsLoadingKey}=useContext(GlobalContext)
+    const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
+    const{globalShowBusRouteKey}=useContext(GlobalContext)
+    const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
 
     const {height, width}=useWindowDimensions();
 
@@ -108,7 +111,7 @@ function Home(props){
                 setGlobalFullBusstopList(retrieveBusStopList.data)
                 findNearestBusStops()
             }else{
-                setLoading(true)
+                setGlobalIsLoading(true)
                 axios.get(URL).then(res=>{
                     setGlobalFullBusstopList(res.data.data)
                     findNearestBusStops()
@@ -119,10 +122,10 @@ function Home(props){
                     }
                     localStorage.removeItem("busstoplistdata")
                     localStorage.setItem("busstoplistdata",JSON.stringify(toLocalStorageBusstopList))
-                    setLoading(false)
+                    setGlobalIsLoading(false)
                 }).catch(error=>{
                     console.log("failed to load full bus stop list")
-                    setLoading(false)
+                    setGlobalIsLoading(false)
                 })
             }
         }
@@ -131,6 +134,7 @@ function Home(props){
 
     function nearbyClick(event){
         updateGlobalTabToggle(3)
+        setGlobalShowBusRoute(false)
         setGlobalbusstopcodeNearby([{
             "busstopcode":"",
             "description": "",
@@ -141,6 +145,7 @@ function Home(props){
 
     function bookmarkClick(event){
         updateGlobalTabToggle(2)
+        setGlobalShowBusRoute(false)
         setGlobalbusstopcodeBM([{
             "busstopcode":"",
             "description": "",
@@ -151,6 +156,7 @@ function Home(props){
 
     function searchClick(event){
         updateGlobalTabToggle(1)
+        setGlobalShowBusRoute(false)
         setGlobalbusstopcode([{
             "busstopcode":"",
             "description": "",
@@ -237,7 +243,7 @@ function Home(props){
     return(
         <div className={globalDarkMode ? "fullbgHomeD":"fullbgHome"}>
             {
-                isLoading?
+                globalisLoading?
                 <LoadingScreen />:null
             }
             <ToastContainer />
