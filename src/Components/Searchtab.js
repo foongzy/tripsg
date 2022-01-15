@@ -30,7 +30,6 @@ function Searchtab() {
     const [currentTotalBusStop, setCurrentTotalBusStop] = useState(0)
     const [extractedBusDets, setExtractedBusDets] = useState("")
     const [busNumState,setBusNum]=useState("")
-    const [isLoop,setIsLoop]=useState(false)
 
     const{globalSearchWordKey}=useContext(GlobalContext)
     const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
@@ -54,6 +53,8 @@ function Searchtab() {
     const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
     const{globalShowBusRouteKey}=useContext(GlobalContext)
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
+    const{globalIsLoopKey}=useContext(GlobalContext)
+    const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const {height, width}=useWindowDimensions();
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
@@ -233,7 +234,7 @@ function Searchtab() {
     function clickBack(event){
         if(globalShowBusRoute==true){
             setGlobalShowBusRoute(false)
-            setIsLoop(false)
+            setGlobalIsLoop(false)
         }else{
             setGlobalbusstopcode([{
                 "busstopcode":"",
@@ -305,7 +306,7 @@ function Searchtab() {
 
             }
             if(busstoproutelist[0].BusStopCode==busstoproutelist[busstoproutelist.length-1].BusStopCode){
-                setIsLoop(true)
+                setGlobalIsLoop(true)
             }
             setCurrentBusDets(busstoproutelist)
             setCurrentTotalBusStop(busstoproutelist.length)
@@ -376,7 +377,7 @@ function Searchtab() {
                                                 <div className={globalDarkMode ? "card cardRD":"card timingCard"}>
                                                     <h4 className={globalDarkMode ?"card-title busrouteD":"card-title busroute"}>Bus {busNumState} Info</h4>
                                                    {
-                                                       isLoop?(
+                                                       globalIsLoop?(
                                                             <div className={globalDarkMode ?"busrouteD":"busroute"} style={{marginTop:"-8px", marginBottom:"8px"}}>Loop Service</div>
                                                        ):(
                                                             <></>

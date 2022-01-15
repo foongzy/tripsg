@@ -37,6 +37,8 @@ function SearchBar({placeholder, data}) {
     const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
     const{globalShowBusRouteKey}=useContext(GlobalContext)
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
+    const{globalIsLoopKey}=useContext(GlobalContext)
+    const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
@@ -165,6 +167,7 @@ function SearchBar({placeholder, data}) {
         setGlobalIsLoading(true)
         axios.get(URLbusArrival).then(res=>{
             setGlobalShowBusRoute(false)
+            setGlobalIsLoop(false)
             let obtainedData=res.data.Services
 
             //Sort bus numbers

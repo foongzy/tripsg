@@ -32,6 +32,8 @@ function Sidebar() {
     const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
     const{globalShowBusRouteKey}=useContext(GlobalContext)
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
+    const{globalIsLoopKey}=useContext(GlobalContext)
+    const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const maxwidth=900
 
@@ -52,24 +54,28 @@ function Sidebar() {
     function clickHome(event){
         event.preventDefault();
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalTabToggle(1)
         history.push("/BusArrival");
     }
     function clickSetting(event){
         event.preventDefault();
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalTabToggle(1)
         history.push("/Settings");
     }
     function clickFeedback(event){
         event.preventDefault();
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalTabToggle(1)
         history.push("/Feedback");
     }
     function clickAbout(event){
         event.preventDefault();
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalTabToggle(1)
         history.push("/About");
     }

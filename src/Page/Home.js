@@ -55,6 +55,8 @@ function Home(props){
     const[globalisLoading,setGlobalIsLoading]=globalIsLoadingKey
     const{globalShowBusRouteKey}=useContext(GlobalContext)
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
+    const{globalIsLoopKey}=useContext(GlobalContext)
+    const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const {height, width}=useWindowDimensions();
 
@@ -135,6 +137,7 @@ function Home(props){
     function nearbyClick(event){
         updateGlobalTabToggle(3)
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalbusstopcodeNearby([{
             "busstopcode":"",
             "description": "",
@@ -146,6 +149,7 @@ function Home(props){
     function bookmarkClick(event){
         updateGlobalTabToggle(2)
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalbusstopcodeBM([{
             "busstopcode":"",
             "description": "",
@@ -157,6 +161,7 @@ function Home(props){
     function searchClick(event){
         updateGlobalTabToggle(1)
         setGlobalShowBusRoute(false)
+        setGlobalIsLoop(false)
         setGlobalbusstopcode([{
             "busstopcode":"",
             "description": "",
