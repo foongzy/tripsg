@@ -33,3 +33,6 @@ TripSg utilizes real time data from the Land Transport Authority of Singapore (L
 GitHub: [foongzy](https://github.com/foongzy)\
 LinkedIn: [foong-zhi-yu](https://www.linkedin.com/in/foong-zhi-yu/)
 
+## License
+
+TripSg is released under the MIT License. You can view the license [here](https://github.com/foongzy/tripsg/blob/master/LICENSE.txt).
