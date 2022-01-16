@@ -69,45 +69,45 @@ function About(props) {
                                                 </CardHeader>
                                                 <CardBody>
                                                     <div className="aboutBody">
-                                                    <div className='container-fluid '>
-                                                    <label>TripSg is a personal full stack project that seeks to quickly provide users with their bus arrival information</label>
-                                                    </div>
-                                                    <div className='container-fluid '>
-                                                    <h5 className='marA'><b>Features</b></h5>
-                                                    <ul>
-                                                        <li>Search for bus stops using bus stop name, bus stop code, bus number</li>
-                                                        <li>Quicksearch enables you to quickly search for bus arrival info near you</li>
-                                                        <li>Shows bus arrival information and bus capacity and wheelchair accessibility</li>
-                                                        <li>Ability to locate bus stop on map</li>
-                                                        <li>Bus route information for queried bus number</li>
-                                                        <li>Personalisation: <br />
-                                                            - Bookmarking commonly visited bus stops<br />
-                                                            - Starring bus services for bookmarked bus stops<br />                                                            
-                                                            - Ability to change display name<br />
-                                                            - Ability to change nearby radius <br />
-                                                            - Dark Mode
-                                                        </li>
-                                                    </ul>
-                                                    </div>
-                                                    <div className='container-fluid '>
-                                                    <h5 className='marA'><b>Source</b></h5>
-                                                    <label className='marC'>Bus info: TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA) </label>
-                                                    <br />
-                                                    <label className='marC'>Code: You can view the sourcecode <a href="https://github.com/foongzy/tripsg" target="_blank">here</a> </label>
-                                                    </div>
-                                                    <div className='container-fluid linee'>
-                                                    <h5 className='marA'><b>Author</b></h5>
-                                                    <div style={{display:"flex", justifyContent:"space-between"}}>
-                                                    <label className='marB marC'>
-                                                        Foong Zhi Yu
-                                                    </label>
-                                                    <div style={{marginLeft:"auto"}}>
-                                                        <a href="https://www.linkedin.com/in/foong-zhi-yu/" target="_blank"><LinkedIn id={globalDarkMode ?"aboutIconD":"aboutIcon"} className="marR"/></a>
-                                                        <a href="https://github.com/foongzy" target="_blank"><GitHub id={globalDarkMode ?"gitD":"git"}/></a>
-                                                    </div>
-                                                    </div>
-                                                    
-                                                    </div>
+                                                        <div className='container-fluid '>
+                                                            <label>TripSg is a personal full stack project that seeks to quickly provide users with their bus arrival information</label>
+                                                        </div>
+                                                        <div className='container-fluid '>
+                                                            <h5 className='marA'><b>Features</b></h5>
+                                                            <ul>
+                                                                <li>Search for bus stops using bus stop name, bus stop code or bus number</li>
+                                                                <li>Quicksearch enables you to quickly obtain bus arrival info near you</li>
+                                                                <li>Bus arrival information includes bus route bus capacity and wheelchair accessibility</li>
+                                                                <li>Ability to show bus stop location on map</li>
+                                                                <li>Personalisation: <br />
+                                                                    <ul>
+                                                                        <li>Bookmarking commonly visited bus stops</li>
+                                                                        <li>Starring bus services for bookmarked bus stops </li>                                                     
+                                                                        <li>Ability to change display name</li>
+                                                                        <li>Ability to change nearby radius</li>
+                                                                        <li>Dark Mode</li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div className='container-fluid '>
+                                                            <h5 className='marA'><b>Source</b></h5>
+                                                            <label className='marC'><b>Bus info:</b> TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA) </label>
+                                                            <br />
+                                                            <label className='marC'><b>Code:</b> You can view the sourcecode <a href="https://github.com/foongzy/tripsg" target="_blank">here</a> </label>
+                                                        </div>
+                                                        <div className='container-fluid linee'>
+                                                        <h5 className='marA'><b>Author</b></h5>
+                                                            <div style={{display:"flex", justifyContent:"space-between"}}>
+                                                                <label className='marB marC'>
+                                                                    Foong Zhi Yu
+                                                                </label>
+                                                                <div style={{marginLeft:"auto"}}>
+                                                                    <a href="https://www.linkedin.com/in/foong-zhi-yu/" target="_blank"><LinkedIn id={globalDarkMode ?"aboutIconD":"aboutIcon"} className="marR"/></a>
+                                                                    <a href="https://github.com/foongzy" target="_blank"><GitHub id={globalDarkMode ?"gitD":"git"}/></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}>
