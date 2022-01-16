@@ -98,7 +98,11 @@ function Feedback(props) {
                         const URL="https://tripsg-db.herokuapp.com/api/feedback/"
                         setIsLoading(true)
                         axios.post(URL, data).then(res=>{
-                            setNameInput("")
+                            if (globalDisplayName!=""){
+                                setNameInput(globalDisplayName)
+                            }else{
+                                setNameInput("")
+                            }
                             setFeedbackInput("")
                             setEmailInput("")
                             setNameInputError(false)
