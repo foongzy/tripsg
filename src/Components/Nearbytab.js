@@ -418,7 +418,7 @@ function Nearbytab() {
                                 <div style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"10px"}}>
                                     <div className="row">
                                     <div className="col-sm-6" style={{marginTop:"10px"}}>
-                                            <div className="row container-fluid">
+                                            <div className="row container-fluid flbus">
                                                 <div className={globalDarkMode ? "card cardRD":"card timingCard"}>
                                                     <h4 className={globalDarkMode ?"card-title busrouteD":"card-title busroute"}>Bus {busNumState} Info</h4>
                                                     {
@@ -502,7 +502,7 @@ function Nearbytab() {
                                                                 <label className="BusNo">{value.ServiceNo}</label>
                                                             </div>
                                                             <div className="col-7">
-                                                                <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
+                                                                <label className="BusTimeNoPad" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
                                                                     <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
                                                                     {
                                                                         globalisBookmarked?(

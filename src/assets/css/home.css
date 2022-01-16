@@ -28,6 +28,11 @@
     font-size: 40px;
 }
 
+.BusTimeNoPad{
+    font-size: 18px;
+    padding-right: 5px;
+}
+
 .BusTime{
     font-size: 18px;
     padding-right: 10px;
@@ -265,4 +270,8 @@ div.card-body{
 .WheelChair3{
     color: black;
     font-size: 18px !important;
+}
+
+.flbus{
+    margin: 0px !important;
 }
