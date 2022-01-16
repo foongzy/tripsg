@@ -30,6 +30,6 @@ TripSg utilizes real time data from the Land Transport Authority of Singapore (L
 ## Author
 
 **Foong Zhi Yu**\
-Github: [foongzy](https://github.com/foongzy)\
-Linkedin: [foong-zhi-yu](https://www.linkedin.com/in/foong-zhi-yu/)
+GitHub: [foongzy](https://github.com/foongzy)\
+LinkedIn: [foong-zhi-yu](https://www.linkedin.com/in/foong-zhi-yu/)
 
