@@ -3,7 +3,7 @@
 TripSg is a personal full stack project that seeks to quickly provide users with their bus arrival information quickly.\
 Frontend: React\
 Backend: Django\
-Database: Postgres\
+Database: PostgreSQL\
  \
 Click [here](https://tripsg.herokuapp.com/) to view the web application.\
  \
