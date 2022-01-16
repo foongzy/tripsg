@@ -3,7 +3,7 @@
 TripSg is a personal full stack project that seeks to quickly provide users with their bus arrival information quickly.\
 Frontend: React\
 Backend: Django\
-Database: Postgres\
+Database: PostgreSQL\
  \
 Click [here](https://tripsg.herokuapp.com/) to view the web application.\
  \
@@ -30,6 +30,6 @@ TripSg utilizes real time data from the Land Transport Authority of Singapore (L
 ## Author
 
 **Foong Zhi Yu**\
-Github: [foongzy](https://github.com/foongzy)\
-Linkedin: [foong-zhi-yu](https://www.linkedin.com/in/foong-zhi-yu/)
+GitHub: [foongzy](https://github.com/foongzy)\
+LinkedIn: [foong-zhi-yu](https://www.linkedin.com/in/foong-zhi-yu/)
 
