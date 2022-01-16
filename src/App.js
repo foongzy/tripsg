@@ -17,12 +17,10 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter history={window.history}>
-    
           <Switch>
-
             <Route exact path="/" render={props=>(<Home />)} />
-            <Route exact path="/tripsg" render={props=>(<Home />)} />
             <Route exact path="/BusArrival" render={props=>(<Home />)} />
+            <Route exact path="/tripsg" render={props=>(<Home />)} />
             <Route exact path="/Settings" render={props=>(<Settings />)} />
             <Route exact path="/Feedback" render={props=>(<Feedback />)} />
             <Route exact path="/About" render={props=>(<About />)} />

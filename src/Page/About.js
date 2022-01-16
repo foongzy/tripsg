@@ -66,8 +66,7 @@ function About(props) {
                                                 <h4>About</h4>
                                                 </CardHeader>
                                                 <CardBody>
-                                                    <h5>Site Under Construction</h5>
-  
+                                                    <h6>Site Under Construction</h6>
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}>
                                                 </CardFooter>

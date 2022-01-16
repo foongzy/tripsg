@@ -12,8 +12,6 @@ import useWindowDimensions from "../Components/useWindowDimensions"
 
 function SearchBar({placeholder, data}) {
     const location=geolocation();
-    const {height, width}=useWindowDimensions();
-    const [mapURLState, setMapURLState] = useState("")
 
     const{globalFilteredDataKey}=useContext(GlobalContext)
     const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey

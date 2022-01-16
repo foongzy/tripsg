@@ -19,11 +19,6 @@
     /* background-color: #fafafb; */
 }
 
-.shadowProperty{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-    height: 100%;
-}
-
 .btnradius{
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;

@@ -1,18 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
 import '../assets/css/home.css'
 import '../assets/css/homeD.css'
 import LoadingScreen from "../Components/loadingScreen";
-
 import axios from 'axios'
 import Navbar from '../Components/Sidebar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import geolocation from "../hooks/useGeoLocation.js";
-import { getDistance, orderByDistance, isPointWithinRadius } from 'geolib';
+import { getDistance, isPointWithinRadius } from 'geolib';
 import Searchtab from "../Components/Searchtab"
 import Bookmarktab from "../Components/Bookmarktab"
 import Nearbytab from "../Components/Nearbytab"
@@ -21,12 +18,6 @@ import Refresh from "@material-ui/icons/Refresh";
 function Home(props){
     const location=geolocation();
 
-    const{globalSearchWordKey}=useContext(GlobalContext)
-    const[globalSearchWord,setGlobalSearchWord]=globalSearchWordKey
-    const{globalFilteredDataKey}=useContext(GlobalContext)
-    const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey
-    const{globalArrivalDataKey}=useContext(GlobalContext)
-    const[globalArrivalData,setGlobalArrivalData]=globalArrivalDataKey
     const{globalbusstopcodeKey}=useContext(GlobalContext)
     const[globalbusstopcode,setGlobalbusstopcode]=globalbusstopcodeKey
     const{globalNearbyBusStopsKey}=useContext(GlobalContext)
@@ -57,6 +48,8 @@ function Home(props){
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
     const{globalIsLoopKey}=useContext(GlobalContext)
     const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
+    const{globalTriggerLocationRefreshKey}=useContext(GlobalContext)
+    const[globalTriggerLocationRefresh, setGlobalTriggerLocationRefresh]=globalTriggerLocationRefreshKey
 
     const {height, width}=useWindowDimensions();
 
@@ -193,6 +186,7 @@ function Home(props){
     useEffect(initialiseSidebarDisplay,[]);
 
     const refreshNearby=()=>{
+        setGlobalTriggerLocationRefresh(true)
         //retrieve search radius settings
         const retrieveSearchRTmp=localStorage.getItem('tripsgradius');
         const retrieveSearchR=JSON.parse(retrieveSearchRTmp);
@@ -294,7 +288,6 @@ function Home(props){
                                             // Nearby tab
                                             <Nearbytab />
                                         )
-                                        
                                     }
                                     </div>
                                 )

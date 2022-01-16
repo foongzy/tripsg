@@ -219,7 +219,6 @@ function Sidebar() {
                     </div>
                 )
             }
-            
         </div>
     )
 }

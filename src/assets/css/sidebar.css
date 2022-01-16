@@ -78,16 +78,6 @@ li.nav-text{
     color: white;
 }
 
-.darkModeSwitch {
-    margin-top: 10px;
-    justify-content: center;
-}
-
-.darkModeSwitch:hover{
-    background-color: transparent;
-    color: white;
-}
-
 .nav-menu-items{
     width:100%;
 }
@@ -107,7 +97,6 @@ li.nav-text{
 }
 
 ul.nav-menu-items{
-    /* margin: 0px 0px 0px; */
     padding: 0px;
 }
 

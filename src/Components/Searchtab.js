@@ -22,7 +22,6 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import { tabScrollButtonClasses } from "@mui/material";
 
 function Searchtab() {
     const [currentBusStopSeq, setCurrentBusStopSeq] = useState("")
@@ -389,10 +388,9 @@ function Searchtab() {
                                                                 <label className="BusTime topmar">Weekdays</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -400,10 +398,9 @@ function Searchtab() {
                                                                 <label className="BusTime topmar">Saturday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
                                                             </div>
                                                         </div> 
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -411,10 +408,9 @@ function Searchtab() {
                                                                 <label className="BusTime topmar">Sunday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
                                                             </div>
                                                         </div> 
                                                     </div>
@@ -423,26 +419,26 @@ function Searchtab() {
                                             </div>
                                         </div>
                                         <div className="col-sm-6" style={{justifyContent:"center"}}>
-                                        <Timeline position="left">
-                                            {currentBusDets.map((value,key)=>{
-                                                return(
-                                                    <div>
-                                                        <TimelineItem>
-                                                            <TimelineSeparator>
-                                                                <TimelineDot variant={value.StopSequence<currentBusStopSeq?"outlined":"filled"} color="primary" />
-                                                                    {
-                                                                        currentTotalBusStop-1==key?(
-                                                                            <></>
-                                                                        ):(
-                                                                            <TimelineConnector />
-                                                                        )
-                                                                    }
-                                                                </TimelineSeparator>
-                                                            <TimelineContent className={value.StopSequence<currentBusStopSeq?("busroute passed"):(globalDarkMode?"busrouteD":"busroute")}>{value.busStopDescription} ({value.BusStopCode})</TimelineContent>
-                                                        </TimelineItem>
-                                                    </div> 
-                                                )
-                                            })}
+                                            <Timeline position="left">
+                                                {currentBusDets.map((value,key)=>{
+                                                    return(
+                                                        <div>
+                                                            <TimelineItem>
+                                                                <TimelineSeparator>
+                                                                    <TimelineDot variant={value.StopSequence<currentBusStopSeq?"outlined":"filled"} color="primary" />
+                                                                        {
+                                                                            currentTotalBusStop-1==key?(
+                                                                                <></>
+                                                                            ):(
+                                                                                <TimelineConnector />
+                                                                            )
+                                                                        }
+                                                                    </TimelineSeparator>
+                                                                <TimelineContent className={value.StopSequence<currentBusStopSeq?("busroute passed"):(globalDarkMode?"busrouteD":"busroute")}>{value.busStopDescription} ({value.BusStopCode})</TimelineContent>
+                                                            </TimelineItem>
+                                                        </div> 
+                                                    )
+                                                })}
                                             </Timeline>
                                         </div>
                                     </div>
@@ -499,7 +495,6 @@ function Searchtab() {
                                 </div>
                             )
                         }
-                            
                     </div>
                 ):(
                     // if havent search
@@ -524,32 +519,32 @@ function Searchtab() {
             <div class="modal fade" id="searchHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content" id={globalDarkMode ?"searchModal":""}>
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search methods</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <b>Quick Search</b>
-                        <ul style={{marginBottom:"5px"}}>
-                            <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
-                            <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop.</li>
-                        </ul>
-                        <div style={{fontSize:"14px", marginLeft:"15px"}}>
-                        Note:
-                        <ul>
-                            <li>Location sharing must be enabled.</li>
-                            <li>May not work for temporary bus stops due to limitations from LTA.</li>
-                        </ul>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Search methods</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="botLine"></div>
-                        <b>Normal Search</b>
-                        <ul style={{marginBottom:"0px"}}>
-                            <li>Search by typing in bus stop name or bus stop code.</li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
-                    </div>
+                        <div class="modal-body">
+                            <b>Quick Search</b>
+                            <ul style={{marginBottom:"5px"}}>
+                                <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
+                                <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop.</li>
+                            </ul>
+                            <div style={{fontSize:"14px", marginLeft:"15px"}}>
+                                Note:
+                                <ul>
+                                    <li>Location sharing must be enabled.</li>
+                                    <li>May not work for temporary bus stops due to limitations from LTA.</li>
+                                </ul>
+                            </div>
+                            <div className="botLine"></div>
+                            <b>Normal Search</b>
+                            <ul style={{marginBottom:"0px"}}>
+                                <li>Search by typing in bus stop name or bus stop code.</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>

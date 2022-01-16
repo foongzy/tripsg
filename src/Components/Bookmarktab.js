@@ -445,7 +445,7 @@ function Bookmarktab() {
                             showBusRoute==true?(
                                 <div style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"10px"}}>
                                     <div className="row">
-                                    <div className="col-sm-6" style={{marginTop:"10px"}}>
+                                        <div className="col-sm-6" style={{marginTop:"10px"}}>
                                             <div className="row container-fluid">
                                                 <div className={globalDarkMode ? "card cardRD":"card timingCard"}>
                                                     <h4 className={globalDarkMode ?"card-title busrouteD":"card-title busroute"}>Bus {busNumState} Info</h4>
@@ -462,10 +462,9 @@ function Bookmarktab() {
                                                                 <label className="BusTime topmar">Weekdays</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -473,10 +472,9 @@ function Bookmarktab() {
                                                                 <label className="BusTime topmar">Saturday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
                                                             </div>
                                                         </div> 
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -484,10 +482,9 @@ function Bookmarktab() {
                                                                 <label className="BusTime topmar">Sunday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                 
                                                             </div>
                                                         </div> 
                                                     </div>
@@ -534,8 +531,9 @@ function Bookmarktab() {
                                                             </div>
                                                             <div className="col-7">
                                                                 <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
-                                                                <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
-                                                                <div style={{marginLeft:"3px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div></label>
+                                                                    <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
+                                                                    <div style={{marginLeft:"3px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div>
+                                                                </label>
                                                                 
                                                                 <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>
                                                                 <label className={value.NextBus2.Load=="SEA"?"BusTime2 empty":value.NextBus2.Load=="SDA"?"BusTime2 standing":"BusTime2 full"}>{value.NextBus2.EstimatedArrival!="NaNmin"?value.NextBus2.EstimatedArrival:""}
@@ -564,7 +562,6 @@ function Bookmarktab() {
                                 </div>
                             )
                         }
-                        
                     </div>
                 ):(
                     // havent click bus stop

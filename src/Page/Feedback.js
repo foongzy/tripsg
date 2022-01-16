@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,14 +22,14 @@ const useStyles = makeStyles(styles);
 
 function Feedback(props) {
     const history = useHistory()
-    const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-    const [nameInput, setNameInput] = React.useState("");
-    const [emailInput, setEmailInput] = React.useState("");
-    const [feedbackInput, setFeedbackInput] = React.useState("");
-    const [nameInputError, setNameInputError] = React.useState(false);
-    const [feedbackInputError, setFeedbackInputError] = React.useState(false);
-    const [emailInputError, setEmailInputError] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [cardAnimaton, setCardAnimation] = useState("cardHidden");
+    const [nameInput, setNameInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
+    const [feedbackInput, setFeedbackInput] = useState("");
+    const [nameInputError, setNameInputError] = useState(false);
+    const [feedbackInputError, setFeedbackInputError] = useState(false);
+    const [emailInputError, setEmailInputError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const{globalPgToggleKey}=useContext(GlobalContext)
     const[globalPgToggle,setGlobalPgToggle]=globalPgToggleKey
@@ -283,22 +283,22 @@ function Feedback(props) {
                                         <Card className={classes[cardAnimaton]} style={{marginTop:"-10px"}}>
                                             <form className={classes.form} id={globalDarkMode?"feedbackCardbgD":""}>
                                                 <CardHeader color="primary" className={classes.cardHeader} style={{background:"linear-gradient(60deg, #5680e9, #1b7ced)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
-                                                <h4>Feedback</h4>
+                                                    <h4>Feedback</h4>
                                                 </CardHeader>
                                                 <CardBody>
-                                                <label for="exampleFormControlInput1" class="form-label feedbackExp">* refers to mandatory fields</label>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1" class="form-label feedbackHead">Name*</label>
-                                                    <input type="text" maxLength="50" class={nameInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={nameInput} onChange={updateNameInput} placeholder="Enter name" />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlInput1" class="form-label feedbackHead">Email</label>
-                                                    <input type="email" maxLength="50" class={emailInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={emailInput} onChange={updateEmailInput} placeholder="Enter email" />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="exampleFormControlTextarea1" class="form-label feedbackHead">Feedback*</label>
-                                                    <textarea maxLength="500" class={feedbackInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} placeholder="Enter feedback" id="exampleFormControlTextarea1" rows="3" value={feedbackInput} onChange={updateFeedbackInput}></textarea>
-                                                </div>
+                                                    <label for="exampleFormControlInput1" class="form-label feedbackExp">* refers to mandatory fields</label>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlInput1" class="form-label feedbackHead">Name*</label>
+                                                        <input type="text" maxLength="50" class={nameInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={nameInput} onChange={updateNameInput} placeholder="Enter name" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlInput1" class="form-label feedbackHead">Email</label>
+                                                        <input type="email" maxLength="50" class={emailInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} id="exampleFormControlInput1" value={emailInput} onChange={updateEmailInput} placeholder="Enter email" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleFormControlTextarea1" class="form-label feedbackHead">Feedback*</label>
+                                                        <textarea maxLength="500" class={feedbackInputError==true?(globalDarkMode?"form-control inputBoxErrD":"form-control inputBoxErr"):(globalDarkMode?"form-control inputBoxD":"form-control inputBox")} placeholder="Enter feedback" id="exampleFormControlTextarea1" rows="3" value={feedbackInput} onChange={updateFeedbackInput}></textarea>
+                                                    </div>
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}  id="test">
                                                     <button type="button" id="feedbackBtn" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} style={{alignItems:"flex-end"}} onClick={submitform}>Submit</button>

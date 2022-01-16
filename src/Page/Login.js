@@ -90,7 +90,7 @@ function Login(props) {
                 <Card className={classes[cardAnimaton]}>
                   <form className={classes.form}>
                     <CardHeader color="primary" className={classes.cardHeader} style={{background:"linear-gradient(60deg, #5680e9, #1b7ced)", boxShadow:"0 12px 20px -10px rgb(156 39 176 / 28%), 0 4px 20px 0px rgb(0 0 0 / 12%), 0 7px 8px -5px rgb(156 39 176 / 20%)", color:"white"}}>
-                      <h4>Login</h4>
+                      <h4>Welcome!</h4>
                     </CardHeader>
                     
                     <CardBody id="logincardBody">

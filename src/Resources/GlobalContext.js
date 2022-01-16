@@ -50,6 +50,7 @@ function GlobalContextProvider(props){
     const[globalisLoading,setGlobalIsLoading]=useState(false)
     const[globalShowBusRoute, setGlobalShowBusRoute]=useState(false)
     const[globalIsLoop, setGlobalIsLoop]=useState(false)
+    const[globalTriggerLocationRefresh, setGlobalTriggerLocationRefresh]=useState(false)
 
     return(
         <GlobalContext.Provider
@@ -75,7 +76,8 @@ function GlobalContextProvider(props){
             globalLocationKey:[globalLocation,setGlobalLocation],
             globalIsLoadingKey:[globalisLoading,setGlobalIsLoading],
             globalShowBusRouteKey:[globalShowBusRoute, setGlobalShowBusRoute],
-            globalIsLoopKey:[globalIsLoop, setGlobalIsLoop]
+            globalIsLoopKey:[globalIsLoop, setGlobalIsLoop],
+            globalTriggerLocationRefreshKey:[globalTriggerLocationRefresh, setGlobalTriggerLocationRefresh]
         }}
         >
             {props.children}

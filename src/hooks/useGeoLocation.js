@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { GlobalContext } from "../Resources/GlobalContext.js";
 
 const useGeoLocation=()=> {
+    const{globalTriggerLocationRefreshKey}=useContext(GlobalContext)
+    const[globalTriggerLocationRefresh, setGlobalTriggerLocationRefresh]=globalTriggerLocationRefreshKey
     const[location, setLocation]=useState({
         loaded:false,
         coordinates:{lat:"", lng:""},
@@ -39,7 +41,8 @@ const useGeoLocation=()=> {
         }
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError)
-    },[])
+        setGlobalTriggerLocationRefresh(false)
+    },[globalTriggerLocationRefresh])
 
     return location
 }

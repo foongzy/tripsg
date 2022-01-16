@@ -409,7 +409,6 @@ function Nearbytab() {
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                     </ul>
                                     <form class={width>991?"d-flex":"container-fluid"} style={{padding:"0px"}}>
-                                        {/* <SearchBar placeholder="Search bus stop number or name..." data={Rawdata} /> */}
                                     </form>
                                 </div>
                             </nav>
@@ -435,10 +434,9 @@ function Nearbytab() {
                                                                 <label className="BusTime topmar">Weekdays</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.WD_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.WD_LastBus}</label>                                                
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -446,10 +444,9 @@ function Nearbytab() {
                                                                 <label className="BusTime topmar">Saturday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SAT_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SAT_LastBus}</label>                                                
                                                             </div>
                                                         </div> 
                                                         <div className="row" style={{marginTop:"10px"}}>
@@ -457,10 +454,9 @@ function Nearbytab() {
                                                                 <label className="BusTime topmar">Sunday</label>
                                                             </div>
                                                             <div className="col-6">
-                                                            <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
-                                                            <br></br>
-                                                            <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
-                                                                
+                                                                <label className="BusTime2">First Bus: {extractedBusDets.SUN_FirstBus}</label>
+                                                                <br></br>
+                                                                <label className="BusTime2">Last Bus: {extractedBusDets.SUN_LastBus}</label>                                                
                                                             </div>
                                                         </div> 
                                                     </div>
@@ -469,26 +465,26 @@ function Nearbytab() {
                                             </div>
                                         </div>
                                         <div className="col-sm-6" style={{justifyContent:"center"}}>
-                                        <Timeline position="left">
-                                            {currentBusDets.map((value,key)=>{
-                                                return(
-                                                    <div>
-                                                        <TimelineItem>
-                                                            <TimelineSeparator>
-                                                                <TimelineDot variant={value.StopSequence<currentBusStopSeq?"outlined":"filled"} color="primary" />
-                                                                    {
-                                                                        currentTotalBusStop-1==key?(
-                                                                            <></>
-                                                                        ):(
-                                                                            <TimelineConnector />
-                                                                        )
-                                                                    }
-                                                                </TimelineSeparator>
-                                                            <TimelineContent className={value.StopSequence<currentBusStopSeq?("busroute passed"):(globalDarkMode?"busrouteD":"busroute")}>{value.busStopDescription} ({value.BusStopCode})</TimelineContent>
-                                                        </TimelineItem>
-                                                    </div> 
-                                                )
-                                            })}
+                                            <Timeline position="left">
+                                                {currentBusDets.map((value,key)=>{
+                                                    return(
+                                                        <div>
+                                                            <TimelineItem>
+                                                                <TimelineSeparator>
+                                                                    <TimelineDot variant={value.StopSequence<currentBusStopSeq?"outlined":"filled"} color="primary" />
+                                                                        {
+                                                                            currentTotalBusStop-1==key?(
+                                                                                <></>
+                                                                            ):(
+                                                                                <TimelineConnector />
+                                                                            )
+                                                                        }
+                                                                    </TimelineSeparator>
+                                                                <TimelineContent className={value.StopSequence<currentBusStopSeq?("busroute passed"):(globalDarkMode?"busrouteD":"busroute")}>{value.busStopDescription} ({value.BusStopCode})</TimelineContent>
+                                                            </TimelineItem>
+                                                        </div> 
+                                                    )
+                                                })}
                                             </Timeline>
                                         </div>
                                     </div>
@@ -621,14 +617,12 @@ function Nearbytab() {
                                         :
                                         <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
                                     }
-                                    
                                     <form class="container-fluid" style={{marginTop:"30px"}}>
                                         <p className={globalDarkMode ?"otherLabelColD":""}>Loading your location...</p>
                                     </form>
                                 </div>
                             )
                         }
-                        
                     </div>
                 )
             }
