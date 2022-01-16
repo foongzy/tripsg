@@ -94,7 +94,6 @@ function About(props) {
                                                             <h5 className='marA'><b>Source</b></h5>
                                                             <label className='marC'><b>Bus info:</b> TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA). </label>
                                                             <br />
-                                                            <br />
                                                             <label className='marC'><b>Code:</b> You can view the sourcecode <a href="https://github.com/foongzy/tripsg" target="_blank">here</a>. </label>
                                                         </div>
                                                         <div className='container-fluid linee'>
