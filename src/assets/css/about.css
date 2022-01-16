@@ -4,7 +4,7 @@
         background-size: cover;
         background-position: top;
         min-height: 100%;
-        height: 100vh;
+        height: 100%;
         position: relative;
         background-color: #FFFFFF;
     }
@@ -16,7 +16,7 @@
         background-size: cover;
         background-position: top;
         min-height: 100%;
-        height: 100vh;
+        height: 100%;
         position: relative;
         background-color: #FFFFFF;
     }
@@ -28,8 +28,49 @@
         background-size: cover;
         background-position: top;
         min-height: 100%;
-        height: 100vh;
+        height: 100%;
         position: relative;
         background-color: #FFFFFF;
     }
+}
+
+#aboutIcon{
+    font-size: 24px ;
+    color:  #0072b1;
+}
+
+#git{
+    font-size: 24px ;
+    color: #333333
+}
+
+.marR{
+    margin-right: 5px;
+}
+
+.linee{
+    border-bottom: 1px solid lightgrey;
+}
+
+.aboutBody{
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+.marA{
+    margin-top: 8px;
+}
+
+.marB{
+    margin-bottom: 8px;
+}
+
+.marC{
+    margin-left: 0px;
+}
+
+.disclaimer{
+    font-size: 10px;
+    font-family: sans-serif;
+    color: grey;
 }
