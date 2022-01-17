@@ -88,6 +88,31 @@ function Settings(props) {
         localStorage.setItem("darkModeToggle",JSON.stringify(toggle))
     }
 
+    function toastSuccess(successMsg){
+        if(globalDarkMode){
+            toast.success(successMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+            toast.success(successMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     function clickNameUpdate(event){
         event.preventDefault();
         if(nameInput!=""){
@@ -111,28 +136,7 @@ function Settings(props) {
             setGlobalDisplayName(nameInput)
             setNameInputError(false)
             setNameInput("")
-            if(globalDarkMode){
-                toast.success('Successfully updated display name', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }else{
-                toast.success('Successfully updated display name', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            toastSuccess('Successfully updated display name')
         }else{
             if(globalDarkMode){
                 toast.error('Name field cannot be empty', {
@@ -169,28 +173,7 @@ function Settings(props) {
         localStorage.removeItem("tripsgradius")
         localStorage.setItem("tripsgradius",JSON.stringify(tripsgradius))
         setGlobalSearchRadius(radiusInput)
-        if(globalDarkMode){
-            toast.success('Successfully updated search radius', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }else{
-            toast.success('Successfully updated search radius', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
+        toastSuccess('Successfully updated search radius')
     }
 
     return (

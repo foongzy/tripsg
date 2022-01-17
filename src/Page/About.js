@@ -1,7 +1,5 @@
 import React, {useContext, useEffect} from 'react'
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../Components/Sidebar'
 import useWindowDimensions from "../Components/useWindowDimensions"
 import GridContainer from "../Components/Grid/GridContainer.js";
@@ -50,7 +48,6 @@ function About(props) {
 
     return (
         <div className={globalDarkMode ? "fullbgD":"fullbgab"}>
-            <ToastContainer />
             <Navbar></Navbar>
             <div className="leftmargin background">
                 <div className={width<551?(globalDarkMode?"bgD":"bgg"):(globalDarkMode?"bgComD":"bggCom")}>
@@ -94,10 +91,14 @@ function About(props) {
                                                             <h5 className='marA'><b>Source</b></h5>
                                                             <label className='marC'><b>Bus info:</b> TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA). </label>
                                                             <br />
-                                                            <label className='marC'><b>Code:</b> You can view the sourcecode <a href="https://github.com/foongzy/tripsg" target="_blank">here</a>. </label>
+                                                            <label className='marC'><b>Code:</b> You can view the sourcecode <a href="https://github.com/foongzy/tripsg" target="_blank" id={globalDarkMode ?"sourcecodelinkD":"sourcecodelink"}>here</a>. </label>
+                                                        </div>
+                                                        <div className='container-fluid '>
+                                                            <h5 className='marA'><b>Credits</b></h5>
+                                                            <label className='marC'>The author would like to thank the friends who helped stress test the web application and provided valuable feedback before launch.</label>
                                                         </div>
                                                         <div className='container-fluid linee'>
-                                                        <h5 className='marA'><b>Author</b></h5>
+                                                            <h5 className='marA'><b>Author</b></h5>
                                                             <div style={{display:"flex", justifyContent:"space-between"}}>
                                                                 <label className='marB marC'>
                                                                     Foong Zhi Yu
@@ -108,15 +109,18 @@ function About(props) {
                                                                 </div>
                                                             </div>
                                                         </div>
+                                           
                                                     </div>
                                                 </CardBody>
                                                 <CardFooter className={classes.cardFooter}>
-                                                    <label className='disclaimer'>
-                                                        Disclaimer: <br />
-                                                        By using TripSg, you agree that the service is provided for your own personal use at no cost.<br />
-                                                        TripSg assumes no responsibility for any damages incurred through the use of the services provided by the application.<br />
-                                                        Bus arrival information provided by TripSg application is provided "as-is" by Singapore's Land Transport Authority and TripSg cannot guarantee the reliability and accuracy of the information.
-                                                    </label>
+                                                    <div className='container-fluid '>
+                                                        <label className='disclaimer'>
+                                                            Disclaimer: <br />
+                                                            By using TripSg, you agree that the service is provided for your own personal use at no cost.<br />
+                                                            TripSg assumes no responsibility for any damages incurred through the use of the services provided by the application.<br />
+                                                            Bus arrival information provided by TripSg application is provided "as-is" by Singapore's Land Transport Authority and TripSg cannot guarantee the reliability and accuracy of the information.
+                                                        </label>
+                                                    </div>
                                                 </CardFooter>
                                             </form>
                                         </Card>

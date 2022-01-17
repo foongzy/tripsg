@@ -60,6 +60,31 @@ function Feedback(props) {
         setFeedbackInput(event.target.value);
     }
 
+    function toastError(errorMsg){
+        if(globalDarkMode){
+            toast.error(errorMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+            toast.error(errorMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     //Initialise sidebar display
     const initialiseSidebarDisplay=()=>{
         setGlobalPgToggle([{
@@ -133,133 +158,28 @@ function Feedback(props) {
                             }
                         }).catch(error=>{
                             setIsLoading(false)
-                            if(globalDarkMode){
-                                toast.error('Error submitting feedback. Please try again', {
-                                    position: "top-right",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                    theme: "dark",
-                                });
-                            }else{
-                                toast.error('Error submitting feedback. Please try again', {
-                                    position: "top-right",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                });
-                            }
+                            toastError('Error submitting feedback. Please try again')
                         })
                     }else{
-                        if(globalDarkMode){
-                            toast.error('Please enter a valid email', {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: "dark",
-                            });
-                        }else{
-                            toast.error('Please enter a valid email', {
-                                position: "top-right",
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                            });
-                        }
+                        toastError('Please enter a valid email')
                         setNameInputError(false)
                         setFeedbackInputError(false)
                         setEmailInputError(true)
                     }
                 }else{
-                    if(globalDarkMode){
-                        toast.error('Name field can only contain letters', {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "dark",
-                        });
-                    }else{
-                        toast.error('Name field can only contain letters', {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
-                    }
+                    toastError('Name field can only contain letters')
                     setNameInputError(true)
                     setFeedbackInputError(false)
                     setEmailInputError(false)
                 }          
             }else{
-                if(globalDarkMode){
-                    toast.error('Feedback field cannot be empty', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "dark",
-                    });
-                }else{
-                    toast.error('Feedback field cannot be empty', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                }
+                toastError('Feedback field cannot be empty')
                 setNameInputError(false)
                 setFeedbackInputError(true)
                 setEmailInputError(false)
             }
         }else{
-            if(globalDarkMode){
-                toast.error('Name field cannot be empty', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }else{
-                toast.error('Name field cannot be empty', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            toastError('Name field cannot be empty')
             setNameInputError(true)
             setFeedbackInputError(false)
             setEmailInputError(false)

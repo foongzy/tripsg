@@ -67,6 +67,31 @@ function Bookmarktab() {
         setNameInput(event.target.value);
     }
 
+    function toastError(errorMsg){
+        if(globalDarkMode){
+            toast.error(errorMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        }else{
+            toast.error(errorMsg, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     const sortArrivalData=(starArray, arrivalData)=>{
         let snapshotArrivalData=arrivalData
         let starArr=[]
@@ -153,28 +178,7 @@ function Bookmarktab() {
             setGlobalIsLoading(false)
         }).catch(error=>{
             setGlobalIsLoading(false)
-            if(globalDarkMode){
-                toast.error('Server error. Please try again', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }else{
-                toast.error('Server error. Please try again', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            toastError('Server error. Please try again')
         })   
     }
 
@@ -248,28 +252,7 @@ function Bookmarktab() {
             }
         }).catch(error=>{
             setGlobalIsLoading(false)
-            if(globalDarkMode){
-                toast.error('Server error', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }else{
-                toast.error('Server error', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            toastError('Server error')
         })
     }
 
@@ -391,28 +374,7 @@ function Bookmarktab() {
             setBusNum(BusNum)
             setGlobalIsLoading(false)
         }).catch(error=>{
-            if(globalDarkMode){
-                toast.error('Error loading bus route details', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark", 
-                });
-            }else{
-                toast.error('Error loading bus route details', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
+            toastError('Error loading bus route details')
             setGlobalIsLoading(false)
         })
     }

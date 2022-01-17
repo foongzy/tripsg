@@ -195,48 +195,74 @@ function Home(props){
         }
         const radius=globalSearchRadius //in metres
         let nearbyBusStops=[]
-        for (let i = 0; i < globalFullBusstopList.length; i++) {
-            const coordinatesTest={
-                latitude:globalFullBusstopList[i].Latitude,
-                longitude:globalFullBusstopList[i].Longitude,
-            };
-            if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
-                nearbyBusStops.push(globalFullBusstopList[i])
+        if(location.loaded==false){
+            if(globalDarkMode){
+                toast.error('Still loading location', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.error('Still loading location', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        }else{
+
+            for (let i = 0; i < globalFullBusstopList.length; i++) {
+                const coordinatesTest={
+                    latitude:globalFullBusstopList[i].Latitude,
+                    longitude:globalFullBusstopList[i].Longitude,
+                };
+                if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
+                    nearbyBusStops.push(globalFullBusstopList[i])
+                }
+            }
+            for (let j = 0; j < nearbyBusStops.length; j++) {
+                const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
+                nearbyBusStops[j].distFromUser = dist;
+            }
+            //sort by dist
+            nearbyBusStops.sort(function(a, b) {
+                return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
+            });
+            updateGlobalNearbyBusStops(nearbyBusStops)
+            setGlobalLocation(location)
+            if(globalDarkMode){
+                toast.success('Nearby bus stops refreshed', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.success('Nearby bus stops refreshed', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         }
-        for (let j = 0; j < nearbyBusStops.length; j++) {
-            const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
-            nearbyBusStops[j].distFromUser = dist;
-        }
-        //sort by dist
-        nearbyBusStops.sort(function(a, b) {
-            return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
-        });
-        updateGlobalNearbyBusStops(nearbyBusStops)
-        setGlobalLocation(location)
-
-        if(globalDarkMode){
-            toast.success('Nearby bus stops refreshed', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }else{
-            toast.success('Nearby bus stops refreshed', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
+        
     }
 
     return(
@@ -266,7 +292,7 @@ function Home(props){
                                 </ul>
                                 {
                                     globalTabToggle==3&&globalbusstopcodeNearby[0].busstopcode==""?(
-                                        <a href="#" onClick={refreshNearby} style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}}><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>
+                                        <a href="#" onClick={refreshNearby} style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh nearby bus stops"><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>
                                     ):(
                                         <></>
                                     )
