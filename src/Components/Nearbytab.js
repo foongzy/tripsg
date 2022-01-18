@@ -24,7 +24,6 @@ import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import WheelChair from '@material-ui/icons/Accessible';
 import Location from '@material-ui/icons/LocationOn';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
-import HelpIcon from '@material-ui/icons/HelpOutline'
 
 function Nearbytab() {
     const location=geolocation();

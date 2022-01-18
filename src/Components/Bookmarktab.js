@@ -19,11 +19,7 @@ import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 
 //Icons import
 import BookmarkFilled from '@material-ui/icons/Bookmark';
-import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
-import StarFilled from '@material-ui/icons/Star';
-import StarIcon from '@material-ui/icons/StarBorder';
 import EditIcon from '@material-ui/icons/Edit';
-import HelpIcon from '@material-ui/icons/HelpOutline'
 import Refresh from '@material-ui/icons/Refresh';
 import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
