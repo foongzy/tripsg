@@ -105,7 +105,7 @@ function StarFunc({BusNum}) {
         localStorage.removeItem("bookmarkedBusstops")
         localStorage.setItem("bookmarkedBusstops",JSON.stringify(bookmarkFinal))
         if(globalDarkMode){
-            toast.success('Removed '+BusNum+' from starred', {
+            toast.success('Removed bus '+BusNum+' from starred', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -116,7 +116,7 @@ function StarFunc({BusNum}) {
                 theme: "dark",
             });
         }else{
-            toast.success('Removed '+BusNum+' from starred', {
+            toast.success('Removed bus '+BusNum+' from starred', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -157,7 +157,7 @@ function StarFunc({BusNum}) {
         localStorage.removeItem("bookmarkedBusstops")
         localStorage.setItem("bookmarkedBusstops",JSON.stringify(bookmarkFinal))
         if(globalDarkMode){
-            toast.success('Successfully starred '+BusNum, {
+            toast.success('Successfully starred bus '+BusNum, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -168,7 +168,7 @@ function StarFunc({BusNum}) {
                 theme: "dark",
             });
         }else{
-            toast.success('Successfully starred '+BusNum, {
+            toast.success('Successfully starred bus '+BusNum, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
