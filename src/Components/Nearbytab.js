@@ -24,6 +24,7 @@ import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import WheelChair from '@material-ui/icons/Accessible';
 import Location from '@material-ui/icons/LocationOn';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
+import HelpIcon from '@material-ui/icons/HelpOutline'
 
 function Nearbytab() {
     const location=geolocation();
@@ -359,15 +360,12 @@ function Nearbytab() {
                         <div className="container-fluid line">
                             <nav class="navbar navbar-expand-lg navbar-light">
                                 <label class="navbar-brand leftLabel">
-                              
                                     <a href="#" className={globalDarkMode ? "arrowIconD":"arrowIcon"}><ArrowBack onClick={clickBack}></ArrowBack></a>
                                     <label className={globalDarkMode ? "busLabelD":""} style={{marginRight:"15px"}}>Bus Stop: {globalbusstopcodeNearby[0].description} ({globalbusstopcodeNearby[0].busstopcode})</label>
-                                   
                                     <a href="#" style={{marginLeft:"-4px"}}><Bookmark></Bookmark></a>
                                     <a href="#" ><MapFunc></MapFunc></a>
                                     <a href="#" ><BusArrivalInfoFunc></BusArrivalInfoFunc></a>
                                     <a href="#" onClick={refreshClick}><Refresh id={globalDarkMode ? "refreshIconD":"refreshIcon"}></Refresh></a>
-                                   
                                 </label>
                                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -503,7 +501,6 @@ function Nearbytab() {
                                 </div>
                             )
                         }
-                        
                     </div>
                 ):(
                     // havent click bus stop

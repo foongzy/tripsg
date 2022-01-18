@@ -119,14 +119,16 @@ div.card-body{
     margin-bottom: 4px;
 }
 
-#helpBokmark{
+#helpBookmark{
     color: black;
-    margin-top: -3px;
 }
 
 #helpSearch{
     color: black;
-    margin-top: 10px;
+}
+
+#helpNearby{
+    color: black;
 }
 
 .cardR{

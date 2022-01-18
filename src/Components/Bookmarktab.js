@@ -559,60 +559,22 @@ function Bookmarktab() {
             {
                 globalBookmarked==""?(
                     <>
-                    <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon id={globalDarkMode?"helpBokmarkD":"helpBokmark"}></HelpIcon></a>
-                    </div>
-                    <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        {globalDarkMode ?
-                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
-                            :
-                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
-                        }
-                        
-                        <form class="container-fluid" style={{marginTop:"30px"}}>
-                            <p className={globalDarkMode ?"otherLabelColD":""}>You have no bookmarks added</p>
-                        </form>
-                    </div>
+                        <div class="container-fluid nearbytop" style={{textAlign:"center", justifyContent:"center"}}>
+                            {globalDarkMode ?
+                                <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"0px"}} />
+                                :
+                                <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"0px"}} />
+                            }
+                            
+                            <form class="container-fluid" style={{marginTop:"30px"}}>
+                                <p className={globalDarkMode ?"otherLabelColD":""}>You have no bookmarks added</p>
+                            </form>
+                        </div>
                     </>
                 ):(
                     <div></div>
                 )
             }
-            {/* modal */}
-            <div class="modal fade" id="bookmarkHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content" id={globalDarkMode ?"bmModal":""}>
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Bookmark</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <b>Adding bookmarks</b>
-                        <ul style={{marginBottom:"5px"}}>
-                            <li>Search for bus stop and click on <BookmarkIcon></BookmarkIcon></li>
-                            <li>Add a name for the bookmark if you like</li>
-                            <li>Click the add button</li>
-                        </ul>
-                        <div className="botLine"></div>
-                        <b>Removing bookmarks</b>
-                        <ul style={{marginBottom:"0px"}}>
-                            <li>Search for bookmarked bus stop</li>
-                            <li>Click on <BookmarkFilled></BookmarkFilled></li>
-                        </ul>
-                        <div className="botLine"></div>
-                        <b>Starred bus services</b>
-                        <ul style={{marginBottom:"0px"}}>
-                            <li>Bookmarked bus stops allows you to star bus services by clicking <StarIcon></StarIcon></li>
-                            <li>Starred services appear at the top</li>
-                            <li>Remove star by clicking <StarFilled></StarFilled></li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
 
             {/* edit bookmark name modal */}
             <div class="modal fade" id="bookmarkEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

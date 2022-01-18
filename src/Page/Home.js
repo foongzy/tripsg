@@ -16,6 +16,11 @@ import Nearbytab from "../Components/Nearbytab"
 
 //Icons import
 import Refresh from "@material-ui/icons/Refresh";
+import HelpIcon from '@material-ui/icons/HelpOutline'
+import BookmarkFilled from '@material-ui/icons/Bookmark';
+import BookmarkIcon from '@material-ui/icons/BookmarkBorder';
+import StarFilled from '@material-ui/icons/Star';
+import StarIcon from '@material-ui/icons/StarBorder';
 
 function Home(props){
     const location=geolocation();
@@ -293,8 +298,31 @@ function Home(props){
                                     </li>
                                 </ul>
                                 {
-                                    globalTabToggle==3&&globalbusstopcodeNearby[0].busstopcode==""?(
-                                        <a href="#" onClick={refreshNearby} style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh nearby bus stops"><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>
+                                    globalTabToggle==1?(
+                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon id={globalDarkMode?"helpSearchD":"helpSearch"}></HelpIcon></a>
+                                    ):(
+                                        <></>
+                                    )
+                                }
+                                {
+                                    globalTabToggle==2?(
+                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon id={globalDarkMode?"helpBookmarkD":"helpBookmark"}></HelpIcon></a>
+                                    ):(
+                                        <></>
+                                    )
+                                }
+                                {
+                                    globalTabToggle==3?(
+                                        <div style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}}>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#nearbyHelpModal" style={{marginRight:"3px"}}><HelpIcon id={globalDarkMode?"helpNearbyD":"helpNearby"}></HelpIcon></a>
+                                            {
+                                                globalbusstopcodeNearby[0].busstopcode==""?(
+                                                    <a href="#" onClick={refreshNearby} data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh nearby bus stops"><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>
+                                                ):(
+                                                    <></>
+                                                )
+                                            }
+                                        </div>
                                     ):(
                                         <></>
                                     )
@@ -321,6 +349,102 @@ function Home(props){
                                 )
                             }
                         </div>
+                    </div>
+                </div>
+            </div>
+            {/* search modal */}
+            <div class="modal fade" id="searchHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content" id={globalDarkMode ?"searchModal":""}>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Search Methods</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <b>Quick Search</b>
+                            <ul style={{marginBottom:"5px"}}>
+                                <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop</li>
+                                <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop</li>
+                            </ul>
+                            <div style={{fontSize:"14px", marginLeft:"15px"}}>
+                                Note:
+                                <ul>
+                                    <li>Location sharing must be enabled</li>
+                                    <li>May not work for temporary bus stops due to limitations from LTA</li>
+                                </ul>
+                            </div>
+                            <div className="botLine"></div>
+                            <b>Normal Search</b>
+                            <ul style={{marginBottom:"0px"}}>
+                                <li>Search by typing in bus stop name or bus stop code</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* bookmark modal */}
+            <div class="modal fade" id="bookmarkHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content" id={globalDarkMode ?"bmModal":""}>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bookmark</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <b>Adding Bookmarks</b>
+                        <ul style={{marginBottom:"5px"}}>
+                            <li>Search for bus stop and click on <BookmarkIcon></BookmarkIcon></li>
+                            <li>Add a name for the bookmark if you like</li>
+                            <li>Click the add button</li>
+                        </ul>
+                        <div className="botLine"></div>
+                        <b>Removing Bookmarks</b>
+                        <ul style={{marginBottom:"0px"}}>
+                            <li>Search for bookmarked bus stop</li>
+                            <li>Click on <BookmarkFilled></BookmarkFilled></li>
+                        </ul>
+                        <div className="botLine"></div>
+                        <b>Starred Bus Services</b>
+                        <ul style={{marginBottom:"0px"}}>
+                            <li>Bookmarked bus stops allows you to star bus services by clicking <StarIcon></StarIcon></li>
+                            <li>Starred services appear at the top</li>
+                            <li>Remove star by clicking <StarFilled></StarFilled></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* nearby modal */}
+            <div class="modal fade" id="nearbyHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content" id={globalDarkMode ?"bmModal":""}>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Nearby</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul style={{marginBottom:"5px"}}>
+                            <li>Shows all nearby bus stops based on your current location</li>
+                            <li>Refresh nearby bus stops by clicking <Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}/> at the top right corner</li>
+                        </ul>
+                        <div style={{fontSize:"14px", marginLeft:"15px"}}>
+                            Note:
+                            <ul>
+                                <li>Location sharing must be enabled to enable this service</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
+                    </div>
                     </div>
                 </div>
             </div>

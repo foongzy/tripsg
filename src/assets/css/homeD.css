@@ -73,14 +73,16 @@
     margin-bottom: 4px;
 }
 
-#helpBokmarkD{
+#helpBookmarkD{
     color: white;
-    margin-top: -3px;
 }
 
 #helpSearchD{
     color: white;
-    margin-top: 10px;
+}
+
+#helpNearbyD{
+    color: white;
 }
 
 .cardRD{

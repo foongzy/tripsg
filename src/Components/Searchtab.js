@@ -333,55 +333,19 @@ function Searchtab() {
                 ):(
                     // if havent search
                     <>
-                    <div class="container-fluid" style={{textAlign:"right", justifyContent:"right"}}>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon id={globalDarkMode?"helpSearchD":"helpSearch"}></HelpIcon></a>
-                    </div>
-                    <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
-                        {globalDarkMode ?
-                            <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
-                            :
-                            <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"16px"}} />
-                        }
-                        <form class="container-fluid" style={{marginTop:"30px"}}>
-                            <SearchBar placeholder="Search..." data={globalFullBusstopList}/>
-                        </form>
-                    </div>
+                        <div class="container-fluid nearbytop" style={{textAlign:"center", justifyContent:"center"}}>
+                            {globalDarkMode ?
+                                <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
+                                :
+                                <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
+                            }
+                            <form class="container-fluid" style={{marginTop:"30px"}}>
+                                <SearchBar placeholder="Search..." data={globalFullBusstopList}/>
+                            </form>
+                        </div>
                     </>
                 )
             }
-            {/* modal */}
-            <div class="modal fade" id="searchHelpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content" id={globalDarkMode ?"searchModal":""}>
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Search methods</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <b>Quick Search</b>
-                            <ul style={{marginBottom:"5px"}}>
-                                <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop.</li>
-                                <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop.</li>
-                            </ul>
-                            <div style={{fontSize:"14px", marginLeft:"15px"}}>
-                                Note:
-                                <ul>
-                                    <li>Location sharing must be enabled.</li>
-                                    <li>May not work for temporary bus stops due to limitations from LTA.</li>
-                                </ul>
-                            </div>
-                            <div className="botLine"></div>
-                            <b>Normal Search</b>
-                            <ul style={{marginBottom:"0px"}}>
-                                <li>Search by typing in bus stop name or bus stop code.</li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" className={globalDarkMode ? "btn btn-secondary bgbtnD":"btn btn-secondary bgbtn"} data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     )
 }
