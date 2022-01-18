@@ -1,6 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../Components/Sidebar'
 import useWindowDimensions from "../Components/useWindowDimensions"
 import { GlobalContext } from "../Resources/GlobalContext.js";
@@ -12,6 +10,8 @@ import CardHeader from "../Components/Card/CardHeader.js";
 import CardFooter from "../Components/Card/CardFooter.js";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../assets/css/settings.css'
 import '../assets/css/settingsD.css'
 import axios from 'axios'

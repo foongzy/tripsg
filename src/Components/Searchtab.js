@@ -5,23 +5,25 @@ import HelpIcon from '@material-ui/icons/HelpOutline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useWindowDimensions from "../Components/useWindowDimensions";
-import BusIconBlack from '../assets/img/busIconBlack.png'
-import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import axios from 'axios'
 import SearchBar from "../Components/SearchBar"
 import Bookmark from './BookmarkFunc'
-import WheelChair from '@material-ui/icons/Accessible';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
 import RefreshFunc from "./RefreshFunc.js"
 import Star from "./StarFunc.js"
-import InfoIcon from '@material-ui/icons/InfoOutlined';
+import BusIconBlack from '../assets/img/busIconBlack.png'
+import BusIconBlack2 from '../assets/img/busIconBlue2.png'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+
+//Icons import
+import InfoIcon from '@material-ui/icons/InfoOutlined';
+import WheelChair from '@material-ui/icons/Accessible';
 
 function Searchtab() {
     const [currentBusStopSeq, setCurrentBusStopSeq] = useState("")

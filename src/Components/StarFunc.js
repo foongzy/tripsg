@@ -1,10 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import StarFilled from '@material-ui/icons/Star';
-import Star from '@material-ui/icons/StarBorder';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useWindowDimensions from "./useWindowDimensions"
+
+//Icons import
+import StarFilled from '@material-ui/icons/Star';
+import Star from '@material-ui/icons/StarBorder';
 
 function StarFunc({BusNum}) {
     const [isStar, setIsStar] = useState(false)

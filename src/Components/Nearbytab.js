@@ -1,27 +1,29 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
-import Refresh from '@material-ui/icons/Refresh';
-import ArrowBack from '@material-ui/icons/ArrowBackIos';
-import Bookmark from './BookmarkFunc'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
-import BusIconBlack from '../assets/img/busIconBlack.png'
-import BusIconBlack2 from '../assets/img/busIconBlue2.png'
-import WheelChair from '@material-ui/icons/Accessible';
-import Location from '@material-ui/icons/LocationOn';
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
 import Star from "./StarFunc.js"
-import InfoIcon from '@material-ui/icons/InfoOutlined';
+import Bookmark from './BookmarkFunc'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+import BusIconBlack from '../assets/img/busIconBlack.png'
+import BusIconBlack2 from '../assets/img/busIconBlue2.png'
+
+//Icons import
+import Refresh from '@material-ui/icons/Refresh';
+import ArrowBack from '@material-ui/icons/ArrowBackIos';
+import WheelChair from '@material-ui/icons/Accessible';
+import Location from '@material-ui/icons/LocationOn';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
 
 function Nearbytab() {
     const location=geolocation();
@@ -515,7 +517,7 @@ function Nearbytab() {
                                             {
                                                 globalnearbyBusStops==''?(
                                                     //No bus stops nearby
-                                                    <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
+                                                    <div class="container-fluid nearbytop" style={{textAlign:"center", justifyContent:"center"}}>
                                                         {globalDarkMode ?
                                                             <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                                             :
@@ -557,11 +559,11 @@ function Nearbytab() {
                                             </>
                                         ):(
                                             //User disabled location
-                                            <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
+                                            <div class="container-fluid nearbytop" style={{textAlign:"center", justifyContent:"center"}}>
                                                 {globalDarkMode ?
-                                                    <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                    <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                                     :
-                                                    <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                                    <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                                 }
                                                 
                                                 <form class="container-fluid" style={{marginTop:"30px"}}>
@@ -573,11 +575,11 @@ function Nearbytab() {
                                 </div>
                             ):(
                                 //Location still not loaded
-                                <div class="container-fluid" style={{textAlign:"center", justifyContent:"center"}}>
+                                <div class="container-fluid nearbytop" style={{textAlign:"center", justifyContent:"center"}}>
                                     {globalDarkMode ?
-                                        <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                        <img src={BusIconBlack2} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                         :
-                                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"50px"}} />
+                                        <img src={BusIconBlack} style={{height:"auto", width:"8rem", paddingTop:"10px"}} />
                                     }
                                     <form class="container-fluid" style={{marginTop:"30px"}}>
                                         <p className={globalDarkMode ?"otherLabelColD":""}>Loading your location...</p>

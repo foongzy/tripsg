@@ -2,16 +2,18 @@ import React, {useState, useEffect, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../Components/useWindowDimensions"
+import { GlobalContext } from "../Resources/GlobalContext.js";
+import axios from 'axios'
 import '../assets/css/sidebar.css'
 import '../assets/css/sidebarD.css'
+
+//Icons import
 import Menu from '@material-ui/icons/Menu';
 import Close from '@material-ui/icons/Close';
 import Setting from '@material-ui/icons/Settings';
 import Feedback from '@material-ui/icons/Feedback';
 import Bus from '@material-ui/icons/DepartureBoard';
 import Info from '@material-ui/icons/Info';
-import { GlobalContext } from "../Resources/GlobalContext.js";
-import axios from 'axios'
 
 function Sidebar() {
     const [sidebar, setSidebar]=useState(false)

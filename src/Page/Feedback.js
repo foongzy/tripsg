@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import LoadingScreen from "../Components/loadingScreen";
 import Navbar from '../Components/Sidebar'
 import useWindowDimensions from "../Components/useWindowDimensions"
 import GridContainer from "../Components/Grid/GridContainer.js";
@@ -12,11 +11,13 @@ import CardHeader from "../Components/Card/CardHeader.js";
 import CardFooter from "../Components/Card/CardFooter.js";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../assets/css/feedback.css'
 import '../assets/css/feedbackD.css'
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
-import LoadingScreen from "../Components/loadingScreen";
+
 
 const useStyles = makeStyles(styles);
 

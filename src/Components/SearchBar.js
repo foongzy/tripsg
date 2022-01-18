@@ -1,14 +1,15 @@
 import React, {useState, useContext} from 'react'
 import '../assets/css/SearchBar.css'
 import '../assets/css/SearchBarD.css'
-import SearchIcon from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
-import useWindowDimensions from "../Components/useWindowDimensions"
+
+//Icons import
+import SearchIcon from '@material-ui/icons/Search';
+import Close from '@material-ui/icons/Close';
 
 function SearchBar({placeholder, data}) {
     const location=geolocation();

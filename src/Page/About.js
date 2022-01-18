@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import Navbar from '../Components/Sidebar'
 import useWindowDimensions from "../Components/useWindowDimensions"
@@ -12,13 +12,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
 import '../assets/css/about.css'
 import '../assets/css/aboutD.css'
+
+//Icons import
 import LinkedIn from '@material-ui/icons/LinkedIn';
 import GitHub from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles(styles);
 
 function About(props) {
-    const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+    const [cardAnimaton, setCardAnimation] = useState("cardHidden");
     const {height, width}=useWindowDimensions();
 
     const{globalPgToggleKey}=useContext(GlobalContext)

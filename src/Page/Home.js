@@ -1,18 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import useWindowDimensions from "../Components/useWindowDimensions"
-import '../assets/css/home.css'
-import '../assets/css/homeD.css'
 import LoadingScreen from "../Components/loadingScreen";
 import axios from 'axios'
 import Navbar from '../Components/Sidebar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../assets/css/home.css'
+import '../assets/css/homeD.css'
 import geolocation from "../hooks/useGeoLocation.js";
 import { getDistance, isPointWithinRadius } from 'geolib';
 import Searchtab from "../Components/Searchtab"
 import Bookmarktab from "../Components/Bookmarktab"
 import Nearbytab from "../Components/Nearbytab"
+
+//Icons import
 import Refresh from "@material-ui/icons/Refresh";
 
 function Home(props){

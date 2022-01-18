@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import BookmarkFilled from '@material-ui/icons/Bookmark';
-import Bookmark from '@material-ui/icons/BookmarkBorder';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useWindowDimensions from "../Components/useWindowDimensions"
+
+// icons import
+import BookmarkFilled from '@material-ui/icons/Bookmark';
+import Bookmark from '@material-ui/icons/BookmarkBorder';
 
 function BookmarkFunc() {
     const [bookmarkNameInput, setBookmarkNameInput] = useState("")

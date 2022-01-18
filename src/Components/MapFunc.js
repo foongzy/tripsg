@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import { GlobalContext } from "../Resources/GlobalContext.js";
-import MapIcon from '@material-ui/icons/Map';
 import useWindowDimensions from "../Components/useWindowDimensions"
+import MapIcon from '@material-ui/icons/Map';
 
 function MapFunc() {
     const {height, width}=useWindowDimensions();

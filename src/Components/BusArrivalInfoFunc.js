@@ -1,9 +1,11 @@
 import React, {useContext} from 'react'
+import { GlobalContext } from "../Resources/GlobalContext.js";
+
+//Icons import
+import InfoIcon from '@material-ui/icons/InfoOutlined';
 import HelpIcon from '@material-ui/icons/HelpOutline'
 import Square from '@material-ui/icons/CropSquare'
 import WheelChair from '@material-ui/icons/Accessible';
-import { GlobalContext } from "../Resources/GlobalContext.js";
-import InfoIcon from '@material-ui/icons/InfoOutlined';
 
 function BusArrivalInfoFunc() {
     const{globalDarkModeKey}=useContext(GlobalContext)

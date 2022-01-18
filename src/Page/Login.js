@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../assets/css/login.css'
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../Resources/GlobalContext.js";
 import GridContainer from "../Components/Grid/GridContainer.js";
@@ -11,11 +12,12 @@ import CardHeader from "../Components/Card/CardHeader.js";
 import CardFooter from "../Components/Card/CardFooter.js";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../assets/jss/material-kit-react/views/aboutPage";
-import Person from '@material-ui/icons/Person';
 import Button from "../Components/CustomButtons/Button.js";
-import '../assets/css/login.css'
 import axios from 'axios'
 import LoadingScreen from "../Components/loadingScreen";
+
+//Icons import
+import Person from '@material-ui/icons/Person';
 
 const useStyles = makeStyles(styles);
 
@@ -24,7 +26,7 @@ function Login(props) {
     const [userInput, setUserInput]=useState('');
     const [userInputError, setUserInputError] = useState(false);
     const [cardAnimaton, setCardAnimation] = useState("cardHidden");
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const{globalDispNameKey}=useContext(GlobalContext)
     const[globalDisplayName,setGlobalDisplayName]=globalDispNameKey
     const{globalSessionIsLogKey}=useContext(GlobalContext)
