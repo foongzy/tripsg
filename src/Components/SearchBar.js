@@ -6,6 +6,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import geolocation from "../hooks/useGeoLocation.js";
+import { getDistance, isPointWithinRadius } from 'geolib';
 
 //Icons import
 import SearchIcon from '@material-ui/icons/Search';
@@ -38,11 +39,21 @@ function SearchBar({placeholder, data}) {
     const[globalShowBusRoute, setGlobalShowBusRoute]=globalShowBusRouteKey
     const{globalIsLoopKey}=useContext(GlobalContext)
     const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
+    const{globalTriggerLocationRefreshKey}=useContext(GlobalContext)
+    const[globalTriggerLocationRefresh, setGlobalTriggerLocationRefresh]=globalTriggerLocationRefreshKey
+    const{globalSearchRadiusKey}=useContext(GlobalContext)
+    const[globalSearchRadius,setGlobalSearchRadius]=globalSearchRadiusKey
+    const{globalLocationKey}=useContext(GlobalContext)
+    const[globalLocation,setGlobalLocation]=globalLocationKey
 
     const URL='https://tripsg-db.herokuapp.com/api/busstops/'
 
     const updateGlobalRefreshToggle=(value)=>{
         setGlobalRefreshToggle(value)
+    }
+
+    const updateGlobalNearbyBusStops=(data)=>{
+        setGlobalNearbyBusStops(data)
     }
 
     const sortArrivalData=(starArray, arrivalData)=>{
@@ -281,11 +292,69 @@ function SearchBar({placeholder, data}) {
         })
     }
 
+    const refreshNearby=()=>{
+        setGlobalTriggerLocationRefresh(true)
+        //retrieve search radius settings
+        const retrieveSearchRTmp=localStorage.getItem('tripsgradius');
+        const retrieveSearchR=JSON.parse(retrieveSearchRTmp);
+        if(retrieveSearchR!=null){
+            setGlobalSearchRadius(retrieveSearchR.radius)
+        }
+        const radius=globalSearchRadius //in metres
+        let nearbyBusStops=[]
+        if(location.loaded==false){
+            if(globalDarkMode){
+                toast.error('Still loading location', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }else{
+                toast.error('Still loading location', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        }else{
+
+            for (let i = 0; i < globalFullBusstopList.length; i++) {
+                const coordinatesTest={
+                    latitude:globalFullBusstopList[i].Latitude,
+                    longitude:globalFullBusstopList[i].Longitude,
+                };
+                if(isPointWithinRadius(location.coordinates,coordinatesTest,radius)==true){
+                    nearbyBusStops.push(globalFullBusstopList[i])
+                }
+            }
+            for (let j = 0; j < nearbyBusStops.length; j++) {
+                const dist=getDistance(location.coordinates,{latitude:nearbyBusStops[j].Latitude,longitude:nearbyBusStops[j].Longitude})
+                nearbyBusStops[j].distFromUser = dist;
+            }
+            //sort by dist
+            nearbyBusStops.sort(function(a, b) {
+                return parseFloat(a.distFromUser) - parseFloat(b.distFromUser);
+            });
+            updateGlobalNearbyBusStops(nearbyBusStops)
+            setGlobalLocation(location)
+        }   
+    }
+
     function clickSearch(event){
         event.preventDefault()
         if(globalSearchWord!=""){
             if(globalSearchWord.length<=4){
                 if(location.loaded==true && location.error==''){
+                    refreshNearby()
                     if (globalnearbyBusStops[0]){
                         //quick search using nearest bus stop
                         getBusArrival(globalnearbyBusStops[0].BusStopCode, "quickBusNo")
@@ -316,6 +385,7 @@ function SearchBar({placeholder, data}) {
         }else{
             if(location.loaded==true && location.error==''){
                 //quick search using nearest bus stop to find bus
+                refreshNearby()
                 if (globalnearbyBusStops[0]){
                     getBusArrival(globalnearbyBusStops[0].BusStopCode, "quickBusStop")
                 }else{
