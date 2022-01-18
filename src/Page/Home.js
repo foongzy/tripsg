@@ -433,12 +433,18 @@ function Home(props){
                     <div class="modal-body">
                         <ul style={{marginBottom:"5px"}}>
                             <li>Shows all nearby bus stops based on your current location</li>
-                            <li>Refresh nearby bus stops by clicking <Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}/> at the top right corner</li>
+                            {
+                                globalbusstopcodeNearby[0].busstopcode==""?(
+                                    <li>Refresh nearby bus stops by clicking <Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}/> at the top right corner</li>
+                                ):(
+                                    <></>
+                                )
+                            }
                         </ul>
                         <div style={{fontSize:"14px", marginLeft:"15px"}}>
                             Note:
                             <ul>
-                                <li>Location sharing must be enabled to enable this service</li>
+                                <li>Location sharing must be enabled to use this service</li>
                             </ul>
                         </div>
                     </div>
