@@ -75,7 +75,7 @@ function About(props) {
                                                             <h5 className='marA'><b>Features</b></h5>
                                                             <ul>
                                                                 <li>Search for bus stops using bus stop name, bus stop code or bus number</li>
-                                                                <li>Quicksearch enables you to quickly obtain bus arrival info near you</li>
+                                                                <li>Quick search enables you to quickly obtain bus arrival info near you</li>
                                                                 <li>Bus arrival info includes bus route, bus capacity and wheelchair accessibility</li>
                                                                 <li>Show bus stop location on map</li>
                                                                 <li>Personalisation: <br />
