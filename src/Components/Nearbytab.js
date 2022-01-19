@@ -464,10 +464,10 @@ function Nearbytab() {
                                                             </div>
                                                             <div className="col-7">
                                                                 <label className="BusTimeNoPad" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
-                                                                    <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
+                                                                    <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon id="busRoouteInfoIcon"/></a>
                                                                     {
                                                                         globalisBookmarked?(
-                                                                            <div style={{marginLeft:"2px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}} id="starIconDisp"/></div>
+                                                                            <div style={{marginLeft:"2px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div>
                                                                         ):(
                                                                             <></>
                                                                         )

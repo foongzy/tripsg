@@ -234,6 +234,7 @@ div.card-body{
 
 #starIcon{
     color: black;
+    font-size: 20px;
 }
 
 #refreshNearby{
@@ -243,7 +244,6 @@ div.card-body{
 
 #inFoIconBR{
     color: black;
-    font-size: 20px;
 }
 
 .busroute{
@@ -287,6 +287,6 @@ div.card-body{
     padding-top: 40px;
 }
 
-#starIconDisp{
+#busRoouteInfoIcon{
     font-size: 20px;
 }

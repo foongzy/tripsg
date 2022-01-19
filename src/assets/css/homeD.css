@@ -220,6 +220,7 @@
 
 #starIconD{
     color: white;
+    font-size: 20px;
 }
 
 #refreshNearbyD{
@@ -229,7 +230,6 @@
 
 #inFoIconBRD{
     color: white;
-    font-size: 20px;
 }
 
 .busrouteD{
