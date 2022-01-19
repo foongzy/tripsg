@@ -31,7 +31,7 @@ function BusArrivalInfoFunc() {
                                             </div>
                                             <div className="col-8 borderLeft">
                                                 <label className="BusTime" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
-                                                <a id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
+                                                <a id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon id="busRoouteInfoIcon"/></a>
                                                 </label>
                                                 <label className="BusTime empty">Arriving</label>
                                                 <label className='BusTime2 standing'>5min<WheelChair className={globalDarkMode ? "WheelChair2D":"WheelChair2"}></WheelChair></label>
