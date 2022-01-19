@@ -120,7 +120,8 @@ function About(props) {
                                                             Disclaimer: <br />
                                                             By using TripSg, you agree that the service is provided for your own personal use at no cost.<br />
                                                             TripSg assumes no responsibility for any damages incurred through the use of the services provided by the application.<br />
-                                                            Bus arrival information provided by TripSg application is provided "as-is" by Singapore's Land Transport Authority and TripSg cannot guarantee the reliability and accuracy of the information.
+                                                            Bus arrival information provided by TripSg application is provided "as-is" by Singapore's Land Transport Authority and TripSg cannot guarantee the reliability and accuracy of the information.<br />
+                                                            Location and search data are not collected by TripSg so don't worry and search away.<br />
                                                         </label>
                                                     </div>
                                                 </CardFooter>
