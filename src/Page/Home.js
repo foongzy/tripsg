@@ -299,14 +299,14 @@ function Home(props){
                                 </ul>
                                 {
                                     globalTabToggle==1?(
-                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon id={globalDarkMode?"helpSearchD":"helpSearch"}></HelpIcon></a>
+                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px", marginRight:"2px"}} data-bs-toggle="modal" data-bs-target="#searchHelpModal"><HelpIcon id={globalDarkMode?"helpSearchD":"helpSearch"}></HelpIcon></a>
                                     ):(
                                         <></>
                                     )
                                 }
                                 {
                                     globalTabToggle==2?(
-                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}} data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon id={globalDarkMode?"helpBookmarkD":"helpBookmark"}></HelpIcon></a>
+                                        <a href="#" style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px", marginRight:"2px"}} data-bs-toggle="modal" data-bs-target="#bookmarkHelpModal"><HelpIcon id={globalDarkMode?"helpBookmarkD":"helpBookmark"}></HelpIcon></a>
                                     ):(
                                         <></>
                                     )
