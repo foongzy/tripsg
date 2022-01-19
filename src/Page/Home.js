@@ -314,7 +314,7 @@ function Home(props){
                                 {
                                     globalTabToggle==3?(
                                         <div style={{alignItems:"flex-end", marginLeft:"auto", marginTop:"10px"}}>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#nearbyHelpModal" style={{marginRight:"3px"}}><HelpIcon id={globalDarkMode?"helpNearbyD":"helpNearby"}></HelpIcon></a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#nearbyHelpModal" style={{marginRight:"2px"}}><HelpIcon id={globalDarkMode?"helpNearbyD":"helpNearby"}></HelpIcon></a>
                                             {
                                                 globalbusstopcodeNearby[0].busstopcode==""?(
                                                     <a href="#" onClick={refreshNearby} data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh nearby bus stops"><Refresh id={globalDarkMode?"refreshNearbyD":"refreshNearby"}></Refresh></a>

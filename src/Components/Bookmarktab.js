@@ -492,7 +492,7 @@ function Bookmarktab() {
                                                             <div className="col-7">
                                                                 <label className="BusTimeNoPad" style={{display:"flex", justifyContent:"space-between"}}>Next Bus:
                                                                     <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
-                                                                    <div style={{marginLeft:"3px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div>
+                                                                    <div style={{marginLeft:"2px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}} id="starIconDisp"/></div>
                                                                 </label>
                                                                 
                                                                 <label className={value.NextBus2.Load=="SEA"?"BusTime empty":value.NextBus2.Load=="SDA"?"BusTime standing":"BusTime full"}>{value.NextBus.EstimatedArrival}{value.NextBus.Feature=="WAB"?<WheelChair className={globalDarkMode ? "WheelChairD":"WheelChair"}></WheelChair>:<></>}</label>

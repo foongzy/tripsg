@@ -467,7 +467,7 @@ function Nearbytab() {
                                                                     <a href="#" onClick={() => InfoClickBusRoute(value.ServiceNo)} id={globalDarkMode ? "inFoIconBRD":"inFoIconBR"} style={{marginLeft:"auto"}}><InfoIcon /></a>
                                                                     {
                                                                         globalisBookmarked?(
-                                                                            <div style={{marginLeft:"3px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}}/></div>
+                                                                            <div style={{marginLeft:"2px"}}><Star BusNum={value.ServiceNo} style={{marginLeft:"auto"}} id="starIconDisp"/></div>
                                                                         ):(
                                                                             <></>
                                                                         )

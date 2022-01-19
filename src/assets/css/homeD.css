@@ -75,14 +75,17 @@
 
 #helpBookmarkD{
     color: white;
+    font-size: 20px;
 }
 
 #helpSearchD{
     color: white;
+    font-size: 20px;
 }
 
 #helpNearbyD{
     color: white;
+    font-size: 20px;
 }
 
 .cardRD{
@@ -221,10 +224,12 @@
 
 #refreshNearbyD{
     color: white;
+    font-size: 24px;
 }
 
 #inFoIconBRD{
     color: white;
+    font-size: 20px;
 }
 
 .busrouteD{

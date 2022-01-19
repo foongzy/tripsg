@@ -121,14 +121,17 @@ div.card-body{
 
 #helpBookmark{
     color: black;
+    font-size: 20px;
 }
 
 #helpSearch{
     color: black;
+    font-size: 20px;
 }
 
 #helpNearby{
     color: black;
+    font-size: 20px;
 }
 
 .cardR{
@@ -235,10 +238,12 @@ div.card-body{
 
 #refreshNearby{
     color: black;
+    font-size: 24px;
 }
 
 #inFoIconBR{
     color: black;
+    font-size: 20px;
 }
 
 .busroute{
@@ -280,4 +285,8 @@ div.card-body{
 
 .nearbytop{
     padding-top: 40px;
+}
+
+#starIconDisp{
+    font-size: 20px;
 }
