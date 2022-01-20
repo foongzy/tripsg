@@ -361,7 +361,7 @@ function Home(props){
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <b>Quick Search</b>
+                            <b>QuickSearch</b>
                             <ul style={{marginBottom:"5px"}}>
                                 <li>Leave search input empty and click search. Application will show bus arrivals for nearest bus stop</li>
                                 <li>Type in bus number and click search. Application will show bus arrival for queried bus at nearest bus stop</li>
