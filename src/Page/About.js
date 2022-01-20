@@ -69,15 +69,19 @@ function About(props) {
                                                 <CardBody>
                                                     <div className="aboutBody">
                                                         <div className='container-fluid '>
-                                                            <label>TripSg is a personal full stack project that seeks to quickly provide users with their bus arrival information.</label>
+                                                            <label style={{marginBottom:"5px"}}>TripSg is a personal full stack project that allow users to easily obtain their bus arrival information.</label><br />
+                                                            <label>Most bus arrival apps require users to identify and select the bus stop they are at, either by checking a map or identifying the bus stop details from the physical bus stop. 
+                                                                With quick search, TripSg saves you that trouble by identifying the bus stop for you and returning the bus arrival information you need on a clean and user-friendly interface.
+                                                            </label>
                                                         </div>
                                                         <div className='container-fluid '>
                                                             <h5 className='marA'><b>Features</b></h5>
                                                             <ul>
                                                                 <li>Search for bus stops using bus stop name, bus stop code or bus number</li>
-                                                                <li>Quick search enables you to quickly obtain bus arrival info near you</li>
-                                                                <li>Bus arrival info includes bus route, bus capacity and wheelchair accessibility</li>
-                                                                <li>Show bus stop location on map</li>
+                                                                <li>Quick search saves you the trouble of identifying the bus stop you are at</li>
+                                                                <li>Bus arrival information includes bus route, bus capacity and wheelchair accessibility</li>
+                                                                <li>Shows bus stop location on map</li>
+                                                                <li>Clean and user-friendly interface</li>
                                                                 <li>Personalisation: <br />
                                                                     <ul>
                                                                         <li>Bookmarking commonly visited bus stops</li>
@@ -91,7 +95,7 @@ function About(props) {
                                                         </div>
                                                         <div className='container-fluid '>
                                                             <h5 className='marA'><b>Source</b></h5>
-                                                            <label className='marC'><b>Bus info:</b> TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA). </label>
+                                                            <label className='marC' style={{marginBottom:"5px"}}><b>Bus information:</b> TripSg utilizes real time data from the Land Transport Authority of Singapore (LTA). </label>
                                                             <br />
                                                             <label className='marC'><b>Code:</b> You can view the source code <a href="https://github.com/foongzy/tripsg" target="_blank" id={globalDarkMode ?"sourcecodelinkD":"sourcecodelink"}>here</a>. </label>
                                                         </div>
