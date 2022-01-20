@@ -14,7 +14,7 @@ This github repository contain the codes used to create the web application's fr
 
 ## Features
 
-* Search for bus stops using bus stop name, bus stop code, bus number
+* Search for bus stops using bus stop name, bus stop code or bus number
 * Quick search saves you the trouble of identifying the bus stop you are at
 * Shows bus arrival information including bus route, bus capacity and wheelchair accessibility
 * Ability to show bus stop location on map
