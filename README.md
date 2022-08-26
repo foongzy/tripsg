@@ -10,7 +10,7 @@ Database: PostgreSQL\
  \
 Click [here](https://tripsg.herokuapp.com/) to view the web application.\
  \
-This github repository contain the codes used to create the web application's frontend.
+This github repository contain the codes used to create the frontend of the web application.
 
 ## Features
 
