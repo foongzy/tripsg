@@ -58,7 +58,7 @@ function Searchtab() {
     const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
 
     function toastError(errorMsg){
         if(globalDarkMode){

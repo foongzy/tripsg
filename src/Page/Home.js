@@ -103,7 +103,7 @@ function Home(props){
     }
     useEffect(findNearestBusStops,[location, globalFullBusstopList])
 
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
     const loadBusstopsData=()=>{
         if(globalFullBusstopList==""){
             const retrieveBusStopListTmp=localStorage.getItem('busstoplistdata');

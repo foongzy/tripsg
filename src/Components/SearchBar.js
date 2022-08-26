@@ -46,7 +46,7 @@ function SearchBar({placeholder, data}) {
     const{globalLocationKey}=useContext(GlobalContext)
     const[globalLocation,setGlobalLocation]=globalLocationKey
 
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
 
     const updateGlobalRefreshToggle=(value)=>{
         setGlobalRefreshToggle(value)

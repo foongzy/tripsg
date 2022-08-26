@@ -25,7 +25,7 @@ function RefreshFunc() {
     const{globalFilteredDataKey}=useContext(GlobalContext)
     const[globalFilteredData,setGlobalFilteredData]=globalFilteredDataKey
     
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
 
     function toastError(errorMsg){
         if(globalDarkMode){

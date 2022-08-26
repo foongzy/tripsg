@@ -29,7 +29,7 @@ function Nearbytab() {
     const location=geolocation();
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
 
     const [activeBookmark, setActiveBookmark]=useState([
         {
@@ -531,7 +531,7 @@ function Nearbytab() {
                                                             return(
                                                                 <div className="col">
                                                                     <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                                                        <div className="card text-dark bg-dark mb-0" className="cardHover" style={{height:"100%"}}>
+                                                                        <div className="card text-dark bg-dark mb-0 cardHover" style={{height:"100%"}}>
                                                                             <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                                                 {value.Description} 
                                                                                 <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>

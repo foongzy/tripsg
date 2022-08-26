@@ -28,7 +28,7 @@ import WheelChair from '@material-ui/icons/Accessible';
 function Bookmarktab() {
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg-db.herokuapp.com/api/busstops/'
+    const URL='https://tripsg.pythonanywhere.com/'
 
     const [activeBookmark, setActiveBookmark]=useState([
         {
@@ -532,7 +532,7 @@ function Bookmarktab() {
                                 return(
                                     <div className="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                            <div className="card text-dark bg-light mb-0" className="cardHover" style={{height:"100%"}}>
+                                            <div className="card text-dark bg-light mb-0 cardHover" style={{height:"100%"}}>
                                                 <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                     {value.CustomName==""?value.Description:value.CustomName} 
                                                     <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>
