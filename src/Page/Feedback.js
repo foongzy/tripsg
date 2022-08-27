@@ -121,7 +121,7 @@ function Feedback(props) {
                             "email": emailInput,
                             "feedback": feedbackInput,
                         }
-                        const URL="https://tripsg-db.herokuapp.com/api/feedback/"
+                        const URL="https://tripsg.pythonanywhere.com/api/feedback/"
                         setIsLoading(true)
                         axios.post(URL, data).then(res=>{
                             if (globalDisplayName!=""){

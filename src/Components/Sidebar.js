@@ -99,7 +99,7 @@ function Sidebar() {
         if(retrieveDispName!=null){
             setGlobalDisplayName(retrieveDispName.displayname)
             if (globalSessionIsLog==false){
-            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+retrieveDispName.displayname+"/2/"
+            const URL ="https://tripsg.pythonanywhere.com/api/logs/"+retrieveDispName.displayname+"/2/"
             setGlobalIsLoading(true)
             axios.post(URL).then(res=>{
                 setGlobalSessionIsLog(true)

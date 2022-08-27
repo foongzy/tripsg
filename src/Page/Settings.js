@@ -116,7 +116,7 @@ function Settings(props) {
     function clickNameUpdate(event){
         event.preventDefault();
         if(nameInput!=""){
-            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+globalDisplayName+"/3/"
+            const URL ="https://tripsg.pythonanywhere.com/api/logs/"+globalDisplayName+"/3/"
             const data={
                 "newuser": nameInput
             }

@@ -45,7 +45,7 @@ function Login(props) {
     function clickEnter(event){
         event.preventDefault();
         if(userInput!=""){
-            const URL ="https://tripsg-db.herokuapp.com/api/logs/"+userInput+"/1/"
+            const URL ="https://tripsg.pythonanywhere.com/api/logs/"+userInput+"/1/"
             setIsLoading(true)
             axios.post(URL).then(res=>{
               setIsLoading(false)

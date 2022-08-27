@@ -348,7 +348,7 @@ function Bookmarktab() {
     useEffect(starSort,[globalBookmarked])
 
     const InfoClickBusRoute=(BusNum)=>{
-        const URL="https://tripsg-db.herokuapp.com/api/busroutes/"+BusNum+"/"+globalbusstopcodeBM[0].busstopcode+"/"
+        const URL="https://tripsg.pythonanywhere.com/api/busroutes/"+BusNum+"/"+globalbusstopcodeBM[0].busstopcode+"/"
         setGlobalIsLoading(true)
         axios.get(URL).then(res=>{
             setCurrentBusStopSeq(res.data.currentStopSeq)
