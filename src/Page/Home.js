@@ -103,7 +103,7 @@ function Home(props){
     }
     useEffect(findNearestBusStops,[location, globalFullBusstopList])
 
-    const URL='https://tripsg.pythonanywhere.com/'
+    const URL='https://tripsg.pythonanywhere.com/api/busstops/'
     const loadBusstopsData=()=>{
         if(globalFullBusstopList==""){
             const retrieveBusStopListTmp=localStorage.getItem('busstoplistdata');

@@ -29,7 +29,7 @@ function Nearbytab() {
     const location=geolocation();
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg.pythonanywhere.com/'
+    const URL='https://tripsg.pythonanywhere.com/api/busstops/'
 
     const [activeBookmark, setActiveBookmark]=useState([
         {

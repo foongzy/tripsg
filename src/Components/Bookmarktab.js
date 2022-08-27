@@ -28,7 +28,7 @@ import WheelChair from '@material-ui/icons/Accessible';
 function Bookmarktab() {
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg.pythonanywhere.com/'
+    const URL='https://tripsg.pythonanywhere.com/api/busstops/'
 
     const [activeBookmark, setActiveBookmark]=useState([
         {

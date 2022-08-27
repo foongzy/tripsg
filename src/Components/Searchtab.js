@@ -58,7 +58,7 @@ function Searchtab() {
     const[globalIsLoop, setGlobalIsLoop]=globalIsLoopKey
 
     const {height, width}=useWindowDimensions();
-    const URL='https://tripsg.pythonanywhere.com/'
+    const URL='https://tripsg.pythonanywhere.com/api/busstops/'
 
     function toastError(errorMsg){
         if(globalDarkMode){

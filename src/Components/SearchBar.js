@@ -46,7 +46,7 @@ function SearchBar({placeholder, data}) {
     const{globalLocationKey}=useContext(GlobalContext)
     const[globalLocation,setGlobalLocation]=globalLocationKey
 
-    const URL='https://tripsg.pythonanywhere.com/'
+    const URL='https://tripsg.pythonanywhere.com/api/busstops/'
 
     const updateGlobalRefreshToggle=(value)=>{
         setGlobalRefreshToggle(value)
