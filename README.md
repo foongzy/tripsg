@@ -6,9 +6,9 @@ Most bus arrival apps require users to identify and select the bus stop they are
  \
 Frontend: React\
 Backend: Django\
-Database: PostgreSQL\
+Database: MySQL\
  \
-Click [here](https://tripsg.herokuapp.com/) to view the web application.\
+Click [here](https://tripsg.vercel.app/) to view the web application.\
  \
 This github repository contain the codes used to create the frontend of the web application.
 
