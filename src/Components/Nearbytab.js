@@ -531,7 +531,7 @@ function Nearbytab() {
                                                             return(
                                                                 <div className="col">
                                                                     <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                                                        <div className="card text-dark bg-dark mb-0 cardHover" style={{height:"100%"}}>
+                                                                        <div className={globalDarkMode?"card text-dark bg-dark mb-0 cardHover":"card text-dark bg-light mb-0 cardHover"} style={{height:"100%"}}>
                                                                             <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                                                 {value.Description} 
                                                                                 <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><Location></Location></i>

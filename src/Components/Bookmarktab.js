@@ -4,6 +4,8 @@ import useWindowDimensions from "../Components/useWindowDimensions"
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../assets/css/home.css'
+import '../assets/css/homeD.css'
 import BusArrivalInfoFunc from "./BusArrivalInfoFunc.js";
 import MapFunc from "./MapFunc.js";
 import Star from "./StarFunc.js"
@@ -527,18 +529,18 @@ function Bookmarktab() {
                     // havent click bus stop
                     <div>
                         {/* Show bookmarked busstops */}
-                        <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px"}}>
+                        <div className={width<950?"row row-cols-1 row-cols-sm-2 g-2 topMargin":"row row-cols-1 row-cols-sm-3 g-2 topMargin"}  style={{paddingLeft:"10px", paddingRight:"10px", marginTop:"0px", paddingTop:"0px"}}>
                             {globalBookmarked.map((value,key)=>{
                                 return(
                                     <div className="col">
                                         <a href="javascript:void(0)" style={{color:"black", textDecoration:"none"}} onClick={()=>getBusArrival(value.BusStopCode)}>
-                                            <div className="card text-dark bg-light mb-0 cardHover" style={{height:"100%"}}>
+                                            <div className={globalDarkMode?"card text-dark bg-dark mb-0 cardHover":"card text-dark bg-light mb-0 cardHover"} style={{height:"100%"}}>
                                                 <div className={globalDarkMode ?"card-header cardHeaderBusStopD":"card-header cardHeaderBusStop"}>
                                                     {value.CustomName==""?value.Description:value.CustomName} 
                                                     <i style={{borderRadius:"50%", backgroundColor:"#5680E9", color:"white", float:"right", padding:"4px 5px", marginTop:"5px"}}><BookmarkFilled></BookmarkFilled></i>
                                                     <div style={{fontSize:"14px"}}>{value.BusStopCode}</div>
                                                 </div>
-                                                <div class={globalDarkMode ? "card-body borderBodycardD":"card-body borderBodycard"}>
+                                                <div className={globalDarkMode ? "card-body borderBodycardD":"card-body borderBodycard"}>
                                                     <div className="row row-cols-1 row-cols-1 g-1">
                                                         <label className="card-text">{value.RoadName}</label>
                                                     </div>        
